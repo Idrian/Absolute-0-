@@ -14,7 +14,7 @@
 | Cameron Trivella |  [LinkedIn](https://www.linkedin.com/in/pearce-jackson-32ba0073/)|
 
 
-Everyhting below to be decided once project is given.
+Everything below to be decided once project is given.
 ## Project Structure
 ## Coding Standards
 ### Naming Conventions
