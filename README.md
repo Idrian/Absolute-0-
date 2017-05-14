@@ -8,7 +8,7 @@
 | Name       | Profile Page |
 |:----------:|:------------:|
 | Idrian van der Westhuizen | [LinkedIn](https://www.linkedin.com/in/eridianentertainment) |
-| name |  |
+| Chris Dreyer              | [LinkedIN](https://www.linkedin.com/in/chris-dreyer-a11a72142/)|
 |  |  |
 |  |  |
 |  |  |
