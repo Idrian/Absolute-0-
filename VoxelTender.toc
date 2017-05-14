@@ -1,5 +1,0 @@
-\select@language {english}
-\contentsline {section}{\numberline {1}High level description:}{2}
-\contentsline {section}{\numberline {2}Deployment diagram:}{2}
-\contentsline {section}{\numberline {3}Brief description of methodology:}{2}
-\contentsline {section}{\numberline {4}Team skills:}{3}
