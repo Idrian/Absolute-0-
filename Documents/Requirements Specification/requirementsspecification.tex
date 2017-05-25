@@ -99,25 +99,38 @@
 		HTTP will be used to handle GET and POST requests and FTP will be used for file uploads and downloads.
 	\pagebreak
 	
-	\section{System Features}
+	\section{System Features}		
+		\subsection{File upload with rules feature}
 		\begin{figure}[h]
 			\includegraphics[width=\textwidth]{rules.jpg}
 			\caption{Use Case Diagram for User upload with rules }
 		\end{figure}
-		
-		\begin{figure}[h]
-			\includegraphics[width=\textwidth]{norules.jpg}
-			\caption{Use Case Diagram for User upload with rules }
-		\end{figure}
-	
-		\subsection{System Feature 1}
-		
+
 			 \subsubsection{Description and Priority}
-			 
+			 	This feature is of high priority since the user will not be able to have their exported file if they can not use the upload feature. The penalty would be a 9 out of 10.
+			 \subsubsection{Stimulus/Response Sequences}
+			 	
+			 \subsubsection{Functional Requirements}
+			 	REQ-1: The user needs to be able to upload a file with or without rules.
+			 	REQ-2: The system must be able to export the files from the users upload.
+			 	REQ-3:The system has to provide the textures based on the users rule file.
+			 	REQ-4: The system needs to display the mesh with three.js.
+			 	REQ-5: The system must provide the functionality to download the mesh.
+			 \subsection{File upload without rules feature}
+				\begin{figure}[h]
+					\includegraphics[width=\textwidth]{norules.jpg}
+					\caption{Use Case Diagram for User upload with rules }
+				\end{figure}
+			 \subsubsection{Description and Priority}
+			 This feature is of high priority since the user will not be able to have their exported file if they can not use the upload feature.It is also of high priority to provide a rule file if none was uploaded otherwise there would be no rules to provide textures for.The penalty would be a 9 out of 10. 
 			 \subsubsection{Stimulus/Response Sequences}
 			 
 			 \subsubsection{Functional Requirements}
-			 
+			 	REQ-1: The user needs to be able to upload a file with or without rules.
+			 	REQ-2: The system must be able to export the files from the users upload.
+			 	REQ-3:The system has to provide a rule file for the textures.
+			 	REQ-4: The system needs to display the mesh with three.js.
+			 	REQ-5: The system must provide the functionality to download the mesh.
 	\pagebreak
 	
 	\section{Other Nonfunctional Requirements}
