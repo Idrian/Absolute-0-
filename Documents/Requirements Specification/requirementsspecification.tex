@@ -83,10 +83,27 @@
 	\section{External Interface Requirements}
 	
 		\subsection{User Interfaces}
+		The users will be interfacing with the Voxel system through online websites.*They will mainly be using a laptop or
+		computer to interface with the system.* However the system itself will provide different interfaces for the user to make
+		use of.
+		
+		This system does not require user profiles as their objects are only manipulate throught the system and not stored. This 
+		implies that the user will only be led to one screen. On this screen they will be able to manipulate their objects.
+		
+		All users will share the same priority as there is not a distinction between user types. All users will have access to 
+		all functions provided by the system.
 		
 		\subsection{Software Interfaces}
+		The system will incorporate several different languages in order to function. For the rules file JSON objects will be 
+		used so that the users can interface with the file. MagicVoxel will be used for the manipulation and movement of the 
+		voxel objexts. The system will run off all major internet browsers that support WebGL.
 		
 		\subsection{Communications Interfaces}
+		The system will have to handle frequent user uploads of their Voxel objects in order to manipulate them. This
+		communication can be done through any persistent internet connection. Once the system has received communication from 
+		the user it should access the rules file so as to be ready for the user interaction. This sytem should aso aloow 
+		multiple users onto the system simultaneously. This is to say that the system's performance should not be proportional 
+		to the number of active users.
 		
 	\pagebreak
 	
@@ -105,10 +122,42 @@
 	\section{Other Nonfunctional Requirements}
 	
 		\subsection{Performance Requirements}
+		\subsubsection {Time to respond to an uploaded file}
+		A user is required to upload a voxel object to the system and then will be allowed to mainpulate a rules file such that 
+		their rules are now applied to the object. The system must not delay once a file is uploaded, this means a delay of no 
+		more than 2 seconds to respond to the upload should be allowed.
+		
+		\subsubsection{Respond to user interaction}
+		Once the user has uploaded their object they may begin editing the object. The system should respond to the user 
+		interaction as quickly as possible as an editor should not lag by more than 20 milliseconds.
+		
+		\subsubsection{Reliability}
+		The system should never cease working completely unless the error is caused
+		by external systems outside our control (operating system, web APIs, etc).
+		Ideally an entire system uptime (per month) of 99.9% must be reached.
+		
+		\subsubsection{Maintainability}
+		The system’s code must be well documented, both by means of in-code comments and external documentation, to aid in 
+		maintaining the system.
+		
+		\subsubsection{Portability}
+		This system should be accessible across all major internet browsers that support WebGL. These include Chrome, Firefox.
+		
+		\subsubsection{Scalibilty}
+		It must be possible to scale the system backend in the event of an increase ofusers. Scaling must be possible both 
+		horizontally or vertically.
+		
+		\subsubsection{Usability}
+		The Voxel system should be easy to operate and understand. The core functions of the system shouldn't take the user more 
+		than a minute to access and understand.
 		
 		\subsection{Security Requirements}
+		This system should be an open source project and so the code should be freely available to anyone seeking the code.
+		However the actual system should be protected and the only editing that a user can do is uploading of objects and 
+		editing of the rules file.
 		
 		\subsection{Quality Requirements}
+		
 		
 	\pagebreak
 	
