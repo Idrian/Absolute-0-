@@ -54,7 +54,7 @@
 		
 		\subsection{Product Scope}
 		
-		Voxc.js is meant to be an easy to use and easy to maintain JavaScript library, similar to how three.js is a library for WebGL. The purpose of the project is to provide users a way to import Voxel models into a webpage that would be using the Voxc.js library and ultimately texturing these Voxel models according to a rules file with a specified structure. The user will then be able to export the textured and rendered object.
+		Voxc.js is meant to be an easy to use and easy to maintain JavaScript library, similar to how three.js is a library for WebGL. The purpose of the project is to provide users a way to import Voxel models into a webpage that would be using the Voxc.js library and use these Voxel models as a coordinate system to create newly genereated mesh object according to a rules file with a specified structure. The user will then be able to export the textured and rendered object.
 		
 		\subsection{References}
 		
@@ -86,12 +86,9 @@
 		The users should be able to interface with voxc.js through our web interface that will be hosted on Github Pages. They will mainly be using a laptop or a desktop to interface with the library. However the library itself should be able to interface with any website on any device with a web browser that has support for WebGL.
 		\\\\
 		This library should not require user profiles as their voxel objects are stored locally on browser storage and manipulated by the library. This implies that the user should only be led to one screen where they will be allowed to upload a voxel object file and a rules file if they choose to do so.
-		\\\\
-		All users should share the same priority as there is not a distinction between user types. All users should have access to 
-		all functions provided by the library.
 		
 		\subsection{Software Interfaces}
-		The system should incorporate several different languages in order to function. For the rules file JSON objects should be 
+		The system should incorporate several different languages in order to function. For the rules file, JSON objects should be 
 		used so that the users can manipulate the file in any text editor based on set conventions and structure. 
 		\\\\
 		MagicVoxel should be used for the creation and manipulation of voxel objects. The library should be able to handle the .obj filetype for the voxel objects.
@@ -99,9 +96,7 @@
 	 	The library should use TypeScript as the JavaScript variant to enable future developers and current developers to debug easier. The library should run on all major internet browsers that support WebGL.
 		
 		\subsection{Communications Interfaces}
-		The system will have to handle frequent user uploads of their Voxel objects in order to manipulate them. *This
-		communication can be done through any persistent internet connection*. HTTP will be used to handle GET and POST requests and FTP will be used for file uploads and downloads. This library should also allow multiple users to use the system simultaneously. *This is to say that the system's performance should not be proportional to the number of active users.*
-		
+		HTTP will be used to handle GET and POST requests and FTP will be used for file uploads and downloads.
 	\pagebreak
 	
 	\section{System Features}
@@ -120,14 +115,13 @@
 	
 		\subsection{Performance Requirements}
 		\subsubsection {Time to respond to an uploaded file}
-		A user is required to upload a voxel object to the library and then should be allowed to mainpulate a rules file if they choose to do so or they should be able to use a predefined rules file such that the rules are applied to the object. The library must not delay once a file is uploaded, this means a delay of no 
-		more than *2 seconds* to respond to the upload should be allowed.
+		A user is required to upload a voxel object to the library and then should be allowed to mainpulate a rules file if they choose to do so or they should be able to use a predefined rules file such that the rules are applied to the object. The library must not delay once a file is uploaded, this means the time it takes to respond to a uploaded file should be proportional to the files size.
 		
 		\subsubsection{Respond to user interaction}
 		The system should respond to user interactions in real time.
 		
 		\subsubsection{Reliability}
-		The system should never cease working completely unless the error is caused by external systems outside our control (operating system, web APIs, etc). Ideally an entire system uptime (per month) of 99.9\% must be reached, meaning that the system should have validation and error checking to prevent unwanted results.
+		The system should never cease working completely unless the error is caused by external systems outside our control (operating system, web APIs, etc). Ideally an entire system uptime (per month) of 99.0\% must be reached, meaning that the system should have validation and error checking to prevent unwanted results.
 		
 		\subsubsection{Maintainability}
 		The library's code must be well documented, both by means of in-code comments and external documentation, to aid in 
@@ -138,8 +132,9 @@
 		The library should also be able to be imported to any website.
 		
 		\subsubsection{Scalibilty}
-		*It must be possible to scale the library backend in the event of an increase of users. Scaling must be possible both 
-		horizontally or vertically.*
+		The system should be able to handle the majority of web browsers and file sizes, by file size we mean that the system should not necessarily struggle or outright reject a file because it was too large. Realistically we cannot handle all file sizes, but the system should aim to handle a large as possible file size. 
+		\\\\
+		Additionally the library should be able to work with any other webpage as a simple imported library, therefore users should be able to alter positions and perhaps even sizes of the dom elements used to upload, download and display the objects.
 		
 		\subsubsection{Usability}
 		The Voxel library should be easy to operate and understand. The core functions of the system shouldn't take the user more 
@@ -149,7 +144,7 @@
 		This library should be an open source project and so the code will be freely available to anyone visiting the Github repository. The actual web interface hosted on Github will act as a demo of the library and should be protected, the only editing that a user should be able to do is uploading of objects and editing their own rules file.
 		
 		\subsection{Quality Requirements}
-		********************************************************
+		*Stars for reviewing*
 		
 	\pagebreak
 	
