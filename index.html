@@ -2,7 +2,9 @@
 <html>
     <head>
         <title>voxc.js</title>
+        <link rel="icon" href="resources/images/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.css">
         <script src="https://use.fontawesome.com/727ae44ffb.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
         <script src="js/monokai.js" type="text/javascript" charset="utf-8"></script>
@@ -12,30 +14,22 @@
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body class="main">
-        <div class="col-sm-2 navbar">
-            <div class="nav-brand">
-                voxc.js
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">voxc.js</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Demo</a></li>
+                    <li><a href="#aboutSection">About</a></li>
+                    <li><a href="#">Usage</a></li>
+                    <li><a href="#">Converter 1</a></li>
+                    <li><a href="#">Converter 2</a></li>
+                    <li><a href="#">Converter 3</a></li>
+                </ul>
             </div>
-            <ul class="link-list">
-                <li class="link-item blue">
-                    <a class="link-item-link">Demo</a>
-                </li>
-                <hr class="hr-blue"/>
-                <li class="link-item">
-                    <a class="link-item-link">Converter 1</a>
-                </li>
-                <hr class="hr-blue"/>
-                <li class="link-item">
-                    <a class="link-item-link">Converter 2</a>
-                </li>
-                <hr class="hr-blue"/>
-                <li class="link-item">
-                    <a class="link-item-link">Converter 3</a>
-                </li>
-                <hr class="hr-blue"/>
-            </ul>
-        </div>
-        <div class="col-sm-10 body">
+        </nav>
+        <div class="col-sm-12 body">
             <!-- <div class="nav-brand">
                 <div class="col-sm-offset-5 col-sm-1">
                     <a target="_blank" href="https://github.com/Idrian/Absolute-0-"><span id="wafflelink" class="fa fa-github"></span></a>
@@ -44,7 +38,10 @@
                     <a target="_blank" href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge"><img height="25" width="25" src="https://dl.dropbox.com/s/oy8z8t69vyhgihk/wafflelogo.png?dl=0"/></a>
                 </div>
             </div>-->
+            
             <img class="voxc-image" src="resources/images/voxc.png"/>
+            <h2 class="main-heading">Demo</h2>
+            <hr class="main-hr"/>
             <div class="col-sm-12 canvascontainer">
                 <div class="col-sm-4">
                     <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
@@ -53,17 +50,56 @@
                     <canvas id="voxelDemo" width="800" height="400"></canvas>
                 </div>
             </div>
-            <div class="col-sm-12 section">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <h2 class="section-heading">About</h2>
-                    <p class="section-paragraph">
-                        Voxc.js is meant to be an easy to use and easy to maintain JavaScript library,
-                        similar to how three.js is a library for WebGL. The purpose of the project is to
-                        provide users a way to import Voxel models into a webpage that would be using
-                        the Voxc.js library and use these Voxel models as a coordinate system to create
-                        newly genereated mesh object according to a rules le with a specied structure.
-                        The user will then be able to export the textured and rendered object.
-                    </p>
+            <div class="row">
+                <div id="aboutSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">About</h2>
+                        <hr class="norm-hr"/>
+                        <p class="section-paragraph">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                        <p class="section-paragraph">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="usageSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">Usage</h2>
+                        <hr class="norm-hr"/>
+                        <p class="section-paragraph">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                        <pre><code class="language-javascript">this.createWorker = function(session) {
+    var worker = new WorkerClient(["ace"], "ace/mode/json_worker", "JsonWorker");
+    worker.attachToDocument(session.getDocument());
+
+    worker.on("annotate", function(e) {
+        session.setAnnotations(e.data);
+    });
+
+    worker.on("terminate", function() {
+        session.clearAnnotations();
+    });
+
+    return worker;
+};
+                        </code></pre>
+                        <pre><code class="language-javascript">var match = line.match(this.foldingStopMarker);
+if (match) {
+    var i = match.index + match[0].length;
+
+    if (match[1])
+        return this.closingBracketBlock(session, match[1], row, i);
+
+    return session.getCommentFoldRange(row, i, -1);
+}
+                        </code></pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,5 +109,6 @@
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
     </body>
 </html>

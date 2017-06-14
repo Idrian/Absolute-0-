@@ -12,15 +12,6 @@ a{
     color: #efefef;
 }
 
-.navbar{
-    background-color: #222;
-    height: 1000px;
-    padding: 0;
-    margin: 0;
-    border: none;
-    text-align: left;
-}
-
 .nav-brand{
     background-color: #86DCEF;
     font-size: 30px;
@@ -94,6 +85,26 @@ a{
     font-family: 'Roboto', sans-serif;
 }
 
+.main-heading{
+    text-align: center;
+    color: #222;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-hr{
+    border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+.norm-hr{
+    border-color: #86DCEF;
+}
+
 .section-paragraph{
     color: #666;
     font-size: 18px;
@@ -109,6 +120,7 @@ a{
     padding: 0;
     margin: 0;
     margin-top: -20px;
+    width: 100%;
 }
 
 #voxelDemo{
@@ -125,6 +137,39 @@ a{
         position: absolute;
         width: 100%;
         height: 400px;
+}
+
+.navbar{
+    border-radius: 0;
+    background-color: #86DCEF;
+    border: none;
+}
+
+.navbar-header a{
+    font-size: 30px;
+    color: #222;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.navbar-inverse .navbar-brand{
+    color: #222;
+}
+
+.nav.navbar-nav li a{
+    color: #222;
+}
+
+.navbar-inverse .nav .navbar-nav > .active li{
+    background-color: #222;
+}
+
+.navbar-inverse .navbar-nav>.active> a{
+    background: #222;
+}
+
+.navbar-inverse .navbar-nav li:hover{
+    background: #222;
 }
 
 
