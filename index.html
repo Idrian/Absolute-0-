@@ -2,11 +2,76 @@
 <html>
     <head>
         <title>voxc.js</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
+        <script src="https://use.fontawesome.com/727ae44ffb.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+        <script src="js/monokai.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/mode-json.js" type="text/javascript" charset="utf-8"></script>
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body class="main">
-        <h1 id="tempheading">Future web interface for the voxc.js library</h1>
+        <div class="col-sm-2 navbar">
+            <div class="nav-brand">
+                voxc.js
+            </div>
+            <ul class="link-list">
+                <li class="link-item blue">
+                    <a class="link-item-link">Demo</a>
+                </li>
+                <hr class="hr-blue"/>
+                <li class="link-item">
+                    <a class="link-item-link">Converter 1</a>
+                </li>
+                <hr class="hr-blue"/>
+                <li class="link-item">
+                    <a class="link-item-link">Converter 2</a>
+                </li>
+                <hr class="hr-blue"/>
+                <li class="link-item">
+                    <a class="link-item-link">Converter 3</a>
+                </li>
+                <hr class="hr-blue"/>
+            </ul>
+        </div>
+        <div class="col-sm-10 body">
+            <!-- <div class="nav-brand">
+                <div class="col-sm-offset-5 col-sm-1">
+                    <a target="_blank" href="https://github.com/Idrian/Absolute-0-"><span id="wafflelink" class="fa fa-github"></span></a>
+                </div>
+                <div class="col-sm-1">
+                    <a target="_blank" href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge"><img height="25" width="25" src="https://dl.dropbox.com/s/oy8z8t69vyhgihk/wafflelogo.png?dl=0"/></a>
+                </div>
+            </div>-->
+            <img class="voxc-image" src="resources/images/voxc.png"/>
+            <div class="col-sm-12 canvascontainer">
+                <div class="col-sm-4">
+                    <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                </div>
+                <div class="col-sm-8">
+                    <canvas id="voxelDemo" width="800" height="400"></canvas>
+                </div>
+            </div>
+            <div class="col-sm-12 section">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <h2 class="section-heading">About</h2>
+                    <p class="section-paragraph">
+                        Voxc.js is meant to be an easy to use and easy to maintain JavaScript library,
+                        similar to how three.js is a library for WebGL. The purpose of the project is to
+                        provide users a way to import Voxel models into a webpage that would be using
+                        the Voxc.js library and use these Voxel models as a coordinate system to create
+                        newly genereated mesh object according to a rules le with a specied structure.
+                        The user will then be able to export the textured and rendered object.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            var JSONMode = ace.require("ace/mode/json").Mode;
+            editor.session.setMode(new JSONMode());
+        </script>
     </body>
 </html>
