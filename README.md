@@ -1,4 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/Idrian/Absolute-0-.png?label=ready&title=Ready)](https://waffle.io/Idrian/Absolute-0-?utm_source=badge)
+
+[Library Main Page](https://idrian.github.io/Absolute-0-/)
+
 # Absolute|0| 
 ## COS 301 Main project
 
