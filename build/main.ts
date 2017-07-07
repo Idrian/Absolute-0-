@@ -1,4 +1,5 @@
-///<reference path="objToThree.ts" />
+import * as THREE from 'three';
+import {objToThree} from './objToThree';
 
 class voxJSCanvas
 {
@@ -106,13 +107,15 @@ window.onload = () => {
     //hard coded a obj file for testing
     let objTest : string = 'example-models/chr_gumi.obj';
 
-    converterOne_model = objToThree_converter.convert(objTest)
+   // converterOne_model = objToThree_converter.convert(objTest)
 
-   // converterOne_model = new THREE.Mesh( geometry, material );
+   
 
-   // var geometry = new THREE.BoxGeometry( 5, 5, 5 );
+    var geometry = new THREE.BoxGeometry( 5, 5, 5 );
 
-//	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+
+     converterOne_model = new THREE.Mesh( geometry, material );
 
     converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.CameraPosition(0,0,-20);

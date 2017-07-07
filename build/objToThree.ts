@@ -1,16 +1,17 @@
-class objToThree 
+import * as THREE from 'three';
+export class objToThree 
 {
     private voxelMesh : THREE.Mesh;
     private loader;
 
     constructor()
     {
-        this.loader  = new THREE.OBJLoader2();
+       // this.loader  = new THREE.OBJLoader2();
     };
 
     convert(inputFile : string) : THREE.Mesh
     {
-        this.loader.load(inputFile, this.assignMesh );
+       // this.loader.load(inputFile, this.assignMesh );
         return this.voxelMesh;
     };
 
