@@ -1,2 +1,13 @@
 sudo: false
 langauge: node_js
+node_js:
+  -0.12.0
+  -4
+  -6
+branches:
+  only:
+  - master
+notifications:
+email: false
+script
+-npm run validate
