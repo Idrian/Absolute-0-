@@ -1,13 +1,15 @@
+language: node_js
 sudo: false
-langauge: node_js
 node_js:
-  -0.12.0
-  -4
-  -6
-branches:
-  only:
-  - master
+  - "4.1"
+  - "4.0"
+  - "0.12"
+  - "0.11"
+  - "0.10"
+  - "iojs"
+install:
+  - npm install
 notifications:
-email: false
+  email: false
 script:
-- npm test
+  - npm test
