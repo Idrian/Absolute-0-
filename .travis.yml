@@ -9,3 +9,5 @@ branches:
   - master
 notifications:
 email: false
+script:
+- bundle exec rake build
