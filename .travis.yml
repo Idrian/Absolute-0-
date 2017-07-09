@@ -9,4 +9,6 @@ branches:
   - master
 notifications:
 email: false
+script:
+- npm run validate
 
