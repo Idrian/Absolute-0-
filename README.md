@@ -1,6 +1,6 @@
-[![Stories in Ready](https://badge.waffle.io/Idrian/Absolute-0-.png?label=ready&title=Ready)](https://waffle.io/Idrian/Absolute-0-?utm_source=badge)
+# Waffle [![Stories in Ready](https://badge.waffle.io/Idrian/Absolute-0-.png?label=ready&title=Ready)](https://waffle.io/Idrian/Absolute-0-?utm_source=badge)
 
-#Travis build status [![Build Status](https://travis-ci.org/Idrian/Absolute-0-.svg?branch=master)](https://travis-ci.org/Idrian/Absolute-0-)
+# Travis build status [![Build Status](https://travis-ci.org/Idrian/Absolute-0-.svg?branch=master)](https://travis-ci.org/Idrian/Absolute-0-)
 
 [Library Main Page](https://idrian.github.io/Absolute-0-/)
 
