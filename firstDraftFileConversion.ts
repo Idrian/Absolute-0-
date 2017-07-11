@@ -34,9 +34,9 @@
         var me = this;
 
         //used to upload a file, temp solution to file retrieval
-        this.element.innerHTML += "<input type='file' id='thisFile'></input></br>";
-        this.element.innerHTML += "<div style='color:blue' id='check'>hello</div>";
-        this.element.innerHTML += "<div style='color:blue' id='display'>Bang</div>";
+        //this.element.innerHTML += "<input type='file' id='thisFile'></input></br>";
+        //this.element.innerHTML += "<div style='color:blue' id='check'>hello</div>";
+        //this.element.innerHTML += "<div style='color:blue' id='display'>Bang</div>";
 
         //function gets called when file is uploaded
         document.getElementById("thisFile").onchange = function () {
@@ -126,26 +126,26 @@
                 //    alert(me.matrix[x]);
                 //alert("in before " + me.largestZ);
                 me.buildMatrix();
-                document.getElementById("display").innerHTML = "Wow";
-                //alert("in " + me.largestX);
+                //document.getElementById("display").innerHTML = "Wow";
+                ////alert("in " + me.largestX);
 
-                var dis = "";
-                for (var x = 0; x <= me.largestX - me.lowX; x++) {
-                    dis += "<table>";
-                    for (var y = 0; y <= me.largestY - me.lowY; y++) {
-                        dis += "<tr>";
-                        for (var z = 0; z <= me.largestZ - me.lowZ; z++) {
-                            var col = "blue";
-                            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
-                                col = "red";
-                            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
-                        }
-                        dis += "</tr>";
-                    }
-                    dis += "</table></br>";
-                }
-                alert(dis);
-                document.getElementById("display").innerHTML = dis;
+                //var dis = "";
+                //for (var x = 0; x <= me.largestX - me.lowX; x++) {
+                //    dis += "<table>";
+                //    for (var y = 0; y <= me.largestY - me.lowY; y++) {
+                //        dis += "<tr>";
+                //        for (var z = 0; z <= me.largestZ - me.lowZ; z++) {
+                //            var col = "blue";
+                //            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
+                //                col = "red";
+                //            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
+                //        }
+                //        dis += "</tr>";
+                //    }
+                //    dis += "</table></br>";
+                //}
+                //alert(dis);
+                //document.getElementById("display").innerHTML = dis;
             };
             reader.readAsText(file);
         };
@@ -395,7 +395,7 @@
     //checks for multiple x/y/z changes
     justOne(fx, sx, fy, sy, fz, sz): boolean {
 
-        alert("JustOne = " + fx + "/" + fy + "/" + fz + " " + sx + "/" + sy + "/ " + sz);
+        //alert("JustOne = " + fx + "/" + fy + "/" + fz + " " + sx + "/" + sy + "/ " + sz);
         var check = 0;
         if (fx + 1 == sx || fx - 1 == sx)
             check++;
@@ -588,13 +588,13 @@
 
                     if (put == true) {
                         this.finalMatrix[x][y][z] = this.getTexString(short[x][y][z], short[x][y][z + 1], short[x + 1][y][z], short[x + 1][y][z + 1], short[x][y + 1][z], short[x][y + 1][z + 1], short[x + 1][y + 1][z], short[x + 1][y + 1][z + 1]);
-                        alert("Placed: " + this.getTexString(short[x][y][z], short[x][y][z + 1], short[x + 1][y][z], short[x + 1][y][z + 1], short[x][y + 1][z], short[x][y + 1][z + 1], short[x + 1][y + 1][z], short[x + 1][y + 1][z + 1]) + " in x:" + x + " y:" + y + " z:" + z);
+                        //alert("Placed: " + this.getTexString(short[x][y][z], short[x][y][z + 1], short[x + 1][y][z], short[x + 1][y][z + 1], short[x][y + 1][z], short[x][y + 1][z + 1], short[x + 1][y + 1][z], short[x + 1][y + 1][z + 1]) + " in x:" + x + " y:" + y + " z:" + z);
                     }
                     //alert("success: " + put);
                 }//end third layer
             }//end second layer
         }//end first layer
-        alert("leaving");
+        //alert("leaving");
         //for (var x = 0; x <= this.largestX - this.lowX; x++)
         //    alert(this.finalMatrix[x]);     
     }
@@ -756,7 +756,7 @@
             count++;
             //alert("Flag is " + flag + " count " + count + " length " + this.GvtArray.length);
         } while (!flag && count < this.GvtArray.length)
-        alert("Done " + this.GvtArray[count - 1]);
+        //alert("Done " + this.GvtArray[count - 1]);
         return this.GvtArray[count - 1];
     }
 
