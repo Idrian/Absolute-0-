@@ -404,7 +404,7 @@
         if (fz + 1 == sz || fz - 1 == sz)
             check++;
 
-        alert("check = " + check);
+        //alert("check = " + check);
         if (check == 1)
             return true;
         return false;
