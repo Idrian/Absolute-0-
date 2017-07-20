@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { objToThree } from './objToThree';
+import { ObjToThree } from './objToThree';
 class voxJSCanvas {
     constructor(containerID) {
         // Create the renderer, in this case using WebGL, we want an alpha channel
@@ -63,12 +63,14 @@ window.onload = () => {
     // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
     let converterOne_model;
-    let objToThree_converter = new objToThree();
+    let objToThree_converter = new ObjToThree();
     //hard coded a obj file for testing
     let objTest = 'example-models/chr_gumi.obj';
-    // converterOne_model = objToThree_converter.convert(objTest)
+    //objToThree_converter.convert();
+    var hex = objToThree_converter.color;
+    console.log("main hex: " + hex);
     var geometry = new THREE.BoxGeometry(5, 5, 5);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var material = new THREE.MeshBasicMaterial({ color: 0x0033ff });
     converterOne_model = new THREE.Mesh(geometry, material);
     converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.CameraPosition(0, 0, -20);
