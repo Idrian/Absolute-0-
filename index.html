@@ -3,29 +3,32 @@
     <head>
         <title>voxc.js</title>
         <link rel="icon" href="resources/images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.css">
         <script src="https://use.fontawesome.com/727ae44ffb.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
         <script src="js/monokai.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/mode-json.js" type="text/javascript" charset="utf-8"></script>
-         <!-- voxc.js required scripts -->
-        <script src="build/js/voxc.min.js" type="text/javascript" charset="utf-8"></script> 
-        <script src="three.js-master/build/three.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css"/>
+         <!-- voxc.js required scripts -->
+        <script src="build/js/voxc.min.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="three.js-master/build/three.js" type="text/javascript" charset="utf-8"></script>
     </head>
-    <body class="main">
-        <nav class="navbar navbar-inverse">
+    <body class="main" id="bodySection">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">voxc.js</a>
+                    <a class="navbar-brand" href="#bodySection">voxc.js</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Demo</a></li>
+                    <li><a href="#demoSection">Demo</a></li>
                     <li><a href="#aboutSection">About</a></li>
-                    <li><a href="#">Usage</a></li>
+                    <li><a href="#usageSection">Usage</a></li>
                     <li><a href="#">Converter 1</a></li>
                     <li><a href="#">Converter 2</a></li>
                     <li><a href="#">Converter 3</a></li>
@@ -43,14 +46,29 @@
             </div>-->
             
             <img class="voxc-image" src="resources/images/voxc.png"/>
-            <h2 class="main-heading">Demo</h2>
-            <hr class="main-hr"/>
-            <div class="col-sm-12 canvascontainer">
-                <div class="col-sm-4">
-                    <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+            <div class="col-sm-12 canvascontainer" id="demoSection">
+                <div class="row">
+                    <div class="file-upload-container col-sm-4">
+                        <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
+                        <label for="file">Upload a file</label><br>
+                        or
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <canvas id="voxelDemo" width="800" height="400"></canvas>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <canvas id="voxelDemo" width="800" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="row save-buttons">
+                    <div class="col-sm-4">
+                        <a class="upload-edited-file">Save and upload</a>
+                    </div>
+                    <div class="col-sm-8">
+                        <a class="reload-canvas">Reload</a>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -59,10 +77,10 @@
                         <h2 class="section-heading">About</h2>
                         <hr class="norm-hr"/>
                         <p class="section-paragraph">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
                         </p>
                         <p class="section-paragraph">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            The converter in the demo takes a .obj voxel file that is uploaded by the user and firstly converts this file to JavaScript matrixes containing the vertices, edges, faces and normals. The converter then evaluates the matrixes against a JSON rules file either uploaded by the user or typed by the user in the text editor on the demo. The evaluation will consider the color of the voxel cubes and texture them accordingly, the converter will evaluate single colors as well as colors that appear next to each other.
                         </p>
                     </div>
                 </div>
@@ -72,11 +90,22 @@
                     <div class="col-sm-8 col-sm-offset-2">
                         <h2 class="section-heading">Usage</h2>
                         <hr class="norm-hr"/>
+                        <div class="row">
+                            <div class="console-command col-sm-12">
+                                $ npm install voxc.js
+                            </div>
+                        </div>
                         <p class="section-paragraph">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                             
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </p>
+                        <div class="row">
+                            <div class="console-command col-sm-12">
+                                <h4 class="console-command-heading">CDN:</h4>
+                                &lt;script src="https://maxcdn.voxccdn.com/voxcjs/1.0.0/js/voxc.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                            </div>
+                        </div>
                         <pre><code class="language-javascript">this.createWorker = function(session) {
     var worker = new WorkerClient(["ace"], "ace/mode/json_worker", "JsonWorker");
     worker.attachToDocument(session.getDocument());
@@ -105,6 +134,37 @@ if (match) {
                     </div>
                 </div>
             </div>
+            <div class="footer row">
+                <div class="col-sm-1 col-sm-offset-1">
+                    <a href="#"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
+                </div>
+                <div class="col-sm-8">
+                    <div class="footer-links row">
+                        <a class="navlink-footer">Demo</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">About</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Usage</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 1</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 2</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 3</a>
+                    </div>
+                    <div class="footer-brand row">
+                        <div class="col-sm-12">
+                            voxc.js
+                        </div>
+                    </div>
+                    <div class="footer-author row">
+                        Team Absolute|0| @ 2017
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    Waffle.io icon
+                </div>
+            </div>
         </div>
         <script>
             var editor = ace.edit("editor");
@@ -113,5 +173,46 @@ if (match) {
             editor.session.setMode(new JSONMode());
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+        <script>
+            /* Canvas mock text */
+            var ParticlerExample = new Particler("voxelDemo",{
+                quantity: 15,
+                lineWidth: 0.05,
+                fillColor: "white",
+                minSize: 1,
+                maxSize: 5,
+                minimalLineLength: 250,
+                speed: 20,
+                frameDuration: 15,
+                backgroundColor: '#222'
+            });
+
+            /* Smooth Scroll */
+            $(document).ready(function(){
+                $('a[href^="#"]').on('click',function (e) {
+                    e.preventDefault();
+
+                    var target = this.hash,
+                    $target = $(target);
+
+                    $('html, body').stop().animate({
+                        'scrollTop': $target.offset().top-50
+                    }, 700, 'swing', function () {
+                        window.location.hash = target;
+                    });
+                });
+            });
+
+            /* Change navbar active class on click */
+            $(".nav li").on("click", function() {
+                $(".nav li").removeClass("active");
+                $(this).addClass("active");
+            });
+            
+            /* Reset active class on brand click */
+            $(".navbar-brand").on("click", function(){
+                $(".nav li").removeClass("active");
+            })
+        </script>
     </body>
 </html>

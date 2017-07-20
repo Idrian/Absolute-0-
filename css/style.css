@@ -1,6 +1,10 @@
 body.main{
-    background-color: #efefef;
+    padding-top: 120px;
+    background-color: #222;
     font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    padding-bottom: 50px;
+    height: 100%;
 }
 
 a{
@@ -114,6 +118,7 @@ a{
 
 .section{
     background-color: #fefefe;
+    padding-bottom: 50px;
 }
 
 .voxc-image{
@@ -124,13 +129,13 @@ a{
 }
 
 #voxelDemo{
-    background-color: #fefefe;
-    border: 2px solid #222;
+    background-color: #222;
 }
 
 .canvascontainer{
-    padding-top: 60px;
+    padding-top: 40px;
     padding-bottom: 60px;
+    background-color: #fefefe;
 }
 
 #editor {
@@ -172,5 +177,130 @@ a{
     background: #222;
 }
 
+.input-file-hidden{
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.input-file-hidden + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #222;
+    background-color: #86DCEF;
+    display: inline-block;
+    padding: 8px 20px 8px 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.input-file-hidden:focus + label,
+.input-file-hidden + label:hover {
+    background-color: #29badb;
+    color: #fefefe;
+}
+
+.file-upload-container{
+    margin-bottom: 10px;
+}
+
+.console-command{
+    padding: 15px 15px 15px 15px;
+    background-color: #efefef;
+    color: #333;
+    font-family: 'Inconsolata', monospace;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    overflow: scroll;
+
+}
+
+.console-command-heading{
+    font-size: 20px;
+    text-align: center;
+}
+
+.upload-edited-file{
+    padding: 15px;
+    background-color: #33ed1e;
+    color: white;
+    transition: all 0.3s;
+    cursor: pointer;
+    
+}
+
+.upload-edited-file:hover{
+    color: white;
+    background-color: #15af03;
+    text-decoration: none;
+}
+
+.save-buttons{
+    margin-top: 30px;
+}
+
+.reload-canvas{
+    padding: 15px 30px 15px 30px;
+    background-color: #86DCEF;
+    color: #222;
+    transition: all 0.3s;
+    cursor: pointer;
+    
+}
+
+.reload-canvas:hover{
+    color: white;
+    background-color: #29badb;
+    text-decoration: none;
+}
+
+.footer{
+    margin-top: 80px;
+    height: 200px;
+    background-color: #86DCEF;
+}
+
+.navlink-footer{
+    color: #222;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.navlink-footer:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.footer-links{
+    padding-top: 30px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer-brand{
+    margin-top: 20px;
+    font-size: 50px;
+    font-family: 'Overpass', sans-serif;
+    color: black;
+}
+
+.footer-author{
+    font-weight: 100;
+    font-size: 12px;
+    color: #333;
+    position: relative;
+    bottom: -25px;
+}
+
+.footer-icon{
+    margin-top: 40px;
+    color: #222;
+    font-size: 120px;
+}
 
 
