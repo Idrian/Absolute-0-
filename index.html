@@ -2,10 +2,216 @@
 <html>
     <head>
         <title>voxc.js</title>
+        <link rel="icon" href="resources/images/favicon.png">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.css">
+        <script src="https://use.fontawesome.com/727ae44ffb.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+        <script src="js/monokai.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/mode-json.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css"/>
+        <!-- Mock canvas demo, remove later -->
+        <script src="js/particler.min.js"></script>
     </head>
-    <body class="main">
-        <h1 id="tempheading">Future web interface for the voxc.js library</h1>
+    <body class="main" id="bodySection">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#bodySection">voxc.js</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#demoSection">Demo</a></li>
+                    <li><a href="#aboutSection">About</a></li>
+                    <li><a href="#usageSection">Usage</a></li>
+                    <li><a href="#">Converter 1</a></li>
+                    <li><a href="#">Converter 2</a></li>
+                    <li><a href="#">Converter 3</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-sm-12 body">
+            <!-- <div class="nav-brand">
+                <div class="col-sm-offset-5 col-sm-1">
+                    <a target="_blank" href="https://github.com/Idrian/Absolute-0-"><span id="wafflelink" class="fa fa-github"></span></a>
+                </div>
+                <div class="col-sm-1">
+                    <a target="_blank" href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge"><img height="25" width="25" src="https://dl.dropbox.com/s/oy8z8t69vyhgihk/wafflelogo.png?dl=0"/></a>
+                </div>
+            </div>-->
+            
+            <img class="voxc-image" src="resources/images/voxc.png"/>
+            <div class="col-sm-12 canvascontainer" id="demoSection">
+                <div class="row">
+                    <div class="file-upload-container col-sm-4">
+                        <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
+                        <label for="file">Upload a file</label><br>
+                        or
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <canvas id="voxelDemo" width="800" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="row save-buttons">
+                    <div class="col-sm-4">
+                        <a class="upload-edited-file">Save and upload</a>
+                    </div>
+                    <div class="col-sm-8">
+                        <a class="reload-canvas">Reload</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="aboutSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">About</h2>
+                        <hr class="norm-hr"/>
+                        <p class="section-paragraph">
+                            Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
+                        </p>
+                        <p class="section-paragraph">
+                            The converter in the demo takes a .obj voxel file that is uploaded by the user and firstly converts this file to JavaScript matrixes containing the vertices, edges, faces and normals. The converter then evaluates the matrixes against a JSON rules file either uploaded by the user or typed by the user in the text editor on the demo. The evaluation will consider the color of the voxel cubes and texture them accordingly, the converter will evaluate single colors as well as colors that appear next to each other.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="usageSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">Usage</h2>
+                        <hr class="norm-hr"/>
+                        <div class="row">
+                            <div class="console-command col-sm-12">
+                                $ npm install voxc.js
+                            </div>
+                        </div>
+                        <p class="section-paragraph">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                        <div class="row">
+                            <div class="console-command col-sm-12">
+                                <h4 class="console-command-heading">CDN:</h4>
+                                &lt;script src="https://maxcdn.voxccdn.com/voxcjs/1.0.0/js/voxc.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                            </div>
+                        </div>
+                        <pre><code class="language-javascript">this.createWorker = function(session) {
+    var worker = new WorkerClient(["ace"], "ace/mode/json_worker", "JsonWorker");
+    worker.attachToDocument(session.getDocument());
+
+    worker.on("annotate", function(e) {
+        session.setAnnotations(e.data);
+    });
+
+    worker.on("terminate", function() {
+        session.clearAnnotations();
+    });
+
+    return worker;
+};
+                        </code></pre>
+                        <pre><code class="language-javascript">var match = line.match(this.foldingStopMarker);
+if (match) {
+    var i = match.index + match[0].length;
+
+    if (match[1])
+        return this.closingBracketBlock(session, match[1], row, i);
+
+    return session.getCommentFoldRange(row, i, -1);
+}
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="footer row">
+                <div class="col-sm-1 col-sm-offset-1">
+                    <a href="#"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
+                </div>
+                <div class="col-sm-8">
+                    <div class="footer-links row">
+                        <a class="navlink-footer">Demo</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">About</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Usage</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 1</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 2</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 3</a>
+                    </div>
+                    <div class="footer-brand row">
+                        <div class="col-sm-12">
+                            voxc.js
+                        </div>
+                    </div>
+                    <div class="footer-author row">
+                        Team Absolute|0| @ 2017
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    Waffle.io icon
+                </div>
+            </div>
+        </div>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            var JSONMode = ace.require("ace/mode/json").Mode;
+            editor.session.setMode(new JSONMode());
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+        <script>
+            /* Canvas mock text */
+            var ParticlerExample = new Particler("voxelDemo",{
+                quantity: 15,
+                lineWidth: 0.05,
+                fillColor: "white",
+                minSize: 1,
+                maxSize: 5,
+                minimalLineLength: 250,
+                speed: 20,
+                frameDuration: 15,
+                backgroundColor: '#222'
+            });
+
+            /* Smooth Scroll */
+            $(document).ready(function(){
+                $('a[href^="#"]').on('click',function (e) {
+                    e.preventDefault();
+
+                    var target = this.hash,
+                    $target = $(target);
+
+                    $('html, body').stop().animate({
+                        'scrollTop': $target.offset().top-50
+                    }, 700, 'swing', function () {
+                        window.location.hash = target;
+                    });
+                });
+            });
+
+            /* Change navbar active class on click */
+            $(".nav li").on("click", function() {
+                $(".nav li").removeClass("active");
+                $(this).addClass("active");
+            });
+            
+            /* Reset active class on brand click */
+            $(".navbar-brand").on("click", function(){
+                $(".nav li").removeClass("active");
+            })
+        </script>
     </body>
 </html>
