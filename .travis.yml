@@ -5,7 +5,7 @@ node_js:
   - 4
   - 6
  install:
-  - npm build/install
+  - npm install
 notifications:
   email: false
 script:
