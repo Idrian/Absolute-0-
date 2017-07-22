@@ -2,7 +2,7 @@
   "name": "absolute-0-",
   "version": "1.0.0",
   "description": "",
-  "main": "my.conf.js",
+  "main": "build/main.js",
   "directories": {
     "test": "tests"
   },
