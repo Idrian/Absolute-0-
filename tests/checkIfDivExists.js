@@ -1,15 +1,14 @@
-describe('Hello world', function () {
+it('is a test of run()', function () {
 
-  beforeEach(function () {
-    this.addMatchers({
-      toBeDivisibleByTwo: function () {
-        return (this.actual % 2) === 0;
-      }
+    runs(function () {
+        var foo = 1;
+        expect(foo).toEqual(1);
     });
-  });
 
-  it('is divisible by 2', function () {
-    expect(gimmeANumber()).toBeDivisibleByTwo();
-  });
+    runs(function () {
+        var bar = 2;
+        bar ++;
+        expect(bar).toEqual(3);
+    });
 
 });
