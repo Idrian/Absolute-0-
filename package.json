@@ -1,0 +1,28 @@
+{
+  "name": "absolute-0-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "my.conf.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "karma": "^1.7.0",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-jasmine": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Idrian/Absolute-0-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Idrian/Absolute-0-/issues"
+  },
+  "homepage": "https://github.com/Idrian/Absolute-0-#readme"
+}
