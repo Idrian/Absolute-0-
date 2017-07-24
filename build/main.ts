@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import {ObjToThree} from './objToThree';
+import {ArrayToMesh} from './ArrayToMesh';
 
 class voxJSCanvas
 {
-    private scene : THREE.Scene;
+    public scene : THREE.Scene;
     private camera : THREE.Camera;
     private renderer : THREE.WebGLRenderer;
     private voxel : THREE.Mesh;
@@ -18,7 +19,7 @@ class voxJSCanvas
         let containerWidth : number = 800; 
         let containerHeight : number = 400;
         this.renderer.setSize(containerWidth,containerHeight);
-        this.renderer.setClearColor(0xFFFFFF,1);
+        this.renderer.setClearColor(0x000000,1);
 
         // Bind the renderer to the HTML, parenting it to our 'container' DIV
         container.appendChild(this.renderer.domElement);
@@ -83,6 +84,9 @@ class voxJSCanvas
 
 		this.voxel.rotation.y += 0.01;
 
+       // var axis = new THREE.Vector3(0,0,0);
+
+       // this.camera.rotateOnAxis(axis,0.05);
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -115,14 +119,74 @@ window.onload = () => {
 
    console.log("main hex: "+hex);
 
-    var geometry = new THREE.BoxGeometry( 5, 5, 5 );
+   /* var geometry = new THREE.BoxGeometry( 5, 5, 5 );
 
 	var material = new THREE.MeshBasicMaterial( { color: 0x0033ff } );
 
      converterOne_model = new THREE.Mesh( geometry, material );
 
     converterOne_canvas.setMesh(converterOne_model);
-    converterOne_canvas.CameraPosition(0,0,-20);
+    */
+
+    var model : number[][][] = new Array<Array<Array<number>>>();
+
+    for(var i=0;i<5;i++)
+        {
+            model.push(new Array());
+            for(var j=0;j<5;j++)
+                {
+                    model[i].push(new Array());
+                    for(var k=0;k<5;k++)
+                        {
+                            model[i][j].push(0x000000);
+                        }
+                }
+        }
+
+        for(var i=0;i<5;i++)
+        {
+            model[2][i][2] = 0x664611;
+        }
+
+        for(var k=3;k<5;k++)
+        {
+
+            for(var i=k-3;i<8-k;i++)
+            {
+                
+                for(var j=k-3;j<8-k;j++)
+                {
+                    
+                    if(i == 2 && j==2) 
+                        {
+                            if(k == 4)
+                                {
+                                    model[i][k][j] = 0x00ff00;
+                                }
+                                else{
+                                    model[2][k][2] = 0x664611;
+                                }
+                            
+                        }
+                        else{
+                            if(k == 3)
+                                {
+                                    model[i][k][j] = 0x00ff00;
+                                }
+                            else{
+                                model[i][k][j] = 0x00ff00;
+                            }
+                        }
+                }
+            }
+        }
+    console.log(model);
+
+    var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model)
+
+    converterOne_model = arrayToMesh.output();
+    converterOne_canvas.CameraPosition(0,0,-10);
+    converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.start();
     
 };
