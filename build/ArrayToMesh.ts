@@ -29,7 +29,7 @@ export class ArrayToMesh
 
                                 let material = new THREE.MeshBasicMaterial( { color: this.theArray[x][y][z] } );
                                 material.wireframe = true;
-                                if(this.theArray[x][y][z] == 0x000000)
+                                if(this.theArray[x][y][z] == null)
                                     {
                                     
                                     }

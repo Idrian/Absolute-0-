@@ -138,7 +138,7 @@ window.onload = () => {
                     model[i].push(new Array());
                     for(var k=0;k<5;k++)
                         {
-                            model[i][j].push(0x000000);
+                            model[i][j].push(null);
                         }
                 }
         }
