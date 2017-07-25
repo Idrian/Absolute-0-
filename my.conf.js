@@ -15,8 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+<<<<<<< HEAD
       'build/helloworld.js',
       'tests/*.js'
+=======
+      'build/helloworld.js , tests/*.js'
+>>>>>>> origin/feature-file-conversion
     ],
 
 
