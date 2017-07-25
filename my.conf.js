@@ -1,11 +1,11 @@
 // Karma configuration
-// Generated on Sat Jul 22 2017 11:56:36 GMT+0200 (South Africa Standard Time)
+// Generated on Tue Jul 25 2017 15:35:23 GMT+0200 (South Africa Standard Time)
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: './',
+    basePath: '',
 
 
     // frameworks to use
@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'tests/*.js'
+      'build/*.js , tests/*.js'
     ],
 
 
