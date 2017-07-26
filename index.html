@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/style.css"/>
          <!-- voxc.js required scripts -->
         <script src="build/js/voxc.min.js" type="text/javascript" charset="utf-8"></script> 
-        <script src="three.js-master/build/three.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body class="main" id="bodySection">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -60,6 +60,9 @@
                     </div>
                     <div class="col-sm-6 col-sm-offset-1">
                         <div id="voxelDemo"></div>
+                        <div class="col-sm-8">
+                            <div id="voxelDemo" width="800" height="400"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row save-buttons">
@@ -165,7 +168,6 @@ if (match) {
                     <a href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge" target="_blank"><img class="waffle-icon" height="100px" width="100px" src="resources/images/waffle.png"/></a>
                 </div>
             </div>
-        </div>
         <script>
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
@@ -174,7 +176,7 @@ if (match) {
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
         <script>
-            /* Smooth Scroll */
+            //Smooth Scroll
             $(document).ready(function(){
                 $('a[href^="#"]').on('click',function (e) {
                     e.preventDefault();
@@ -190,13 +192,13 @@ if (match) {
                 });
             });
 
-            /* Change navbar active class on click */
+            //Change navbar active class on click
             $(".nav li").on("click", function() {
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");
             });
             
-            /* Reset active class on brand click */
+            Reset active class on brand click
             $(".navbar-brand").on("click", function(){
                 $(".nav li").removeClass("active");
             })
