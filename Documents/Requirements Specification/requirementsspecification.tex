@@ -17,18 +17,18 @@
 \usepackage{color}
 
 
-\graphicspath{{Pictures/}}
+\graphicspath{{../Pictures/}}
 
 
 \begin{document}
 	
 	
 	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{teamphoto.jpg}
+		\includegraphics[width=\linewidth]{Team/teamphoto.jpg}
 	\end{figure}
 
 	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{teamtitle.jpg}
+		\includegraphics[width=\linewidth]{Team/teamtitle.jpg}
 	\end{figure}
 
 	\begin{figure}[H]
@@ -36,7 +36,7 @@
 	\end{figure}
 
 	\begin{figure}[H]
-		\includegraphics[width=\linewidth]{teamtable.jpg}
+		\includegraphics[width=\linewidth]{Team/teamtable.jpg}
 	\end{figure}
 	
 	\pagenumbering{gobble}
@@ -85,7 +85,7 @@
 		\subsection{User Interfaces}
 		The users should be able to interface with voxc.js through our web interface that will be hosted on Github Pages. They will mainly be using a laptop or a desktop to interface with the library. However the library itself should be able to interface with any website on any device with a web browser that has support for WebGL.
 		\\\\
-		This library should not require user profiles as their voxel objects are stored locally on browser storage and manipulated by the library. This implies that the user should only be led to one screen where they will be allowed to upload a voxel object file and a rules file if they choose to do so.
+		The end users should thus be able to use the library for any webinterface they program that allows for the use of WebGL.
 		
 		\subsection{Software Interfaces}
 		The system should incorporate several different languages in order to function. For the rules file, JSON objects should be 
@@ -94,47 +94,109 @@
 		MagicVoxel should be used for the creation and manipulation of voxel objects. The library should be able to handle the .obj filetype for the voxel objects.
 		\\\\
 	 	The library should use TypeScript as the JavaScript variant to enable future developers and current developers to debug easier. The library should run on all major internet browsers that support WebGL.
+	 	\\\\
+	 	The library should be compiled together using webpack, as to allow end users to simply download a single Javascript file for use in their own projects.
 		
 		\subsection{Communications Interfaces}
 		HTTP will be used to handle GET and POST requests and FTP will be used for file uploads and downloads.
+		\\\\
+		Due to the way Chrome handles the loading of local files it should be made clear to the user that in order to run anything locally that they would need to make use of some sort of server such as a node server or even xampp.
 	\pagebreak
 	
+	
+	\section{System Requirements}
+	\begin{tabular}{||c | c||} 
+		\hline
+		Requirement ID & Requirement description \\ [0.5ex] 
+		\hline\hline
+		R1 & User should be able to upload their files from the webinterface \\ 
+		\hline
+		R1.1 & User uploads valid .obj, png and rule file \\ 
+		\hline
+		R1.2 & User uploads valid .obj and rule file. Should default png \\
+		\hline
+		R1.3 & User uploads valid .obj and png. Should default rule file \\
+		\hline
+		R1.4 & User uploads valid .obj. Should default png and rule file \\
+		\hline
+		R1.5 & User uploads valid js arrays \\
+		\hline
+		R1.6 & User uploads valid 3D matrix \\
+		\hline
+		R1.7 & User uploads valid array of images \\
+		\hline
+		R2 & Should be able to convert .obj to JSONMAtrix \\ 
+		\hline
+		R3 & Should be able to convert array of images to JSONMAtrix \\ 
+		\hline
+		R4 & Should be able to convert JSONMAtrix to Three-js mesh \\ 
+		\hline
+		R4.1 & Should be able to create visual 3D-matrix \\ 
+		\hline
+		R4.2 & Should be able to apply rule file \\ 
+		\hline
+		R4.2.1 & Should apply textures and change matrix according to rule file \\ 
+		\hline
+		R4.2.2 & Should be able to apply rule file with use of cellular-automata\\ 
+		\hline
+		R5 & Should be able to convert Three-js mesh into .obj\\ 
+		\hline
+		R5.1 & Converted .obj should be exportable/downloadable\\ 
+		\hline
+		R5.2 & Should contain all textures for ease of use\\ 
+		\hline	
+	\end{tabular}
+	
+		\pagebreak
 	\section{System Features}		
-		\subsection{File upload with rules feature}
-		\begin{figure}[h]
-			\includegraphics[width=\textwidth]{rules.jpg}
-			\caption{Use Case Diagram for User upload with rules }
-		\end{figure}
+		\subsection{File upload}
 
 			 \subsubsection{Description and Priority}
-			 	This feature is of high priority since the user will not be able to have their exported file if they can not use the upload feature. The penalty would be a 9 out of 10. The systems response is also critical because if no textures are provided then the program fails to do what it is meant to do.
+			 	This feature will be needed for the webinterface, but is not required, thus it has a low priority. The feature will get user input in the form of a file upload, the feature should be able to determine what file is being uploaded and then through use of a strategy method determine the most valid course of action, i.e. selection of the 1st converter.
+			 	
+			 	\subsection{OBJ file upload with rules file}
+			 	\begin{figure}[h]
+			 		\includegraphics[width=\textwidth]{Use Cases/rules.jpg}
+			 		\caption{Use Case Diagram for User upload with rules }
+			 	\end{figure}
 			 \subsubsection{Stimulus/Response Sequences}
 			 	Stimulus: The user uploads his file with the rules file included.\\
 			 	Response sequences: The system responds by using the files the user uploaded to extract them.\\\\
-			 	 The system then uses the user rule file to provide the textures. Next the system responds by displaying the mesh with three.js and then providing the user with the option to download it. 
-			 \subsubsection{Functional Requirements}
-			 	REQ-1: The user needs to be able to upload a file with rules.\\
-			 	REQ-2: The system must be able to export the files from the users upload.\\
-			 	REQ-3: The system has to provide the textures based on the users rule file.\\
-			 	REQ-4: The system needs to display the mesh with three.js.\\
-			 	REQ-5: The system must provide the functionality to download the mesh.\\
+			 	 The system then determines the appropriate 1st converter and also provides the later converters with the uploaded rule file.
+			 	 
 			 \subsection{File upload without rules feature}
 				\begin{figure}[h]
-					\includegraphics[width=\textwidth]{norules.jpg}
+					\includegraphics[width=\textwidth]{Use Cases/norules.jpg}
 					\caption{Use Case Diagram for User upload with rules }
 				\end{figure}
-			 \subsubsection{Description and Priority}
-			 This feature is of high priority since the user will not be able to have their exported file if they can not use the upload feature.It is also of high priority to provide a rule file if none was uploaded otherwise there would be no rules to provide textures for.The penalty would be a 9 out of 10.The systems response is also critical because if no textures are provided then the program fails to do what it is meant to do. 
 			 \subsubsection{Stimulus/Response Sequences}
 			 	Stimulus: The user uploads his file with the rules file excluded.\\
 			 	Response sequences: The system responds by using the files the user uploaded to extract them.\\\\
-			 	 The system then uses a rule file provided by the system to get the textures. Next the system responds by displaying the mesh with three.js and then providing the user with the option to download it. 
-			 \subsubsection{Functional Requirements}
-			 	REQ-1: The user needs to be able to upload a file  without rules.\\
-			 	REQ-2: The system must be able to export the files from the users upload.\\
-			 	REQ-3: The system has to provide a rule file for the textures.\\
-			 	REQ-4: The system needs to display the mesh with three.js.\\
-			 	REQ-5: The system must provide the functionality to download the mesh.\\
+			 	 The system then determines the appropriate 1st converter and also provides the later converters with the default rule file provided by the system. 
+	\pagebreak
+	
+		\subsection{ObjToArray}
+		\subsubsection{Description and Priority}
+			This feature is the first step in the .obj file upload process and is required in order to allow the use of subsequent converters. It is thus of medium-high priority as the user need not upload or use an obj file, but can instead use one of the other initial converters for different file types.\\\\
+			The ObjToArray class should take in and obj file, preferably one created with the use Magicavoxel, that would then convert it into a JSONMatrix array containing the color values of each voxel from the obj.
+			
+	\pagebreak
+		\subsection{ArrayToMesh}
+		\subsubsection{Description and Priority}
+		This feature is an intermediate/bridging converter where the outputs of each initial converter would need to go through in order to apply the rule file and create the new 3D object a.k.a the new mesh. It is beacuse all converters need to go through this converter eventually that it has a very high priotity, because if this converter fails then all other before and after converters would fail as a result.\\\\
+		The converter will start using the outputted JSONMatrix of previous converters as a coordinate system in order to determine where textures and objects should go according to the supplied rule file. 
+		
+	\pagebreak
+	\subsection{MeshToObj}
+	\subsubsection{Description and Priority}
+	This feature provides one of the end products of the converter pipeline and is optional to the end user, but is asked for by the client. It thus has a medium priority as most end users would probably ignore this feature, but because the client wants to use it, its priority is elevated.
+	
+	\pagebreak
+	\subsection{IMGsToArray}
+	\subsubsection{Description and Priority}
+	This feature is the first step in the array of images file upload process and is required in order to allow the use of subsequent converters. It is thus of medium-high priority as the user need not upload or use an image array file, but can instead use one of the other initial converters for different file types.\\\\
+	The IMGsToArray class should take in and array of images that would then be converted into a JSONMatrix array containing the color values of each pixel from the array of images.
+	
 	\pagebreak
 	
 	\section{Other Nonfunctional Requirements}
