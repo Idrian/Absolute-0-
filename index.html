@@ -15,8 +15,9 @@
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css"/>
-        <!-- Mock canvas demo, remove later -->
-        <script src="js/particler.min.js"></script>
+         <!-- voxc.js required scripts -->
+        <script src="build/js/voxc.min.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body class="main" id="bodySection">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,7 +45,7 @@
                 </div>
             </div>-->
             
-            <img class="voxc-image" src="resources/images/voxc.png"/>
+            <div class="voxc-image"></div>
             <div class="col-sm-12 canvascontainer" id="demoSection">
                 <div class="row">
                     <div class="file-upload-container col-sm-4">
@@ -57,8 +58,11 @@
                     <div class="col-sm-4">
                         <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
                     </div>
-                    <div class="col-sm-8">
-                        <canvas id="voxelDemo" width="800" height="400"></canvas>
+                    <div class="col-sm-6 col-sm-offset-1">
+                        <div id="voxelDemo"></div>
+                        <div class="col-sm-8">
+                            <div id="voxelDemo" width="800" height="400"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row save-buttons">
@@ -135,7 +139,7 @@ if (match) {
             </div>
             <div class="footer row">
                 <div class="col-sm-1 col-sm-offset-1">
-                    <a href="#"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
+                    <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
                 </div>
                 <div class="col-sm-8">
                     <div class="footer-links row">
@@ -161,10 +165,9 @@ if (match) {
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    Waffle.io icon
+                    <a href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge" target="_blank"><img class="waffle-icon" height="100px" width="100px" src="resources/images/waffle.png"/></a>
                 </div>
             </div>
-        </div>
         <script>
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
@@ -173,20 +176,7 @@ if (match) {
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
         <script>
-            /* Canvas mock text */
-            var ParticlerExample = new Particler("voxelDemo",{
-                quantity: 15,
-                lineWidth: 0.05,
-                fillColor: "white",
-                minSize: 1,
-                maxSize: 5,
-                minimalLineLength: 250,
-                speed: 20,
-                frameDuration: 15,
-                backgroundColor: '#222'
-            });
-
-            /* Smooth Scroll */
+            //Smooth Scroll
             $(document).ready(function(){
                 $('a[href^="#"]').on('click',function (e) {
                     e.preventDefault();
@@ -202,13 +192,13 @@ if (match) {
                 });
             });
 
-            /* Change navbar active class on click */
+            //Change navbar active class on click
             $(".nav li").on("click", function() {
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");
             });
             
-            /* Reset active class on brand click */
+            Reset active class on brand click
             $(".navbar-brand").on("click", function(){
                 $(".nav li").removeClass("active");
             })

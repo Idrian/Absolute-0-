@@ -1,10 +1,8 @@
 body.main{
-    padding-top: 120px;
     background-color: #222;
     font-family: 'Open Sans', sans-serif;
     overflow-x: hidden;
     padding-bottom: 50px;
-    height: 100%;
 }
 
 a{
@@ -122,14 +120,16 @@ a{
 }
 
 .voxc-image{
-    padding: 0;
-    margin: 0;
-    margin-top: -20px;
-    width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../resources/images/voxc.png");
 }
 
 #voxelDemo{
-    background-color: #222;
+    background-color: #fefefe;
 }
 
 .canvascontainer{
@@ -301,6 +301,14 @@ a{
     margin-top: 40px;
     color: #222;
     font-size: 120px;
+}
+
+.navbar{
+    margin: 0;
+}
+
+.waffle-icon{
+    margin-top: 50px;
 }
 
 
