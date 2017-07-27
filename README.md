@@ -79,4 +79,6 @@ Add additional notes about how to deploy this on a live system
 
 This project is open source
 
+[MIT License](https://github.com/Idrian/Absolute-0-/blob/master/LICENSE)
+
 
