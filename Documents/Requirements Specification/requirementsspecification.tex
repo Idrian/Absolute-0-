@@ -59,11 +59,7 @@
 		\subsection{References}
 		
 		\color{blue}
-		\url{http://www.oskarstalberg.com/game/house/Index.html}
-		\newline
-		\\\url{https://voxel.codeplex.com/}
-		\newline
-		\\\url{https://pages.github.com/}
+		\url{https://pages.github.com/}
 		\newline
 		\\\url{http://threejs.org/}
 		\newline
@@ -80,10 +76,28 @@
 		
 	\pagebreak
 	
+	\section{Architectural design}
+	The voxc.js library revolves around different converters achieving different results by manipulating the ouput of other converters in different ways and then again providing their output to other converters.  This whole process imitates a physical pipeline starting from one converter and ending at the last converter.  Therefore we used the Pipeline Software Architecture to guide our structure and our architecture.  The Pipeline Architecture resembles a physical pipeline and consists of a chain of processing elements.  Each of our converters will act as a element in the pipeline, also called a filter in the pipeline.  Each of these filters will use the output of the previous filter and then again provide its output as input to the next filter.\\\\
+	\begin{figure}[h]
+		\includegraphics[width=\textwidth]{/pipeline.jpg}
+		\caption{The voxc.js pipeline structure }
+	\end{figure}
+	One problem with the structure of this architecture is the fact that Converter 3 might want to receive input directly from Converter 1 rather than Converter 2, and therefore an additional architecture is needed to enable the converters or filters to be loosely coupled.  A Microservices Architecture is a perfect solution to the mentioned problem.  By making our services lightweight and fine-grained we can allow the services to be loosely coupled and to be used interchangeably in the pipeline structure.  Another major benefit of the use of this architecture is the fact that it makes the system easier to understand and inheritantly makes it easier to develop and test new features of the library.  This is a major benefit because essentially the voxc.js library is made to be tinkered with and changed to suit ones own needs.\\\\
+	\begin{figure}[h]
+		\includegraphics[width=\textwidth]{/microservicespipeline.jpg}
+		\caption{Pipeline architecture and Microservices architecture combined }
+	\end{figure}
+
+
+	\section{Testing technologies and framework}
+We have incorporated two main technologies to aid us in testing each segment of our Voxel project. These technologies are Jasmine and Karma. Jasmine is an open source testing framework that is installed through the npm using Karma. It is used for unit testing of Javascript functions to ensure that the functions provide the expected output and to ensure that the functions behave as expected. With Jasmine distinct functions will tests various aspects and with the aid of the \textquotedblleft expect\textquotedblright \space statement expected result is compared to the actual results and any mismatch will return a fail. Using Jasmine does require the tester to learn a new form of syntax that is unique to Jasmine.\\\\
+With regards to Karma, it is a testing environment where testers need not worry too much about the smaller details but rather are able to tests and receive rapid results. Karma also keeps a vigilant eye on the different files and when there is a change it sends out a signal to rerun the test code. This ensures that all copies are up to date. Karma also enables the tester to customize the testing experience by specifying what aspects to include and to use, these specifications are saved in a \textquotedblleft my.conf.js\textquotedblright \space file. To run and build the tests we used Travis-CI, Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub. Travis CI automatically detects when a commit has been made and pushed to a GitHub repository that is using Travis CI, and each time this happens, it will try to build the project and run tests.
+
+	
 	\section{External Interface Requirements}
 	
 		\subsection{User Interfaces}
-		The users should be able to interface with voxc.js through our web interface that will be hosted on Github Pages. They will mainly be using a laptop or a desktop to interface with the library. However the library itself should be able to interface with any website on any device with a web browser that has support for WebGL.
+		The users should be able to interface with voxc.js through our web interface [github pages] that will be hosted on Github Pages. They will mainly be using a laptop or a desktop to interface with the library. However the library itself should be able to interface with any website on any device with a web browser that has support for WebGL.
 		\\\\
 		The end users should thus be able to use the library for any webinterface they program that allows for the use of WebGL.
 		
@@ -93,15 +107,16 @@
 		\\\\
 		MagicVoxel should be used for the creation and manipulation of voxel objects. The library should be able to handle the .obj filetype for the voxel objects.
 		\\\\
-	 	The library should use TypeScript as the JavaScript variant to enable future developers and current developers to debug easier. The library should run on all major internet browsers that support WebGL.
+	 	The library should use TypeScript [Typescriptlang.org] as the JavaScript variant to enable future developers and current developers to debug easier. The library should run on all major internet browsers that support WebGL [ES6-features].
 	 	\\\\
-	 	The library should be compiled together using webpack, as to allow end users to simply download a single Javascript file for use in their own projects.
+	 	The library should be compiled together using webpack [typescript-webpack], as to allow end users to simply download a single Javascript file for use in their own projects.
 		
 		\subsection{Communications Interfaces}
 		HTTP will be used to handle GET and POST requests and FTP will be used for file uploads and downloads.
 		\\\\
-		Due to the way Chrome handles the loading of local files it should be made clear to the user that in order to run anything locally that they would need to make use of some sort of server such as a node server or even xampp.
+		Due to the way Chrome handles the loading of local files it should be made clear to the user that in order to run anything locally that they would need to make use of some sort of server such as a node server or even xampp [threejs.org].
 	\pagebreak
+	
 	
 	
 	\section{System Requirements}
@@ -148,15 +163,77 @@
 	\end{tabular}
 	
 		\pagebreak
-	\section{System Features}		
+		
+
+
+
+			\begin{tabular}[left]{| c |m{1.2cm} | m{1.4cm} | m{1.4cm} | m{1.0cm} | m{1.0cm} | m{1.0cm} | m{1.0cm}|} 
+				\hline
+				Requirements ID & File upload & OBJ file upload with rules file & File upload without rules feature & Obj To Array & Array To Mesh & Mesh To Obj & IMGs To Array \\ [0.5ex] 
+				\hline\hline
+				R1 & X &  & X &  &  &  &  \\ 
+				\hline
+				R1.1 & X & X &  &  &  &  &  \\
+				\hline
+				R1.2 & X & X &  &  &  &  &  \\
+				\hline
+				R1.3 & X &  & X &  &  &  &  \\
+				\hline
+				R1.4 & X &  & X &  &  &  &  \\
+				\hline
+				R1.5 & X &  & X &  &  &  &  \\
+				\hline
+				R1.6 & X &  & X &  &  &  &  \\
+				\hline
+				R1.7 & X &  & X &  &  &  &  \\
+				\hline
+				R2 &  &  &  & X &  &  &  \\
+				\hline
+				R3 &  &  &  &  &  &  & X \\
+				\hline
+				R4 &  &  &  &  & X &  &  \\
+				\hline
+				R4.1 &  &  &  &  & X &  &  \\
+				\hline
+				R4.2 &  &  &  &  &  &  &  \\
+				\hline
+				R4.2.1 &  &  &  &  & X &  &  \\
+				\hline
+				R4.2.2 &  &  &  &  & X &  &  \\
+				\hline
+				R5 &  &  &  &  &  & X &  \\
+				\hline
+				R5.1 &  &  &  &  &  & X &  \\
+				\hline
+				R5.2 &  &  &  &  &  & X &  \\
+				\hline
+			\end{tabular}
+	
+	\pagebreak
+	\section{System Features}
+		\subsection{Download of library}
+		\subsubsection{Description and Priority}
+		The end user need to be able to download a single javascript library which they should be able to apply and use in their own webpage. This feature has the highest priority as without it no other set of features will come together and be easliy usable by end users.
+		
+		\begin{figure}[h]
+			\includegraphics[width=\textwidth]{Use Cases/LibraryDownload.jpg}
+			\caption{Use Case Diagram for download of library }
+		\end{figure}
+		\pagebreak	
+			
 		\subsection{File upload}
 
 			 \subsubsection{Description and Priority}
 			 	This feature will be needed for the webinterface, but is not required, thus it has a low priority. The feature will get user input in the form of a file upload, the feature should be able to determine what file is being uploaded and then through use of a strategy method determine the most valid course of action, i.e. selection of the 1st converter.
 			 	
+			 	\begin{figure}[h]
+			 		\includegraphics[width=\textwidth]{Use Cases/FileDownload.jpg}
+			 		\caption{Use Case Diagram for User upload and download of files }
+			 	\end{figure}
+			 	
 			 	\subsection{OBJ file upload with rules file}
 			 	\begin{figure}[h]
-			 		\includegraphics[width=\textwidth]{Use Cases/rules.jpg}
+			 		\includegraphics[width=\textwidth]{Use Cases/Upload with Rule file.jpg}
 			 		\caption{Use Case Diagram for User upload with rules }
 			 	\end{figure}
 			 \subsubsection{Stimulus/Response Sequences}
@@ -166,7 +243,7 @@
 			 	 
 			 \subsection{File upload without rules feature}
 				\begin{figure}[h]
-					\includegraphics[width=\textwidth]{Use Cases/norules.jpg}
+					\includegraphics[width=\textwidth]{Use Cases/NoTexturesNoRules.jpg}
 					\caption{Use Case Diagram for User upload with rules }
 				\end{figure}
 			 \subsubsection{Stimulus/Response Sequences}
@@ -186,6 +263,16 @@
 		This feature is an intermediate/bridging converter where the outputs of each initial converter would need to go through in order to apply the rule file and create the new 3D object a.k.a the new mesh. It is beacuse all converters need to go through this converter eventually that it has a very high priotity, because if this converter fails then all other before and after converters would fail as a result.\\\\
 		The converter will start using the outputted JSONMatrix of previous converters as a coordinate system in order to determine where textures and objects should go according to the supplied rule file. 
 		
+		\begin{figure}[h]
+			\includegraphics[width=\textwidth]{Use Cases/DisplayAndSave.jpg}
+			\caption{Use Case Diagram for display of mesh }
+		\end{figure}
+		
+		\begin{figure}[h]
+			\includegraphics[width=\textwidth]{Use Cases/ApplyRuleFile.jpg}
+			\caption{Use Case Diagram for applying of the rules file }
+		\end{figure}
+		
 	\pagebreak
 	\subsection{MeshToObj}
 	\subsubsection{Description and Priority}
@@ -197,6 +284,11 @@
 	This feature is the first step in the array of images file upload process and is required in order to allow the use of subsequent converters. It is thus of medium-high priority as the user need not upload or use an image array file, but can instead use one of the other initial converters for different file types.\\\\
 	The IMGsToArray class should take in and array of images that would then be converted into a JSONMatrix array containing the color values of each pixel from the array of images.
 	
+	\begin{figure}[h]
+		\includegraphics[width=\textwidth]{Use Cases/FileConversion.jpg}
+		\caption{Use Case Diagram for images and array conversion }
+	\end{figure}
+	
 	\pagebreak
 	
 	\section{Other Nonfunctional Requirements}
@@ -204,12 +296,6 @@
 		\subsection{Performance Requirements}
 		\subsubsection {Time to respond to an uploaded file}
 		A user is required to upload a voxel object to the library and then should be allowed to mainpulate a rules file if they choose to do so or they should be able to use a predefined rules file such that the rules are applied to the object. The library must not delay once a file is uploaded, this means the time it takes to respond to a uploaded file should be proportional to the files size.
-		
-		\subsubsection{Respond to user interaction}
-		The system should respond to user interactions in real time.
-		
-		\subsubsection{Reliability}
-		The system should never cease working completely unless the error is caused by external systems outside our control (operating system, web APIs, etc). Ideally an entire system uptime (per month) of 99.0\% must be reached, meaning that the system should have validation and error checking to prevent unwanted results.
 		
 		\subsubsection{Maintainability}
 		The library's code must be well documented, both by means of in-code comments and external documentation, to aid in 
@@ -224,15 +310,12 @@
 		\\\\
 		Additionally the library should be able to work with any other webpage as a simple imported library, therefore users should be able to alter positions and perhaps even sizes of the dom elements used to upload, download and display the objects.
 		
+		
 		\subsubsection{Usability}
 		The Voxel library should be easy to operate and understand. The core functions of the system shouldn't take the user more 
-		than a minute to access and understand. A user manual should be provided to aid in the use of the library and to explain some advanced functions or settings.
-		
-		\subsection{Security Requirements}
+		than a minute to access and understand. A user manual should be provided to aid in the use of the library and to explain some advanced functions or settings.\\\\
 		This library should be an open source project and so the code will be freely available to anyone visiting the Github repository. The actual web interface hosted on Github will act as a demo of the library and should be protected, the only editing that a user should be able to do is uploading of objects and editing their own rules file.
 		
-		\subsection{Quality Requirements}
-		*Stars for reviewing*
 		
 	\pagebreak
 	
