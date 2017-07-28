@@ -50,7 +50,6 @@ voxc.min.js will display its output in any div with the id of "voxelDemo"
 <div id="voxelDemo"></div>
 ```
 
-Inline-style: 
 ![alt text](https://github.com/Idrian/Absolute-0-/blob/master/resources/images/demo.png "Example output of voxc.js")
 
 
