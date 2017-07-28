@@ -42,9 +42,7 @@ A web browser supporting WebGL
 
 Download latest minified javascript
 
-```
 [voxc.min.js](https://github.com/Idrian/Absolute-0-/blob/master/build/js/voxc.min.js)
-```
 
 voxc.min.js will display its output in any div with the id of "voxelDemo"
 
