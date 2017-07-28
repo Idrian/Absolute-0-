@@ -78,9 +78,12 @@ Give an example
 Add additional notes about how to deploy this on a live system
 
 ## Built With
-voxc.js is built with TypeScript and THREE.js
-voxc.js is tested with Travis and Jasmine
-voxc.js is minified and built with Webpack 3
+
+```
+- voxc.js is built with TypeScript and THREE.js
+- voxc.js is tested with Travis and Jasmine
+- voxc.js is minified and built with Webpack 3
+```
 
 ## License
 
