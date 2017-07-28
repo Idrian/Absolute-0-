@@ -25,29 +25,36 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to use the library and how to use the library
+A web browser supporting WebGL
 
 ```
-Give examples
+- Google Chrome
+- Mozilla Firefox
+- Midori
+- Safari
+- Opera
+- Internet Explorer
+- Microsoft Edge
+- Vivaldi
 ```
 
 ### Usage
 
-A step by step series of examples that tell you have to get a development environment running
-
-Say what the step will be
+Download latest minified javascript
 
 ```
-Give the example
+[voxc.min.js](https://github.com/Idrian/Absolute-0-/blob/master/build/js/voxc.min.js)
 ```
 
-And repeat
+voxc.min.js will display its output in any div with the id of "voxelDemo"
 
 ```
-until finished
+<div id="voxelDemo"></div>
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Inline-style: 
+![alt text](https://github.com/Idrian/Absolute-0-/blob/master/resources/images/demo.png "Example output of voxc.js")
+
 
 ## Running the tests
 
@@ -74,6 +81,9 @@ Give an example
 Add additional notes about how to deploy this on a live system
 
 ## Built With
+voxc.js is built with TypeScript and THREE.js
+voxc.js is tested with Travis and Jasmine
+voxc.js is minified and built with Webpack 3
 
 ## License
 
