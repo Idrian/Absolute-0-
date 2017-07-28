@@ -126,26 +126,26 @@
                 //    alert(me.matrix[x]);
                 //alert("in before " + me.largestZ);
                 me.buildMatrix();
-                //document.getElementById("display").innerHTML = "Wow";
+                document.getElementById("display").innerHTML = "Wow";
                 //alert("in " + me.largestX);
 
-                //var dis = "";
-                //for (var x = 0; x < me.largestX - me.lowX; x++) {
-                //    dis += "<table>";
-                //    for (var y = 0; y < me.largestY - me.lowY; y++) {
-                //        dis += "<tr>";
-                //        for (var z = 0; z < me.largestZ - me.lowZ; z++) {
-                //            var col = "blue";
-                //            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
-                //                col = "red";
-                //            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
-                //        }
-                //        dis += "</tr>";
-                //    }
-                //    dis += "</table></br>";
-                //}
-                //alert(dis);
-                //document.getElementById("display").innerHTML = dis;
+                var dis = "";
+                for (var x = 0; x < me.largestX - me.lowX; x++) {
+                    dis += "<table>";
+                    for (var y = 0; y < me.largestY - me.lowY; y++) {
+                        dis += "<tr>";
+                        for (var z = 0; z < me.largestZ - me.lowZ; z++) {
+                            var col = "blue";
+                            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
+                                col = "red";
+                            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
+                        }
+                        dis += "</tr>";
+                    }
+                    dis += "</table></br>";
+                }
+                alert(dis);
+                document.getElementById("display").innerHTML = dis;
             };
             reader.readAsText(file);
         };
@@ -572,8 +572,50 @@
         //abnormal triangle 2
         if (ox == x1 && ox == x2 && oy != y1 && oy != y2 && oz != z1 && oz != z2) {
             if (y1 == y2) {
-                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + x + "/" + y + "/" + z;
-                this.setVertex(ox, oy, oz);
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + ox + "/" + y1 + "/" + oz;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + ox + "/" + y2 + "/" + oz;
+                this.setVertex(result, true);
+                return;
+            }
+            if (z1 == z2) {
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + ox + "/" + oy + "/" + z1;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + ox + "/" + oy + "/" + z2;
+                this.setVertex(result, true);
+                return;
+            }
+        }
+        if (oy == y1 && oy == y2 && ox != x1 && ox != x2 && oz != z1 && oz != z2) {
+            if (x1 == x2) {
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + x1 + "/" + oy + "/" + oz;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + x2 + "/" + oy + "/" + oz;
+                this.setVertex(result, true);
+                return;
+            }
+            if (z1 == z2) {
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + ox + "/" + oy + "/" + z1;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + ox + "/" + oy + "/" + z2;
+                this.setVertex(result, true);
+                return;
+            }
+        }
+        if (oz == z1 && oz == z2 && oy != y1 && oy != y2 && ox != x1 && ox != x2) {
+            if (y1 == y2) {
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + ox + "/" + y1 + "/" + oz;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + ox + "/" + y2 + "/" + oz;
+                this.setVertex(result, true);
+                return;
+            }
+            if (x1 == x2) {
+                result = ox + "/" + oy + "/" + oz + "/" + x1 + "/" + y1 + "/" + z1 + "/" + x1 + "/" + oy + "/" + oz;
+                this.setVertex(result, true);
+                result = ox + "/" + oy + "/" + oz + "/" + x2 + "/" + y2 + "/" + z2 + "/" + x2 + "/" + oy + "/" + oz;
+                this.setVertex(result, true);
+                return;
             }
         }
         alert("Leaving stupidity checker: " + x1 + "/" + y1 + "/" + z1 + " " + x2 + "/" + y2 + "/" + z2 + " " + ox + "/" + oy + "/" + oz);
@@ -811,25 +853,25 @@
         //for (var x = 0; x <= this.largestX - this.lowZ; x++)
         //    alert("Exists " + short[x]);
 
-        document.getElementById("display").innerHTML = "Wow";
+        //document.getElementById("display").innerHTML = "Wow";
 
-        var dis = "";
-        for (var x = 0; x <= this.largestX - this.lowX; x++) {
-            dis += "<table>";
-            for (var y = 0; y <= this.largestY - this.lowY; y++) {
-                dis += "<tr>";
-                for (var z = 0; z <= this.largestZ - this.lowZ; z++) {
-                    var col = "blue";
-                    if (short[x][y][z] == "")
-                        col = "red";
-                    dis += "<td style='width:50px;height:50px;color:black;border:5px;background-color:" + col + ";'>" + this.matrix[x][y][z] + "</td>";
-                }
-                dis += "</tr>";
-            }
-            dis += "</table></br>";
-        }
-        alert(dis);
-        document.getElementById("display").innerHTML = dis;
+        //var dis = "";
+        //for (var x = 0; x <= this.largestX - this.lowX; x++) {
+        //    dis += "<table>";
+        //    for (var y = 0; y <= this.largestY - this.lowY; y++) {
+        //        dis += "<tr>";
+        //        for (var z = 0; z <= this.largestZ - this.lowZ; z++) {
+        //            var col = "blue";
+        //            if (short[x][y][z] == "")
+        //                col = "red";
+        //            dis += "<td style='width:50px;height:50px;color:black;border:5px;background-color:" + col + ";'>" + this.matrix[x][y][z] + "</td>";
+        //        }
+        //        dis += "</tr>";
+        //    }
+        //    dis += "</table></br>";
+        //}
+        //alert(dis);
+        //document.getElementById("display").innerHTML = dis;
 
         //alert("I'm here " + this.largestX + " " + this.largestY + " " + this.largestZ + " ");
 
@@ -850,11 +892,16 @@
                     isThere[6] = this.isGood(short[x + 1][y + 1][z], 6)
                     isThere[7] = this.isGood(short[x + 1][y + 1][z + 1], 7)
 
+                    var incorrectCounter = 0;
+
                     for (var i = 0; i < 8; i++) {
                         //alert("isThere[" + i + "] = " + isThere[i]);
                         if (isThere[i] == false)
-                            put = false;
+                            incorrectCounter++;
                     }
+
+                    if (incorrectCounter > 3)
+                        put = false;
 
                     if (put == true) {
                         this.finalMatrix[x][y][z] = this.getTexString(short[x][y][z], short[x][y][z + 1], short[x + 1][y][z], short[x + 1][y][z + 1], short[x][y + 1][z], short[x][y + 1][z + 1], short[x + 1][y + 1][z], short[x + 1][y + 1][z + 1]);
