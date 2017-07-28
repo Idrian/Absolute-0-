@@ -3,7 +3,6 @@
     <head>
         <title>voxc.js</title>
         <link rel="icon" href="resources/images/favicon.png">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.css">
@@ -17,7 +16,7 @@
         <link rel="stylesheet" href="css/style.css"/>
          <!-- voxc.js required scripts -->
         <script src="build/js/voxc.min.js" type="text/javascript" charset="utf-8"></script> 
-        <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </head>
     <body class="main" id="bodySection">
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -85,20 +84,19 @@
                     <div class="col-sm-8 col-sm-offset-2">
                         <h2 class="section-heading">Usage</h2>
                         <hr class="norm-hr"/>
-                        <div class="row">
-                            <div class="console-command col-sm-12">
-                                $ npm install voxc.js
-                            </div>
-                        </div>
                         <p class="section-paragraph">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            voxc.js is used by downloading the minified javascript file and including it in your project.
                         </p>
+                        <p class="section-paragraph">
+                            voxc.js will display its output in any div with an id of voxelDemo.
+                        </p>
+                        <div class="console-command col-sm-12">
+                            &lt;div id="voxelDemo">&lt;/div>
+                        </div>
                         <div class="row">
                             <div class="console-command col-sm-12">
-                                <h4 class="console-command-heading">CDN:</h4>
-                                &lt;script src="https://maxcdn.voxccdn.com/voxcjs/1.0.0/js/voxc.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                                <h4 class="console-command-heading">Download Minified Javascript:</h4>
+                                <a href="build/js/voxc.min.js" download>voxc.min.js</a>
                             </div>
                         </div>
                         <pre><code class="language-javascript">this.createWorker = function(session) {
@@ -135,11 +133,11 @@ if (match) {
                 </div>
                 <div class="col-sm-8">
                     <div class="footer-links row">
-                        <a class="navlink-footer">Demo</a>
+                        <a class="navlink-footer" href="#demoSection">Demo</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer">About</a>
+                        <a class="navlink-footer" href="#aboutSection">About</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer">Usage</a>
+                        <a class="navlink-footer" href="#usageSection">Usage</a>
                           &nbsp;&middot;&nbsp;
                         <a class="navlink-footer">Converter 1</a>
                           &nbsp;&middot;&nbsp;
@@ -160,19 +158,12 @@ if (match) {
                     <a href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge" target="_blank"><img class="waffle-icon" height="100px" width="100px" src="resources/images/waffle.png"/></a>
                 </div>
             </div>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            var JSONMode = ace.require("ace/mode/json").Mode;
-            editor.session.setMode(new JSONMode());
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+        </div>
         <script>
             //Smooth Scroll
             $(document).ready(function(){
                 $('a[href^="#"]').on('click',function (e) {
                     e.preventDefault();
-
                     var target = this.hash,
                     $target = $(target);
 
@@ -190,10 +181,17 @@ if (match) {
                 $(this).addClass("active");
             });
             
-            Reset active class on brand click
+            //Reset active class on brand click
             $(".navbar-brand").on("click", function(){
                 $(".nav li").removeClass("active");
             })
         </script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            var JSONMode = ace.require("ace/mode/json").Mode;
+            editor.session.setMode(new JSONMode());
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
     </body>
 </html>
