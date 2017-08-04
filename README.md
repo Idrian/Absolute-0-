@@ -44,7 +44,9 @@ Download latest minified javascript
 
 [voxc.min.js](https://github.com/Idrian/Absolute-0-/blob/master/build/js/voxc.min.js)
 
-voxc.min.js will display its output in any div with the id of "voxelDemo"
+voxc.min.js contains a class called VoxJSCanvas, and by constructing the class with the
+id of any div such as, new VoxJSCanvas("VoxelDemo"), the class will create a THREE.js canvas/scene with
+the required basics to display all our meshes.
 
 ```
 <div id="voxelDemo"></div>
@@ -52,7 +54,9 @@ voxc.min.js will display its output in any div with the id of "voxelDemo"
 
 ![alt text](https://github.com/Idrian/Absolute-0-/blob/master/resources/images/demo.png "Example output of voxc.js")
 
-
+The above shows the output of the ArrayToMesh converter class which can be used by simply inputting an array of hex colour values
+to create the 3D mesh of the array. The converter is used as such, new ArrayToMesh(model) (Where model is the 3D array mentioned above).
+This creates the mesh as seen above and by using, VoxJS_canvas.setMesh(arrayToMesh.output()) the VoxJSCanvas object you created will set the displayed mesh to the outputted mesh from the ArrayToMesh converter.
 ## Running the tests
 
 Explain how to run the automated tests for this system
