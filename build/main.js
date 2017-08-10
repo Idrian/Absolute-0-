@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { ObjToThree } from './objToThree';
 import { ArrayToMesh } from './ArrayToMesh';
-class voxJSCanvas {
+import { RuleApplyer } from './RuleApplyer';
+export class voxJSCanvas {
     constructor(containerID) {
         // Create the renderer, in this case using WebGL, we want an alpha channel
         let container = document.getElementById(containerID);
@@ -20,11 +20,12 @@ class voxJSCanvas {
         // Position is -20 along the Z axis and look at the origin
         this.camera.position.set(0, 0, -20);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        this.scene.add(this.camera);
         // Add the lights
-        let ambientLight = new THREE.AmbientLight(0x111111);
+        let ambientLight = new THREE.AmbientLight(0xFFFFFF);
         this.scene.add(ambientLight);
-        let light = new THREE.PointLight(0xFFFFDD);
-        light.position.set(-15, 10, 15);
+        let light = new THREE.PointLight(0x111111);
+        light.position.set(-10, 10, -10);
         this.scene.add(light);
     }
     CameraPosition(x, y, z) {
@@ -47,6 +48,9 @@ class voxJSCanvas {
         // Add it to the scene and render the scene using the Scene and Camera objects
         this.scene.add(this.voxel);
     }
+    setBackgroundColor(color) {
+        this.renderer.setClearColor(color, 1);
+    }
     render() {
         // Each frame we want to render the scene again
         // Use typescript Arrow notation to retain the thisocity passing render to requestAnimationFrame
@@ -66,12 +70,12 @@ window.onload = () => {
     // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
     let converterOne_model;
-    let objToThree_converter = new ObjToThree();
+    //let objToThree_converter = new ObjToThree();
     //hard coded a obj file for testing
-    let objTest = 'example-models/chr_gumi.obj';
+    // let objTest : string = 'example-models/chr_gumi.obj';
     //objToThree_converter.convert();
-    var hex = objToThree_converter.color;
-    console.log("main hex: " + hex);
+    // var hex = objToThree_converter.color;
+    //console.log("main hex: "+hex);
     /* var geometry = new THREE.BoxGeometry( 5, 5, 5 );
  
      var material = new THREE.MeshBasicMaterial( { color: 0x0033ff } );
@@ -116,8 +120,9 @@ window.onload = () => {
         }
     }
     console.log(model);
-    var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model);
-    converterOne_model = arrayToMesh.output();
+    var arrayToMesh = new ArrayToMesh(model);
+    var ruleApplyer = new RuleApplyer(model);
+    converterOne_model = ruleApplyer.output();
     converterOne_canvas.CameraPosition(0, 0, -10);
     converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.start();

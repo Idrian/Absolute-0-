@@ -3,18 +3,22 @@ import * as THREE from 'three';
 export class ArrayToMesh
 {
     private theArray : number[][][];
-    private theMesh : THREE.Mesh;
+    private theMesh : THREE.Group;
 
-    constructor(scene : THREE.Scene,inputArray : number[][][])
+    constructor(inputArray : number[][][])
     {
         this.theArray = inputArray;
-        var mergedGeometry = new THREE.Geometry();
-        var mergedMaterialArray : THREE.MeshBasicMaterial[] = new Array<THREE.MeshBasicMaterial>();
-        var materialCounter : number = 0;
-         
+        this.theMesh = new THREE.Group();
 
+        /**
+         * These Length variables are used to re-centre the group object as each object
+         * will be placed at the index values of the arrays so we need to push them back
+         * in order to have the centre object be at (or relatively be at) postion 0,0,0
+         */
+        var xLength = Math.floor(inputArray.length/2);
+        var yLength = Math.floor(inputArray[0].length/2);
+        var zLength = Math.floor(inputArray[0][0].length/2);
 
-        
         for(var x=0;x<this.theArray.length;x++)
             {
                 for(var y=0;y<this.theArray[x].length;y++)
@@ -22,10 +26,10 @@ export class ArrayToMesh
                         for(var z=0;z<this.theArray[x][y].length;z++)
                             {
                                 let geometry = new THREE.BoxGeometry( 1, 1, 1 );
-                                for ( let face in geometry.faces ) 
+                               /* for ( let face in geometry.faces ) 
                                 {
                                     geometry.faces[ face ].materialIndex = materialCounter;
-                                }
+                                }*/
 
                                 let material = new THREE.MeshBasicMaterial( { color: this.theArray[x][y][z] } );
                                 material.wireframe = true;
@@ -36,13 +40,9 @@ export class ArrayToMesh
                                 else{
                                      let singleCube = new THREE.Mesh( geometry, material );
 
-                                    singleCube.position.set(-x,y,z);
+                                    singleCube.position.set(-x+xLength,y-yLength,z-zLength);
 
-                                    mergedMaterialArray.push(material);
-                                    // mergedGeometry.merge(geometry, singleCube.matrix ,materialCounter);
-                                    mergedGeometry.mergeMesh(singleCube);
-                                
-                                    materialCounter++;
+                                    this.theMesh.add(singleCube);
                                 }
                                
 
@@ -51,13 +51,11 @@ export class ArrayToMesh
                     }
             }
 
-	    
-        var meshFaceMaterial = new THREE.MeshFaceMaterial( mergedMaterialArray );
-        this.theMesh = new THREE.Mesh( mergedGeometry, meshFaceMaterial );
-        this.theMesh.geometry.center();
+           // console.log((inputArray.length/2),(inputArray[0].length/2),(inputArray[0][0].length/2));
+           // this.theMesh.position.set(-(inputArray.length/2),-(inputArray[0].length/2),-(inputArray[0][0].length/2));
     }
 
-    output() : THREE.Mesh
+    output() : THREE.Group
     {
         return this.theMesh;
     }

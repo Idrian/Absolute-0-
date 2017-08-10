@@ -1,20 +1,23 @@
 import * as THREE from 'three';
 import {ObjToThree} from './objToThree';
 import {ArrayToMesh} from './ArrayToMesh';
+import {RuleApplyer} from './RuleApplyer';
 
-class voxJSCanvas
+
+export class voxJSCanvas
 {
     public scene : THREE.Scene;
     private camera : THREE.Camera;
     private renderer : THREE.WebGLRenderer;
-    private voxel : THREE.Mesh;
+    private voxel : THREE.Group;
+
 
     constructor(containerID : string)
     {
         // Create the renderer, in this case using WebGL, we want an alpha channel
         let container = document.getElementById(containerID);
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
-
+       
         // Set dimensions to containers and background color to white
         let containerWidth : number = 800; 
         let containerHeight : number = 400;
@@ -29,17 +32,19 @@ class voxJSCanvas
 
         // And a camera.  Set Field of View, Near and Far clipping planes
         this.camera = new THREE.PerspectiveCamera(45, containerWidth/containerHeight, 0.1, 1000);
-
+    
         // Position is -20 along the Z axis and look at the origin
         this.camera.position.set(0,0,-20);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
 
+        this.scene.add(this.camera);
+
          // Add the lights
-        let ambientLight = new THREE.AmbientLight(0x111111);
+        let ambientLight = new THREE.AmbientLight(0xFFFFFF);
         this.scene.add(ambientLight);
 
-        let light = new THREE.PointLight( 0xFFFFDD );
-        light.position.set( -15, 10, 15 );
+        let light = new THREE.PointLight( 0x111111 );
+        light.position.set( -10, 10, -10 );
         this.scene.add( light );
     }
 
@@ -53,7 +58,7 @@ class voxJSCanvas
         this.renderer.setSize(width,height);
     }
 
-    setMesh(inputMesh : THREE.Mesh)
+    setMesh(inputMesh : THREE.Group)
     {
 	     this.voxel = inputMesh;
 
@@ -76,10 +81,13 @@ class voxJSCanvas
      
     }
 
+    setBackgroundColor(color:number)
+    {
+         this.renderer.setClearColor(color,1);
+    }
+
     render() {
         // Each frame we want to render the scene again
-        // Use typescript Arrow notation to retain the thisocity passing render to requestAnimationFrame
-        // It's possible I invented the word thisocity.
         requestAnimationFrame(() => this.render());
 
 		this.voxel.rotation.y += 0.01;
@@ -95,7 +103,6 @@ class voxJSCanvas
     {
         this.render();
     }
-
 }
 
 window.onload = () => {
@@ -103,21 +110,21 @@ window.onload = () => {
    // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
 
-    let converterOne_model : THREE.Mesh;
+    let converterOne_model : THREE.Group;
 
 
 
 
-    let objToThree_converter = new ObjToThree();
+    //let objToThree_converter = new ObjToThree();
 
     //hard coded a obj file for testing
-    let objTest : string = 'example-models/chr_gumi.obj';
+   // let objTest : string = 'example-models/chr_gumi.obj';
 
     //objToThree_converter.convert();
 
-   var hex = objToThree_converter.color;
+  // var hex = objToThree_converter.color;
 
-   console.log("main hex: "+hex);
+   //console.log("main hex: "+hex);
 
    /* var geometry = new THREE.BoxGeometry( 5, 5, 5 );
 
@@ -180,11 +187,11 @@ window.onload = () => {
                 }
             }
         }
-    console.log(model);
 
-    var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model)
+    var arrayToMesh = new ArrayToMesh(model);
+    var ruleApplyer = new RuleApplyer(model);
 
-    converterOne_model = arrayToMesh.output();
+    converterOne_model = ruleApplyer.output();
     converterOne_canvas.CameraPosition(0,0,-10);
     converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.start();

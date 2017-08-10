@@ -1,0 +1,31 @@
+{
+  "name": "voxc",
+  "version": "1.0.0",
+  "description": "voxel converter library",
+  "main": "./build/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Idrian/Absolute-0-.git"
+  },
+  "author": "absolute-0- team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Idrian/Absolute-0-/issues"
+  },
+  "homepage": "https://github.com/Idrian/Absolute-0-#readme",
+  "devDependencies": {
+    "@types/three": "^0.84.19",
+    "expose-loader": "^0.7.3",
+    "three": "^0.86.0",
+    "three-js": "^79.0.0",
+    "ts-loader": "^2.3.2",
+    "typescript": "^2.4.2",
+    "webpack": "^3.4.1"
+  },
+  "dependencies": {
+    "@types/three": "^0.84.19"
+  }
+}
