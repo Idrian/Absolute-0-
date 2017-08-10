@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>voxc.js</title>
+        <link rel="icon" href="resources/images/favicon.png">
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass|Roboto+Condensed" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.css">
+        <script src="https://use.fontawesome.com/727ae44ffb.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+        <script src="js/monokai.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/mode-json.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css"/>
+         <!-- voxc.js required scripts -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="build/js/voxc.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="js/webMain.js" type="text/javascript" charset="utf-8"></script> 
+       
+    </head>
+    <body class="main" id="bodySection" >
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#bodySection">voxc.js</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#demoSection">Demo</a></li>
+                    <li><a href="#aboutSection">About</a></li>
+                    <li><a href="#usageSection">Usage</a></li>
+                    <li><a href="#">Converter 1</a></li>
+                    <li><a href="#">Converter 2</a></li>
+                    <li><a href="#">Converter 3</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-sm-12 body">
+            
+            <div class="voxc-image"></div>
+            <div class="col-sm-12 canvascontainer" id="demoSection">
+                <div class="row">
+                    <div class="file-upload-container col-sm-4">
+                        <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
+                        <label for="file">Upload a file</label><br>
+                        or
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                    </div>
+                    <div class="col-sm-6 col-sm-offset-1">
+                        <div id="voxelDemo"></div>
+                        <div class="col-sm-8">
+                            <div id="voxelDemo" width="800" height="400"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row save-buttons">
+                    <div class="col-sm-4">
+                        <a class="upload-edited-file">Save and upload</a>
+                    </div>
+                    <div class="col-sm-8">
+                        <a class="reload-canvas">Reload</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="aboutSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">About</h2>
+                        <hr class="norm-hr"/>
+                        <p class="section-paragraph">
+                            Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
+                        </p>
+                        <p class="section-paragraph">
+                            The converter in the demo takes a .obj voxel file that is uploaded by the user and firstly converts this file to JavaScript matrixes containing the vertices, edges, faces and normals. The converter then evaluates the matrixes against a JSON rules file either uploaded by the user or typed by the user in the text editor on the demo. The evaluation will consider the color of the voxel cubes and texture them accordingly, the converter will evaluate single colors as well as colors that appear next to each other.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="usageSection" class="col-sm-8 col-sm-offset-2 section">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h2 class="section-heading">Usage</h2>
+                        <hr class="norm-hr"/>
+                        <p class="section-paragraph">
+                            voxc.js is used by downloading the minified javascript file and including it in your project.
+                        </p>
+                        <p class="section-paragraph">
+                            voxc.js will display its output in any div with an id of voxelDemo.
+                        </p>
+                        <div class="console-command col-sm-12">
+                            &lt;div id="voxelDemo">&lt;/div>
+                        </div>
+                        <div class="row">
+                            <div class="console-command col-sm-12">
+                                <h4 class="console-command-heading">Download Minified Javascript:</h4>
+                                <a href="build/js/voxc.min.js" download>voxc.min.js</a>
+                            </div>
+                        </div>
+                        <h5>Creation of canvas and setting up mesh</h5>
+                        <pre><code class="language-javascript">var converterOne_canvas = new voxJSCanvas("voxelDemo");
+ var converterOne_model;
+                            
+ var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model);
+ converterOne_model = arrayToMesh.output();
+ converterOne_canvas.CameraPosition(0, 0, -10);
+ converterOne_canvas.setMesh(converterOne_model);
+ converterOne_canvas.start();        
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="footer row">
+                <div class="col-sm-1 col-sm-offset-1">
+                    <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
+                </div>
+                <div class="col-sm-8">
+                    <div class="footer-links row">
+                        <a class="navlink-footer" href="#demoSection">Demo</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer" href="#aboutSection">About</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer" href="#usageSection">Usage</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 1</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 2</a>
+                          &nbsp;&middot;&nbsp;
+                        <a class="navlink-footer">Converter 3</a>
+                    </div>
+                    <div class="footer-brand row">
+                        <div class="col-sm-12">
+                            voxc.js
+                        </div>
+                    </div>
+                    <div class="footer-author row">
+                        Team Absolute|0| @ 2017
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <a href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge" target="_blank"><img class="waffle-icon" height="100px" width="100px" src="resources/images/waffle.png"/></a>
+                </div>
+            </div>
+        </div>
+        <script>
+            //Smooth Scroll
+            $(document).ready(function(){
+                $('a[href^="#"]').on('click',function (e) {
+                    e.preventDefault();
+                    var target = this.hash,
+                    $target = $(target);
+
+                    $('html, body').stop().animate({
+                        'scrollTop': $target.offset().top-50
+                    }, 700, 'swing', function () {
+                        window.location.hash = target;
+                    });
+                });
+            });
+
+            //Change navbar active class on click
+            $(".nav li").on("click", function() {
+                $(".nav li").removeClass("active");
+                $(this).addClass("active");
+            });
+            
+            //Reset active class on brand click
+            $(".navbar-brand").on("click", function(){
+                $(".nav li").removeClass("active");
+            })
+        </script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            var JSONMode = ace.require("ace/mode/json").Mode;
+            editor.session.setMode(new JSONMode());
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,315 @@
+body.main{
+    background-color: #222;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+a{
+    text-decoration : none;
+}
+
+#tempheading{
+    text-align: center;
+    color: #efefef;
+}
+
+.nav-brand{
+    background-color: #86DCEF;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    height: 60px;
+    padding-top: 10px;
+    font-family: 'Overpass', sans-serif;
+    margin-bottom: 20px;
+}
+
+.body{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#wafflelink{
+    color: #efefef;
+}
+
+#wafflelink:hover{
+    color: #fff;
+}
+
+.link-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link-item a{
+    text-decoration : none;
+    cursor: pointer;
+    padding-left: 10px;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    color: #fefefe;
+}
+
+.link-item a:hover{
+    color: #86DCEF;
+}
+
+.link-item.blue a{
+    color: #86DCEF;
+    font-size: 28px;
+}
+
+.link-item.blue a:hover{
+    color: #fefefe;
+}
+
+.hr-blue{
+   color: #86DCEF;
+    padding-left: 10px;
+}
+
+.voxc-heading{
+    font-size: 50px;
+    color: #86DCEF;
+    font-family: 'Overpass', sans-serif;
+    margin-bottom: 80px;
+    margin-top: 80px;
+}
+
+.section-heading{
+    text-align: left;
+    color: #555;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-heading{
+    text-align: center;
+    color: #222;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-hr{
+    border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+.norm-hr{
+    border-color: #86DCEF;
+}
+
+.section-paragraph{
+    color: #666;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.section{
+    background-color: #fefefe;
+    padding-bottom: 50px;
+}
+
+.voxc-image{
+    min-height: 100vh;
+    max-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../resources/images/voxc.png");
+}
+
+#voxelDemo{
+    background-color: #fefefe;
+}
+
+.canvascontainer{
+    padding-top: 40px;
+    padding-bottom: 60px;
+    background-color: #fefefe;
+}
+
+#editor {
+        position: absolute;
+        width: 100%;
+        height: 400px;
+}
+
+.navbar{
+    border-radius: 0;
+    background-color: #86DCEF;
+    border: none;
+}
+
+.navbar-header a{
+    font-size: 30px;
+    color: #222;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.navbar-inverse .navbar-brand{
+    color: #222;
+}
+
+.nav.navbar-nav li a{
+    color: #222;
+}
+
+.navbar-inverse .nav .navbar-nav > .active li{
+    background-color: #222;
+}
+
+.navbar-inverse .navbar-nav>.active> a{
+    background: #222;
+}
+
+.navbar-inverse .navbar-nav li:hover{
+    background: #222;
+}
+
+.input-file-hidden{
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.input-file-hidden + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #222;
+    background-color: #86DCEF;
+    display: inline-block;
+    padding: 8px 20px 8px 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.input-file-hidden:focus + label,
+.input-file-hidden + label:hover {
+    background-color: #29badb;
+    color: #fefefe;
+}
+
+.file-upload-container{
+    margin-bottom: 10px;
+}
+
+.console-command{
+    padding: 15px 15px 15px 15px;
+    background-color: #efefef;
+    color: #333;
+    font-family: 'Inconsolata', monospace;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-align: center;
+
+}
+
+.console-command-heading{
+    font-size: 20px;
+    text-align: center;
+}
+
+.upload-edited-file{
+    padding: 15px;
+    background-color: #33ed1e;
+    color: white;
+    transition: all 0.3s;
+    cursor: pointer;
+    
+}
+
+.upload-edited-file:hover{
+    color: white;
+    background-color: #15af03;
+    text-decoration: none;
+}
+
+.save-buttons{
+    margin-top: 30px;
+}
+
+.reload-canvas{
+    padding: 15px 30px 15px 30px;
+    background-color: #86DCEF;
+    color: #222;
+    transition: all 0.3s;
+    cursor: pointer;
+    
+}
+
+.reload-canvas:hover{
+    color: white;
+    background-color: #29badb;
+    text-decoration: none;
+}
+
+.footer{
+    margin-top: 80px;
+    height: 200px;
+    background-color: #86DCEF;
+}
+
+.navlink-footer{
+    color: #222;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.navlink-footer:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.footer-links{
+    padding-top: 30px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer-brand{
+    margin-top: 20px;
+    font-size: 50px;
+    font-family: 'Overpass', sans-serif;
+    color: black;
+}
+
+.footer-author{
+    font-weight: 100;
+    font-size: 12px;
+    color: #333;
+    position: relative;
+    bottom: -25px;
+}
+
+.footer-icon{
+    margin-top: 40px;
+    color: #222;
+    font-size: 120px;
+}
+
+.navbar{
+    margin: 0;
+}
+
+.waffle-icon{
+    margin-top: 50px;
+}
+
+

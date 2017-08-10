@@ -1,0 +1,51 @@
+\documentclass[english]{article}
+
+
+
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{grffile}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{tabu}
+\usepackage{ragged2e}
+\usepackage{textcomp}
+\usepackage{amstext}
+\usepackage[final]{pdfpages}
+\usepackage{caption}
+\usepackage{color}
+
+
+\graphicspath{{Pictures/}}
+
+
+\begin{document}
+	
+	
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{teamphoto.jpg}
+	\end{figure}
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{teamtitle.jpg}
+	\end{figure}
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{documenttitle.jpg}
+	\end{figure}
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{teamtable.jpg}
+	\end{figure}
+	
+	\pagenumbering{gobble}
+	\newpage
+	\tableofcontents
+	
+	\pagenumbering{arabic}
+	\newpage
+
+	\section{Introduction}
+	
+\end{document}
