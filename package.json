@@ -30,11 +30,7 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@types/three": "^0.84.19",
     "eval": "^0.1.2"
-=======
-    
->>>>>>> origin/feature-rules
   }
 }
