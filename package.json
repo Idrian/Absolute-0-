@@ -30,6 +30,6 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
-    "@types/three": "^0.84.19"
+    
   }
 }
