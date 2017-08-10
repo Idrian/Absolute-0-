@@ -52,7 +52,6 @@
                         <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
                     </div>
                     <div class="col-sm-6 col-sm-offset-1">
-                        <div id="voxelDemo"></div>
                         <div class="col-sm-8">
                             <div id="voxelDemo" width="800" height="400"></div>
                         </div>
@@ -76,7 +75,7 @@
                             Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
                         </p>
                         <p class="section-paragraph">
-                            The converter in the demo takes a .obj voxel file that is uploaded by the user and firstly converts this file to JavaScript matrixes containing the vertices, edges, faces and normals. The converter then evaluates the matrixes against a JSON rules file either uploaded by the user or typed by the user in the text editor on the demo. The evaluation will consider the color of the voxel cubes and texture them accordingly, the converter will evaluate single colors as well as colors that appear next to each other.
+                            The first converter in the demo takes a .obj voxel file that *is uploaded by the user* (still in development) and firstly converts this file to JavaScript matrixes containing the vertices, edges, faces and normals.The first converter then uses these to create and output an array of hex valued colors to be used in follow up converters. The 2nd converter then evaluates the array against a JSON rules file *either uploaded by the user or typed by the user in the text editor on the demo* (still in development). The evaluation will consider the color of the voxel cubes stored in the array and texture them accordingly, the converter will evaluate single colors as well as colors that appear next to each other.
                         </p>
                     </div>
                 </div>
@@ -90,7 +89,7 @@
                             voxc.js is used by downloading the minified javascript file and including it in your project.
                         </p>
                         <p class="section-paragraph">
-                            voxc.js will display its output in any div with an id of voxelDemo.
+                            voxc.min.js contains a class called VoxJSCanvas, and by constructing the class with the id of any div such as, new VoxJSCanvas("VoxelDemo"), the class will create a THREE.js canvas/scene with the required basics to display all our meshes.
                         </p>
                         <div class="console-command col-sm-12">
                             &lt;div id="voxelDemo">&lt;/div>
@@ -101,8 +100,8 @@
                                 <a href="build/js/voxc.min.js" download>voxc.min.js</a>
                             </div>
                         </div>
-                        <h5>Creation of canvas and setting up mesh</h5>
-                        <pre><code class="language-javascript">var converterOne_canvas = new voxJSCanvas("voxelDemo");
+                        <h5>Creation of canvas and setting up wireframe-mesh display</h5>
+                        <pre><code class="language-javascript"> var converterOne_canvas = new voxJSCanvas("voxelDemo");
  var converterOne_model;
                             
  var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model);
