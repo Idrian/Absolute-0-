@@ -1,0 +1,172 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Meeting times: 
+\end_layout
+
+\begin_layout Subsubsection
+Meetings with Client: 
+\end_layout
+
+\begin_layout Paragraph
+Our first meeting with our client took place on the 25 May 2017 starting
+ at 3:34pm and continued for 34 minutes.
+ Idrian established communication methods and acquired the initial requirements
+ elicitation.
+ This information was shared amongst the group and discussion took place
+ on the topic of the requirements elicitation.
+\end_layout
+
+\begin_layout Paragraph
+Our next meeting with the client took place on the 1 June 2017.
+ In this meeting, our group discussed potential approaches and ideas with
+ our client.
+ We further discussed the purpose of the library.
+ Our client discussed the coordinate system which would be used to create
+ the library.
+ As an added feature, an array of images was discussed and agreed upon as
+ being a possible feature.
+\end_layout
+
+\begin_layout Paragraph
+On the 3 July 2017, we again had a meeting with our client with the purpose
+ of updating him and showing which features had been completed as well as
+ those currently in progress.
+ Our client was pleased with the progress that had been made.
+\end_layout
+
+\begin_layout Paragraph
+The next meeting took place on the 20 July 2017 at 3:27pm and continued
+ through 4:30pm.
+ The SRS document was discussed and reviewed to ensure that it was up to
+ date.
+ /our client recommended using an intermediate converter for use in demos
+ to demonstrate what the system could currently do.
+ This converter was used to display the array of images onto the screen.
+\end_layout
+
+\begin_layout Subsubsection
+Team Meetings:
+\end_layout
+
+\begin_layout Paragraph
+The 22 May 2017 saw our first meeting as an established team.
+ In this meeting, we shared our ideas of what we expected from the project
+ as well as drawing up an initial SRS document for our client to read.
+\end_layout
+
+\begin_layout Paragraph
+Our next was on the 25May where we discussed the upcoming client meeting
+ as well as finalizing the SRS document.
+ We then left for client meeting.
+ After the meeting with our client on the 25 May we met again on the 29
+ May to discuss the feedback we had received.
+ We updated our SRS to reflect the feedback.
+ We then planned for our meeting on the 1 June 2017.
+\end_layout
+
+\begin_layout Paragraph
+Our discussion of which technologies to use and how-to setup our system
+ took place on the 14 June 2017.
+ We spent about a half hour before agreeing on the technology choices.
+ In this meeting, we also split up work into smaller team of two.
+\end_layout
+
+\begin_layout Paragraph
+By the 27 June we had created the VoxJSCanvas class as well as the web interface
+’s initial format.
+ We discussed the use of webpack and agreed on using it in our project.
+ Lastly, we discussed the general format of the classes that would be implemente
+d in our project.
+\end_layout
+
+\begin_layout Paragraph
+On the 5 July, we discussed two approaches for the first converter however
+ we later found an alternative approach that was decided on.
+ We continued our discussion on webpack as well as using typescript and
+ three-js.
+ For our automated testing, we decided to incorporate travis as a testing
+ module.
+\end_layout
+
+\begin_layout Paragraph
+On the 22 and 25 July, we discussed the testing procedures and started the
+ writing of the tests.
+ This took some time as severely errors were encountered but were dealt
+ with by the 25 July.
+ The 26 and 27 July were used to review and update the SRS document as well
+ as to prepare for our second demo on the 28 July.
+\end_layout
+
+\end_body
+\end_document
