@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Idrian/Absolute-0-#readme",
   "devDependencies": {
     "@types/three": "^0.84.19",
+    "browserify": "^14.4.0",
     "expose-loader": "^0.7.3",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -25,7 +26,10 @@
     "karma-jasmine": "^1.1.0",
     "three": "^0.86.0",
     "three-js": "^79.0.0",
+    "three-orbitcontrols-ts": "^0.1.2",
+    "three-trackballcontrols": "0.0.5",
     "ts-loader": "^2.3.2",
+    "tsify": "^3.0.1",
     "typescript": "^2.4.2",
     "webpack": "^3.4.1"
   },

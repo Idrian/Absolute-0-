@@ -1,22 +1,24 @@
 import * as THREE from 'three';
-import {ObjToThree} from './objToThree';
+import { OrbitControls } from 'three-orbitcontrols-ts';
 import {ArrayToMesh} from './ArrayToMesh';
 import {RuleApplyer} from './RuleApplyer';
 
 
-export class voxJSCanvas
+class voxJSCanvas
 {
     public scene : THREE.Scene;
-    private camera : THREE.Camera;
+    private camera : THREE.PerspectiveCamera;
     private renderer : THREE.WebGLRenderer;
     private voxel : THREE.Group;
-
+    private controls : OrbitControls;
+    private ambientLight : THREE.AmbientLight;
+    private light : THREE.PointLight;
 
     constructor(containerID : string)
     {
         // Create the renderer, in this case using WebGL, we want an alpha channel
         let container = document.getElementById(containerID);
-        this.renderer = new THREE.WebGLRenderer({ alpha: true });
+        this.renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
        
         // Set dimensions to containers and background color to white
         let containerWidth : number = 800; 
@@ -35,17 +37,29 @@ export class voxJSCanvas
     
         // Position is -20 along the Z axis and look at the origin
         this.camera.position.set(0,0,-20);
+        this.camera.up.set(0,1,0);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
 
         this.scene.add(this.camera);
 
          // Add the lights
-        let ambientLight = new THREE.AmbientLight(0xFFFFFF);
-        this.scene.add(ambientLight);
+        this.ambientLight = new THREE.AmbientLight(0xFFFFFF);
+        this.scene.add( this.ambientLight);
 
-        let light = new THREE.PointLight( 0x111111 );
-        light.position.set( -10, 10, -10 );
-        this.scene.add( light );
+        this.light = new THREE.PointLight( 0xffc228 );
+         this.light.position.set( -10, 10, -10 );
+        this.scene.add(  this.light );
+
+        this.controls = new OrbitControls(this.camera,  this.renderer.domElement);
+       // this.controls.addEventListener('change',this.render);
+        this.controls.enablePan = true;
+        this.controls.minPolarAngle = 0;
+        this.controls.maxPolarAngle = Math.PI;
+        this.controls.minDistance = 0;
+        this.controls.maxDistance = Infinity;
+        this.controls.enableZoom = true;
+
+        
     }
 
     CameraPosition(x : number,y : number,z : number)
@@ -59,8 +73,13 @@ export class voxJSCanvas
     }
 
     setMesh(inputMesh : THREE.Group)
-    {
-	     this.voxel = inputMesh;
+    {        
+
+        this.scene.remove(this.scene.getObjectByName("Voxel"));
+         this.voxel = inputMesh;
+        this.voxel.castShadow = true;
+        this.scene.receiveShadow = true;
+        this.scene.castShadow = true;
 
       // this.voxel = inputMesh;
 
@@ -78,6 +97,7 @@ export class voxJSCanvas
         // Add it to the scene and render the scene using the Scene and Camera objects
         this.scene.add(this.voxel);
 
+     // console.log("Children",this.scene.children);
      
     }
 
@@ -90,11 +110,10 @@ export class voxJSCanvas
         // Each frame we want to render the scene again
         requestAnimationFrame(() => this.render());
 
-		this.voxel.rotation.y += 0.01;
+           this.voxel.rotation.y += 0.01;
+           //this.voxel.getObjectByName("222").rotation.x += 0.01;
+           this.controls.update();
 
-       // var axis = new THREE.Vector3(0,0,0);
-
-       // this.camera.rotateOnAxis(axis,0.05);
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -106,11 +125,11 @@ export class voxJSCanvas
 }
 
 window.onload = () => {
-    let converterOne_canvas = new voxJSCanvas("voxelDemo");
+   
    // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
 
-    let converterOne_model : THREE.Group;
+    let converterOne_model = new THREE.Group();
 
 
 
@@ -135,7 +154,7 @@ window.onload = () => {
     converterOne_canvas.setMesh(converterOne_model);
     */
 
-    var model : number[][][] = new Array<Array<Array<number>>>();
+    var model = new Array();
 
     for(var i=0;i<5;i++)
         {
@@ -188,12 +207,38 @@ window.onload = () => {
             }
         }
 
-    var arrayToMesh = new ArrayToMesh(model);
-    var ruleApplyer = new RuleApplyer(model);
+    var editor = document.getElementById("editor");
+
+    var jsonString = editor.innerText.replace(/^[^{]*{/,"{")
+   // console.log("editor",jsonString);
+
+    var ruleFile = JSON.parse(jsonString);
+   // console.log("fileJson",JSON.parse(".resources/ruleExample.json"));
+
+  //  var arrayToMesh = new ArrayToMesh(model);
+    var ruleApplyer = new RuleApplyer();
+    ruleApplyer.convert(ruleFile, model);
 
     converterOne_model = ruleApplyer.output();
+    let converterOne_canvas = new voxJSCanvas("voxelDemo");
     converterOne_canvas.CameraPosition(0,0,-10);
     converterOne_canvas.setMesh(converterOne_model);
     converterOne_canvas.start();
-    
+     
+
+    var uplouder = document.getElementsByClassName("upload-edited-file");
+
+    uplouder[0].addEventListener("click", function()
+        {
+            jsonString = editor.innerText.replace(/^[^{]*{/,"{")
+            //console.log("editor",jsonString);
+
+            ruleFile = JSON.parse(jsonString);
+            ruleApplyer.convert(ruleFile, model);
+            var converterOne_model = new THREE.Group(); 
+          //  console.log("Before Group",converterOne_model);
+            converterOne_model = ruleApplyer.output();
+          //  console.log("After Group",converterOne_model);
+            converterOne_canvas.setMesh(converterOne_model);
+        })
 };
