@@ -370,4 +370,13 @@ a{
     margin-top: 65px;
 }
 
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 400px;
+    padding: 0 5px;
+}
+
 
