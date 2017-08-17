@@ -128,10 +128,6 @@ a{
     background-image: url("../resources/images/voxc.png");
 }
 
-#voxelDemo{
-    background-color: #fefefe;
-}
-
 .canvascontainer{
     padding-top: 40px;
     padding-bottom: 60px;
@@ -139,9 +135,9 @@ a{
 }
 
 #editor {
-        position: absolute;
-        width: 100%;
-        height: 400px;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 100px;
 }
 
 .navbar{
@@ -261,7 +257,6 @@ a{
 }
 
 .footer{
-    margin-top: 80px;
     height: 200px;
     background-color: #86DCEF;
 }
@@ -350,6 +345,29 @@ a{
 
 .demo-heading h2{
     text-align: center;
+}
+
+#editor{
+
+}
+
+#converter1Canvas{
+    background-color: #222;
+    min-height: 400px;
+}
+
+#converter2Canvas1{
+    background-color: #222;
+    min-height: 400px;
+}
+
+#converter2Canvas2{
+    background-color: #222;
+    min-height: 400px;
+}
+
+.footer-image{
+    margin-top: 65px;
 }
 
 
