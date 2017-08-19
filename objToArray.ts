@@ -31,7 +31,7 @@
     //called immediately
     constructor(element: HTMLElement) {
         this.element = element;
-        var me = this;
+        var me: fileReader = this;
 
         //used to upload a file, temp solution to file retrieval
         this.element.innerHTML += "<input type='file' id='thisFile'></input></br>";
@@ -113,27 +113,27 @@
                     }
                 }
 
-                //me.buildMatrix();
-                //document.getElementById("display").innerHTML = "Wow";
-                ////alert("in " + me.largestX);
+                me.buildMatrix();
+                document.getElementById("display").innerHTML = "Wow";
+                //alert("in " + me.largestX);
 
-                //var dis = "";
-                //for (var x = 0; x < me.largestX - me.lowX; x++) {
-                //    dis += "<table>";
-                //    for (var y = 0; y < me.largestY - me.lowY; y++) {
-                //        dis += "<tr>";
-                //        for (var z = 0; z < me.largestZ - me.lowZ; z++) {
-                //            var col = "blue";
-                //            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
-                //                col = "red";
-                //            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
-                //        }
-                //        dis += "</tr>";
-                //    }
-                //    dis += "</table></br>";
-                //}
-                //alert(dis);
-                //document.getElementById("display").innerHTML = dis;
+                var dis = "";
+                for (var x = 0; x < me.largestX - me.lowX; x++) {
+                    dis += "<table>";
+                    for (var y = 0; y < me.largestY - me.lowY; y++) {
+                        dis += "<tr>";
+                        for (var z = 0; z < me.largestZ - me.lowZ; z++) {
+                            var col = "blue";
+                            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
+                                col = "red";
+                            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
+                        }
+                        dis += "</tr>";
+                    }
+                    dis += "</table></br>";
+                }
+                alert(dis);
+                document.getElementById("display").innerHTML = dis;
             };
             reader.readAsText(file);
         };
@@ -143,22 +143,21 @@
         return this.finalMatrix;
     }
 
-    setVertex(line, skip): void {
+    setVertex(line: string[], skip: boolean): void {
         //alert("In setVertex " + line);
 
         //declaring variables to hold coors, normals and textures
-        var v1: string[] = [];
-        var t1: string[] = [];
-        var n1: string[] = [];
-        var v2: string[] = [];
-        var t2: string[] = [];
-        var n2: string[] = [];
-        var v3: string[] = [];
-        var t3: string[] = [];
-        var n3: string[] = [];
+        var v1: string = "";
+        var t1: string = "";
+        var n1: string = "";
+        var v2: string = "";
+        var t2: string = "";
+        var n2: string = "";
+        var v3: string = "";
+        var t3: string = "";
+        var n3: string = "";
 
             var tempArray1: string[][];
-            var tempArray2 = new Array(2);
 
             var count: number = 0;
 
@@ -228,19 +227,19 @@
             //alert("verts = " + v1 + " " + t1 + " " + v2 + " " + t2 + " " + v3 + " " + t3);
 
             //declaring x/y/z coords for all three points
-            var x1: string[] = [];
-            var y1: string[] = [];
-            var z1: string[] = [];
+        var x1: string = "";
+        var y1: string = "";
+        var z1: string = "";
 
-            var x2: string[] = [];
-            var y2: string[] = [];
-            var z2: string[] = [];
+        var x2: string = "";
+        var y2: string = "";
+        var z2: string = "";
 
-            var x3: string[] = [];
-            var y3: string[] = [];
-            var z3: string[] = [];
+        var x3: string = "";
+        var y3: string = "";
+        var z3: string = "";
 
-            var temp;
+        var temp: string[] = [];
 
             //setting first coord points
         temp = this.GvArray[+v1 - 1].split(' ');
@@ -265,28 +264,28 @@
         z3 = temp[2];
 
         //converting x coords from string to rounded int
-        var X1 = Math.round(+x1) - this.lowX;
-        var X2 = Math.round(+x2) - this.lowX;
-        var X3 = Math.round(+x3) - this.lowX;
+        var X1: number = Math.round(+x1) - this.lowX;
+        var X2: number = Math.round(+x2) - this.lowX;
+        var X3: number = Math.round(+x3) - this.lowX;
         //converting y coords from string to rounded int
-        var Y1 = Math.round(+y1) - this.lowY;
-        var Y2 = Math.round(+y2) - this.lowY;
-        var Y3 = Math.round(+y3) - this.lowY;
+        var Y1: number = Math.round(+y1) - this.lowY;
+        var Y2: number = Math.round(+y2) - this.lowY;
+        var Y3: number = Math.round(+y3) - this.lowY;
         //converting z coords from string to rounded int
-        var Z1 = Math.round(+z1) - this.lowZ;
-        var Z2 = Math.round(+z2) - this.lowZ;
-        var Z3 = Math.round(+z3) - this.lowZ;
+        var Z1: number = Math.round(+z1) - this.lowZ;
+        var Z2: number = Math.round(+z2) - this.lowZ;
+        var Z3: number = Math.round(+z3) - this.lowZ;
 
         var isGood = 0;
 
         //setting largest and smallest coords for this vertex
-        var largX = this.isBiggest2(X1, X2, X3);          
-        var largY = this.isBiggest2(Y1, Y2, Y3);          
-        var largZ = this.isBiggest2(Z1, Z2, Z3);  
+        var largX: number = this.isBiggest2(X1, X2, X3);          
+        var largY: number = this.isBiggest2(Y1, Y2, Y3);          
+        var largZ: number = this.isBiggest2(Z1, Z2, Z3);  
         
-        var lowestX = this.isLowest2(X1, X2, X3);
-        var lowestY = this.isLowest2(Y1, Y2, Y3);
-        var lowestZ = this.isLowest2(Z1, Z2, Z3);   
+        var lowestX: number = this.isLowest2(X1, X2, X3);
+        var lowestY: number = this.isLowest2(Y1, Y2, Y3);
+        var lowestZ: number = this.isLowest2(Z1, Z2, Z3);   
 
         //alert("Largest is: " + largZ)
         this.matrix.push(new face(largX, largY, largZ, lowestX, lowestY, lowestZ, t1, this.getNormals(+n1 - 1))); 
@@ -298,7 +297,7 @@
         //this.matrix[this.matrix.length-1].display();     
     }
 
-    addCoords(obj, xArray, yArray, zArray): void {
+    addCoords(obj: face, xArray: number[], yArray: number[], zArray: number[]): void {
         //if x doesn't change
         //console.log("addCoords: ", xArray, yArray, zArray);
         if (obj.normal == "+/0/0" || obj.normal == "-/0/0") {
@@ -460,9 +459,9 @@
         }
     }
 
-    isLowest2(num1, num2, num3): number {
+    isLowest2(num1: number, num2: number, num3: number): number {
         //find lowest of num1, num2 and num3
-        var tempLowest = num1;
+        var tempLowest: number = num1;
         if (num2 < tempLowest)
             tempLowest = num2;
         if (num3 < tempLowest)
@@ -470,9 +469,9 @@
         return tempLowest;
     }
 
-    isBiggest2(num1, num2, num3): number {
+    isBiggest2(num1: number, num2: number, num3: number): number {
         //find highest of num1, num2 and num3
-        var tempHighest = num1;
+        var tempHighest: number = num1;
         if (num2 > tempHighest)
             tempHighest = num2;
         if (num3 > tempHighest)
@@ -480,9 +479,9 @@
         return tempHighest;
     }
 
-    getNormals(which): string {
+    getNormals(which: string): string {
         //console.log(which);
-        var temp = this.GvnArray[which].split(" ");
+        var temp: string[] = this.GvnArray[which].split(" ");
         //alert(temp[0] + "  " + temp[1] + "  " + temp[2]);
         var result = "";
 
@@ -517,14 +516,14 @@
         return result;
     }
 
-    isBiggest(line): void {
+    isBiggest(line: string[]): void {
 
         var count = 0;
         //temp arrays to hold number strings
 
-        var tempX: string[] = [];
-        var tempY: string[] = [];
-        var tempZ: string[] = [];
+        var tempX: string = "";
+        var tempY: string = "";
+        var tempZ: string = "";
 
         //fetching temp x value
         while (line[count] != " ") {
@@ -568,13 +567,13 @@
         //alert("Current xyz = " + this.largestX + " " + this.largestY + " " + this.largestZ + " ");
     }
 
-    isSmallest(line): void {
+    isSmallest(line: string[]): void {
 
         var count = 0;
         //temp arrays to hold number strings
-        var tempX: string[] = [];
-        var tempY: string[] = [];
-        var tempZ: string[] = [];
+        var tempX: string = "";
+        var tempY: string = "";
+        var tempZ: string = "";
 
         //fetching temp x value
         while (line[count] != " ") {
@@ -630,15 +629,15 @@
 
         //alert("After matrixChecker");
         var isThere: boolean[] = [false, false, false, false, false, false, false, false];
-        var put = true;
-        var enter = 0;
+        var put: boolean = true;
+        var enter: number = 0;
 
-        for (var x = 0; x < this.largestX - this.lowX; x++) {//setting first layer
+        for (var x: number = 0; x < this.largestX - this.lowX; x++) {//setting first layer
             this.finalMatrix[x] = [];
             //alert("first layer success");
-            for (var y = 0; y < this.largestY - this.lowY; y++) {//setting second layer
+            for (var y: number = 0; y < this.largestY - this.lowY; y++) {//setting second layer
                 this.finalMatrix[x][y] = [];
-                for (var z = 0; z < this.largestZ - this.lowZ; z++) {//setting third layer
+                for (var z: number = 0; z < this.largestZ - this.lowZ; z++) {//setting third layer
                     this.finalMatrix[x][y][z] = "0";
                 }//end third layer
             }//end second layer
@@ -670,30 +669,30 @@
         //alert("I'm here large " + this.largestX + " " + this.largestY + " " + this.largestZ + " ");
         //alert("I'm here small " + this.lowX + " " + this.lowY + " " + this.lowZ + " ");
 
-        for (var i = 0; i < this.matrix.length; i++) {
+        for (var i: number = 0; i < this.matrix.length; i++) {
             this.add(this.matrix[i]);
         }   
     }   
 
-    add(faceObj): void {
+    add(faceObj: face): void {
         //adding a single face
         //faceObj.display();
 
-        var realX = faceObj.maxX - faceObj.lowX;
-        var realY = faceObj.maxY - faceObj.lowY;
-        var realZ = faceObj.maxZ - faceObj.lowZ;
+        var realX: number = faceObj.maxX - faceObj.lowX;
+        var realY: number = faceObj.maxY - faceObj.lowY;
+        var realZ: number = faceObj.maxZ - faceObj.lowZ;
         var count = 0;
 
         //if x doesnt change
         if (faceObj.normal == "-/0/0" || faceObj.normal == "+/0/0") {
             console.log("In one.one");
-            var m = (faceObj.y1 - faceObj.y2) / (faceObj.z1 - faceObj.z2);
-            var tempMin = faceObj.lowZ;
-            var tempMax = faceObj.maxZ;
-            var c = faceObj.y1 - (m * faceObj.z1);
-            for (var z = tempMin; z < tempMax; z++) {
+            var m: number = (faceObj.y1 - faceObj.y2) / (faceObj.z1 - faceObj.z2);
+            var tempMin: number = faceObj.lowZ;
+            var tempMax: number = faceObj.maxZ;
+            var c: number = faceObj.y1 - (m * faceObj.z1);
+            for (var z: number = tempMin; z < tempMax; z++) {
                 console.log("In one");
-                var line = ((m * (faceObj.lowZ + count)) + c);
+                var line: number = ((m * (faceObj.lowZ + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
@@ -714,12 +713,12 @@
         }
         //if y doesnt change
         if (faceObj.normal == "0/+/0" || faceObj.normal == "0/-/0") {
-            var m = (faceObj.z1 - faceObj.z2) / (faceObj.x1 - faceObj.x2);
+            var m: number = (faceObj.z1 - faceObj.z2) / (faceObj.x1 - faceObj.x2);
             //alert("m = " + m);
-            var c = faceObj.z1 - (m * faceObj.x1);
-            for (var x = faceObj.lowX; x < faceObj.maxX; x++) {
+            var c: number = faceObj.z1 - (m * faceObj.x1);
+            for (var x: number = faceObj.lowX; x < faceObj.maxX; x++) {
                 console.log("In two");
-                var line = ((m * (faceObj.lowX + count)) + c);
+                var line: number = ((m * (faceObj.lowX + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
@@ -740,12 +739,12 @@
         }
         //if z doesnt change
         if (faceObj.normal == "0/0/+" || faceObj.normal == "0/0/-") {
-            var m = (faceObj.y1 - faceObj.y2) / (faceObj.x1 - faceObj.x2);
+            var m: number = (faceObj.y1 - faceObj.y2) / (faceObj.x1 - faceObj.x2);
             //alert("m = " + m);
-            var c = faceObj.y1 - (m * faceObj.x1);
-            for (var x = faceObj.lowX; x < faceObj.maxX; x++) {
+            var c: number = faceObj.y1 - (m * faceObj.x1);
+            for (var x: number = faceObj.lowX; x < faceObj.maxX; x++) {
                 console.log("In three");
-                var line = ((m * (faceObj.lowX + count)) + c);
+                var line: number = ((m * (faceObj.lowX + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
@@ -766,45 +765,45 @@
         }
     }
 
-    putIn(from, to, normal, color, currentLevel, other): void {
+    putIn(from: number, to: number, normal: string, color: string, currentLevel: number, other: number): void {
         console.log("In put in: " + from + " to " + to);
         if (normal == "+/0/0") {
-            for (var y = from; y < to; y++) {
+            for (var y: number = from; y < to; y++) {
                 console.log("Adding " + color + " to " + (other - 1) + "/" + (y) + "/" + currentLevel);
                 //if (this.finalMatrix[other - 1][currentLevel][z] != null)
                 this.finalMatrix[other - 1][y][currentLevel] = color;
             }
         }
         if (normal == "-/0/0") {
-            for (var y = from; y < to; y++) {
+            for (var y: number = from; y < to; y++) {
                 console.log("Adding " + color + " to " + other + "/" + (y) + "/" + (currentLevel));
                 //if (this.finalMatrix[other][currentLevel][z] != null)
                 this.finalMatrix[other][y][currentLevel] = color;
             }
         }
         if (normal == "0/+/0") {
-            for (var z = from; z < to; z++) {
+            for (var z: number = from; z < to; z++) {
                 console.log("Adding " + color + " to " + currentLevel + "/" + (other - 1) + "/" + z);
                 //if (this.finalMatrix[x][other - 1][currentLevel])
                 this.finalMatrix[currentLevel][other-1][z] = color;
             }
         }
         if (normal == "0/-/0") {
-            for (var z = from; z < to; z++) {
+            for (var z: number = from; z < to; z++) {
                 console.log("Adding " + color + " to " + currentLevel + "/" + (other) + "/" + z);
                 //if (this.finalMatrix[x] && this.finalMatrix[x][other] && this.finalMatrix[x][other][currentLevel])
                 this.finalMatrix[currentLevel][other][z] = color;
             }
         }
         if (normal == "0/0/+") {
-            for (var y = from; y < to; y++) {
+            for (var y: number = from; y < to; y++) {
                 console.log("Adding " + color + " to " + y + "   " + y + "/" + (currentLevel) + "/" + other);
                 //if (this.finalMatrix[x] && this.finalMatrix[x][currentLevel] && this.finalMatrix[x][currentLevel][other - 1])
                 this.finalMatrix[currentLevel][y][other-1] = color;
             }
         }
         if (normal == "0/0/-") {
-            for (var y = from; y < to; y++) {
+            for (var y: number = from; y < to; y++) {
                 console.log("Adding " + color + " to " + y + "   " + y + "/" + (currentLevel) + "/" + other);
                 //if (this.finalMatrix[x] && this.finalMatrix[x][currentLevel] && this.finalMatrix[x][currentLevel][other])
                     this.finalMatrix[currentLevel][y][other] = color;
