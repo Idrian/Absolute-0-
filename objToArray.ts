@@ -113,29 +113,29 @@
                     }
                 }
 
-                me.buildMatrix();
-                document.getElementById("display").innerHTML = "Wow";
-                //alert("in " + me.largestX);
+            //    me.buildMatrix();
+            //    document.getElementById("display").innerHTML = "Wow";
+            //    //alert("in " + me.largestX);
 
-                var dis = "";
-                for (var x = 0; x < me.largestX - me.lowX; x++) {
-                    dis += "<table>";
-                    for (var y = 0; y < me.largestY - me.lowY; y++) {
-                        dis += "<tr>";
-                        for (var z = 0; z < me.largestZ - me.lowZ; z++) {
-                            var col = "blue";
-                            if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
-                                col = "red";
-                            dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
-                        }
-                        dis += "</tr>";
-                    }
-                    dis += "</table></br>";
-                }
-                alert(dis);
-                document.getElementById("display").innerHTML = dis;
-            };
-            reader.readAsText(file);
+            //    var dis = "";
+            //    for (var x = 0; x < me.largestX - me.lowX; x++) {
+            //        dis += "<table>";
+            //        for (var y = 0; y < me.largestY - me.lowY; y++) {
+            //            dis += "<tr>";
+            //            for (var z = 0; z < me.largestZ - me.lowZ; z++) {
+            //                var col = "blue";
+            //                if (!me.finalMatrix[x][y][z] || me.finalMatrix[x][y][z] == "0")
+            //                    col = "red";
+            //                dis += "<td style='width:50px;height:50px;border:5px;background-color:" + col + ";'></td>";
+            //            }
+            //            dis += "</tr>";
+            //        }
+            //        dis += "</table></br>";
+            //    }
+            //    alert(dis);
+            //    document.getElementById("display").innerHTML = dis;
+            //};
+            //reader.readAsText(file);
         };
     }
 
