@@ -57,6 +57,6 @@ export class ArrayToMesh
 
     output() : THREE.Group
     {
-        return this.theMesh;
+        return this.theMesh.clone();
     }
 }

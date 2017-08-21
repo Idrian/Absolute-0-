@@ -1,13 +1,14 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three-orbitcontrols-ts';
+import { OrbitControls } from './OrbitControls';
 import {ArrayToMesh} from './ArrayToMesh';
 import {RuleApplyer} from './RuleApplyer';
+import {fileReader} from './ObjToArray';
 
 
 class voxJSCanvas
 {
     public scene : THREE.Scene;
-    private camera : THREE.PerspectiveCamera;
+    public camera : THREE.PerspectiveCamera;
     private renderer : THREE.WebGLRenderer;
     private voxel : THREE.Group;
     private controls : OrbitControls;
@@ -24,7 +25,7 @@ class voxJSCanvas
         let containerWidth : number = 800; 
         let containerHeight : number = 400;
         this.renderer.setSize(containerWidth,containerHeight);
-        this.renderer.setClearColor(0x000000,1);
+        this.renderer.setClearColor(0xffffff,1);
 
         // Bind the renderer to the HTML, parenting it to our 'container' DIV
         container.appendChild(this.renderer.domElement);
@@ -36,7 +37,7 @@ class voxJSCanvas
         this.camera = new THREE.PerspectiveCamera(45, containerWidth/containerHeight, 0.1, 1000);
     
         // Position is -20 along the Z axis and look at the origin
-        this.camera.position.set(0,0,-20);
+        this.camera.position.set(0,0,20);
         this.camera.up.set(0,1,0);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
 
@@ -47,7 +48,7 @@ class voxJSCanvas
         this.scene.add( this.ambientLight);
 
         this.light = new THREE.PointLight( 0xffc228 );
-         this.light.position.set( -10, 10, -10 );
+         this.light.position.set( -10, 10, 10 );
         this.scene.add(  this.light );
 
         this.controls = new OrbitControls(this.camera,  this.renderer.domElement);
@@ -59,25 +60,38 @@ class voxJSCanvas
         this.controls.maxDistance = Infinity;
         this.controls.enableZoom = true;
 
+        this.scene.background =  new THREE.Color( 0xa5c7ff );
+
+
+       
         
     }
 
-    CameraPosition(x : number,y : number,z : number)
+    public zoomInOut(z : number)
+    {
+      //  console.log("CameraPos",this.camera.position);
+        this.camera.position.z = ((z));
+      //  this.controls.object = ;
+    }
+
+   public CameraPosition(x : number,y : number,z : number)
     {
         this.camera.position.set(x,y,z);
     }
 
-    setDimensions(width : number, height : number)
+    public setDimensions(width : number, height : number)
     {
         this.renderer.setSize(width,height);
     }
 
-    setMesh(inputMesh : THREE.Group)
+    public setMesh(inputMesh : THREE.Group)
     {        
 
         this.scene.remove(this.scene.getObjectByName("Voxel"));
          this.voxel = inputMesh;
+         
         this.voxel.castShadow = true;
+         
         this.scene.receiveShadow = true;
         this.scene.castShadow = true;
 
@@ -101,9 +115,17 @@ class voxJSCanvas
      
     }
 
-    setBackgroundColor(color:number)
+   public setGridHelper(x : number, y : number, z : number)
     {
-         this.renderer.setClearColor(color,1);
+         this.scene.remove(this.scene.getObjectByName("GridHelper"));
+        var GridHelper = new THREE.GridHelper(x,z).translateY(-((y/2)));
+        GridHelper.name = "GridHelper";
+        this.scene.add(GridHelper);
+    }
+
+   public setBackgroundColor(color:number)
+    {
+        this.scene.background =  new THREE.Color( color );
     }
 
     render() {
@@ -111,7 +133,7 @@ class voxJSCanvas
         requestAnimationFrame(() => this.render());
 
            this.voxel.rotation.y += 0.01;
-           //this.voxel.getObjectByName("222").rotation.x += 0.01;
+          // this.voxel.getObjectByName("212").rotation.x += 0.01;
            this.controls.update();
 
 
@@ -207,9 +229,42 @@ window.onload = () => {
             }
         }
 
-    var editor = document.getElementById("editor");
+    
 
-    var jsonString = editor.innerText.replace(/^[^{]*{/,"{")
+let arrayToMesh = new ArrayToMesh(model);
+
+//let wireFrameMesh : THREE.Group = arrayToMesh.output();
+
+    let converterOne_canvas = new voxJSCanvas("converter1Canvas");  
+    
+     
+     converterOne_canvas.CameraPosition(0,0,10);
+     converterOne_canvas.setMesh(arrayToMesh.output());
+     converterOne_canvas.setBackgroundColor(0xffffff);
+     converterOne_canvas.start();
+
+     let converterTwo_canvasOne = new voxJSCanvas("converter2Canvas1");  
+
+     // var arrayToMesh = new ArrayToMesh(model);
+     converterTwo_canvasOne.CameraPosition(0,0,10);
+     converterTwo_canvasOne.setDimensions(400,400);
+     converterTwo_canvasOne.setMesh(arrayToMesh.output());
+     converterTwo_canvasOne.setBackgroundColor(0xffffff);
+     converterTwo_canvasOne.start();
+
+     let converterTwo_canvasTwo = new voxJSCanvas("converter2Canvas2");  
+
+     // var arrayToMesh = new ArrayToMesh(model);
+     converterTwo_canvasTwo.CameraPosition(0,0,10);
+     converterTwo_canvasTwo.setDimensions(400,400);
+     converterTwo_canvasTwo.setMesh(arrayToMesh.output());
+     converterTwo_canvasTwo.setBackgroundColor(0xffffff);
+     converterTwo_canvasTwo.start();
+
+    var editor = <HTMLDivElement>document.getElementById("editor");
+
+    var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+    console.log("editor",jsonString)
    // console.log("editor",jsonString);
 
     var ruleFile = JSON.parse(jsonString);
@@ -220,18 +275,35 @@ window.onload = () => {
     ruleApplyer.convert(ruleFile, model);
 
     converterOne_model = ruleApplyer.output();
-    let converterOne_canvas = new voxJSCanvas("voxelDemo");
-    converterOne_canvas.CameraPosition(0,0,-10);
-    converterOne_canvas.setMesh(converterOne_model);
-    converterOne_canvas.start();
-     
+    let demo_canvas = new voxJSCanvas("voxelDemo");
 
-    var uplouder = document.getElementsByClassName("upload-edited-file");
+ 
+    demo_canvas.CameraPosition(0,0,10);
+    demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
+    demo_canvas.setMesh(converterOne_model);
+    demo_canvas.start();
+     
+    var uplouder = document.getElementsByClassName("rules-file-button");
+
+    var objUpload = <HTMLInputElement>document.getElementById("file");
+
+    var converterOne : fileReader;
+
+    objUpload.addEventListener("input", function(){
+        var OBJFile : File = objUpload.files[0];
+        converterOne = new fileReader(OBJFile);
+
+        console.log("Input File array",converterOne.getArray());
+
+        var array = converterOne.getArray();
+
+         console.log("Input File array 2",array);
+    });
 
     uplouder[0].addEventListener("click", function()
         {
-            jsonString = editor.innerText.replace(/^[^{]*{/,"{")
-            //console.log("editor",jsonString);
+            var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+            console.log("editor",jsonString)
 
             ruleFile = JSON.parse(jsonString);
             ruleApplyer.convert(ruleFile, model);
@@ -239,6 +311,7 @@ window.onload = () => {
           //  console.log("Before Group",converterOne_model);
             converterOne_model = ruleApplyer.output();
           //  console.log("After Group",converterOne_model);
-            converterOne_canvas.setMesh(converterOne_model);
-        })
+           demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
+            demo_canvas.setMesh(converterOne_model);
+        }) ;
 };
