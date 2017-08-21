@@ -52,19 +52,19 @@
                         </div>
                         <div class="documents-download-links col-sm-8 col-sm-offset-2">
                             <div class="document-link-container col-sm-4">
-                                <a href="Documents/User%2520Manual/usermanual.pdf">
+                                <a href="Documents/User Manual/usermanual.pdf">
                                     <i class="fa fa-question-circle" aria-hidden="true"></i>
                                 </a>
                                 <h4 class="document-link-heading">User Manual</h4>
                             </div>
                             <div class="document-link-container col-sm-4">
-                                <a href="Documents/Test%2520Reports/Test%20report.pdf">
+                                <a href="Documents/Test Reports/Test report.pdf">
                                     <i class="fa fa-bug" aria-hidden="true"></i>
                                 </a>
                                 <h4 class="document-link-heading">Testing Report</h4>
                             </div>
                             <div class="document-link-container col-sm-4">
-                                <a href="Documents/Requirements%2520Specification/requirementsspecification.pdf">
+                                <a href="Documents/Requirements Specification/requirementsspecification.pdf">
                                     <i class="fa fa-file-text" aria-hidden="true"></i>
                                 </a>
                                 <h4 class="document-link-heading">SRS</h4>
@@ -106,6 +106,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                        <button class="rules-file-upload-button">Save and upload</button>
                     </div>
                     <div class="col-sm-8">
                         <div id="voxelDemo" width="800" height="400"></div>
@@ -240,9 +241,9 @@
                           &nbsp;&middot;&nbsp;
                         <a class="navlink-footer" href="#usageSection">Usage</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer" href="converter1Section">Converter 1</a>
+                        <a class="navlink-footer" href="#converter1Section">Converter 1</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer" href="converter2Section">Converter 2</a>
+                        <a class="navlink-footer" href="#converter2Section">Converter 2</a>
                           &nbsp;&middot;&nbsp;
                         <a class="navlink-footer">Converter 3</a>
                     </div>
@@ -271,20 +272,148 @@
                 <h4 class="modal-title">Rules file shape guidelines</h4>
               </div>
               <div class="modal-body">
-    <pre><code class="language-javascript"> var converterOne_canvas = new voxJSCanvas("voxelDemo");
-var converterOne_model;
-
-var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model);
-converterOne_model = arrayToMesh.output();
-converterOne_canvas.CameraPosition(0, 0, -10);
-converterOne_canvas.setMesh(converterOne_model);
-converterOne_canvas.start();        
+                The value located at "-----------" can be changed to any of the shapes specified below.
+    <pre><code class="language-javascript">{"Rules" :
+    [{
+        "Color" : "0x664611",
+        "Shape" : "-----------",
+        "Texture" : "./resources/textures/-----.jpg"
+    ]}
+}           
                     </code></pre><br/>
                 <h4>Available shapes:</h4>
-                <ul>
-                    <li>"circle"</li>
-                    <li>"triangle"</li>
-                </ul>
+                <div class="available-shapes-list">
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/cube.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "cube"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/cylinder.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "cylinder"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/circle.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "circle"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/cone.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "cone"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/plane.jpg">
+                            </div>
+                            <div class="shape-example-name">
+                                | "plane"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/pyramid.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "pyramid"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/ring.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "ring"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/sphere.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "sphere"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/torus.jpeg">
+                            </div>
+                            <div class="shape-example-name">
+                                | "torus"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/torusknot.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "torusknot"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/dodecahedron.jpeg">
+                            </div>
+                            <div class="shape-example-name">
+                                | "dodecahedron"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/icosahedron.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "icosahedron"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="shape-example-container col-xs-10">
+                            <div class="shape-example-image-container col-xs-2">
+                                <img class="shape-example-image" src="resources/shapes/octahedron.png">
+                            </div>
+                            <div class="shape-example-name">
+                                | "octahedron"
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -303,20 +432,78 @@ converterOne_canvas.start();
                 <h4 class="modal-title">Rules file texture guidelines</h4>
               </div>
               <div class="modal-body">
-    <pre><code class="language-javascript"> var converterOne_canvas = new voxJSCanvas("voxelDemo");
-var converterOne_model;
-
-var arrayToMesh = new ArrayToMesh(converterOne_canvas.scene, model);
-converterOne_model = arrayToMesh.output();
-converterOne_canvas.CameraPosition(0, 0, -10);
-converterOne_canvas.setMesh(converterOne_model);
-converterOne_canvas.start();        
+                The value located at "./resources/textures/-----.jpg" can be changed to any of the textures listed below
+    <pre><code class="language-javascript">{"Rules" :
+    [{
+        "Color" : "0x664611",
+        "Shape" : "Cylinder",
+        "Texture" : "./resources/textures/-----.jpg"
+    ]}
+}        
                     </code></pre><br/>
                 <h4>Available textures:</h4>
-                <ul>
-                    <li>"texture1.png"</li>
-                    <li>"texture2.png"</li>
-                </ul>
+                <div class="texture-list">
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/brick-texture.jpg"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Brick texture | <span class="texture-example-value">"./resources/textures/brick-texture.jpg"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/flowerbed-texture.jpg"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Flowerbed texture | <span class="texture-example-value">"./resources/textures/flowerbed-texture.jpg"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/grass-texture.jpg"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Grass texture | <span class="texture-example-value">"./resources/textures/grass-texture.jpg"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/leaves.jpg"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Leaves texture | <span class="texture-example-value">"./resources/textures/leaves.jpg"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/oak.png"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Oak texture | <span class="texture-example-value">"./resources/textures/oak.png"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="texture-example-container col-xs-10">
+                            <div class="texture-example-image-container col-xs-2">
+                                <img class="texture-example-image" src="resources/textures/slate-roof-texture.jpg"/>
+                            </div>
+                            <div class="texture-example-name col-xs-10">
+                                Slate roof texture | <span class="texture-example-value">"./resources/textures/slate-roof-texture.jpg"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
