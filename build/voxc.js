@@ -1950,7 +1950,7 @@ window.onload = () => {
     demo_canvas.setMesh(converterOne_model);
     demo_canvas.start();
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
-    var objUpload = document.getElementById("file");
+    var objUpload = document.getElementById("objfile");
     var converterOne;
     var useME = true;
     objUpload.addEventListener("input", function () {

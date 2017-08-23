@@ -289,7 +289,7 @@ let arrayToMesh = new ArrayToMesh(model);
      
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
 
-    var objUpload = <HTMLInputElement>document.getElementById("file");
+    var objUpload = <HTMLInputElement>document.getElementById("objfile");
 
     var converterOne : fileReader;
  
