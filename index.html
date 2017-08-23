@@ -94,10 +94,11 @@
                             </div>
                             Use predefined rules file
                         </div>
-                        <div class="rules-file-button-container col-sm-2 col-sm-offset-3">
-                            <div class="rules-file-button">
-                                <i class="fa fa-download" aria-hidden="true"></i>
-                            </div>
+                        <div class="file-upload-container col-sm-2 col-sm-offset-3">
+                            <input type="file" name="objfile" id="objfile" class="input-file-hidden" accept=".obj"/>
+
+                            <label for="file"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
+                            
                             Upload own .obj file
                         </div>
                     </div>
@@ -544,7 +545,6 @@
             editor.setTheme("ace/theme/monokai");
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
-            editor.renderer.setOption('showLineNumbers', false);
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
     </body>
