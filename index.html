@@ -544,6 +544,7 @@
             editor.setTheme("ace/theme/monokai");
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
+            editor.renderer.setOption('showLineNumbers', false);
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
     </body>
