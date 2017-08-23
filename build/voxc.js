@@ -1587,8 +1587,9 @@ class RuleInterpreter {
             var MAT;
             var shapeFound = false;
             if (this.ruleFile.Rules[i].Shape != null) {
+                var thisShape = this.ruleFile.Rules[i].Shape.toLowerCase();
                 for (var g = 0; g < this.Shapes.length; g++) {
-                    if (this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase()) {
+                    if (thisShape == this.Shapes[g].ShapeName.toLowerCase()) {
                         GEO = this.Shapes[g].ShapeGEO;
                         shapeFound = true;
                         break;
@@ -1607,7 +1608,9 @@ class RuleInterpreter {
             // console.log("Textures","map",texture,"bmap",bumpTexture);
             MAT = new THREE.MeshPhongMaterial({ map: texture, bumpMap: bumpTexture, bumpScale: 1.0 });
             // MAT.color.setHex(this.ruleFile.Rules[i].Color);
-            MAT.side = THREE.DoubleSide;
+            if (thisShape == "ring" || thisShape == "plane" || thisShape == "circle") {
+                MAT.side = THREE.DoubleSide;
+            }
             this.ruleSets.push({ Color: this.ruleFile.Rules[i].Color, Geometry: GEO, Material: MAT });
         }
         //console.log("Rule-set",this.ruleSets);
@@ -1953,7 +1956,8 @@ window.onload = () => {
     var objUpload = document.getElementById("objfile");
     var converterOne;
     var useME = true;
-    objUpload.addEventListener("input", function () {
+    objUpload.addEventListener("change", function () {
+        console.log("I am here");
         var OBJFile = objUpload.files[0];
         useME = false;
         converterOne = new ObjToArray_1.fileReader(OBJFile, doRest, [demo_canvas, converterOne_canvas, ruleApplyer, arrayToMesh]);

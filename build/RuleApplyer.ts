@@ -269,9 +269,10 @@ class RuleInterpreter
                 var shapeFound : boolean = false;
                 if(this.ruleFile.Rules[i].Shape != null)
                 {
+                    var thisShape = this.ruleFile.Rules[i].Shape.toLowerCase();
                     for(var g=0;g<this.Shapes.length;g++)
                         {
-                            if(this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase())
+                            if(thisShape == this.Shapes[g].ShapeName.toLowerCase())
                                 {
                                     GEO = this.Shapes[g].ShapeGEO;
                                     shapeFound = true;
@@ -293,7 +294,8 @@ class RuleInterpreter
                // console.log("Textures","map",texture,"bmap",bumpTexture);
                 MAT = new THREE.MeshPhongMaterial({ map : texture, bumpMap : bumpTexture, bumpScale  :  1.0}); 
                // MAT.color.setHex(this.ruleFile.Rules[i].Color);
-                MAT.side = THREE.DoubleSide;
+               if(thisShape == "ring" || thisShape == "plane" || thisShape == "circle")
+               { MAT.side = THREE.DoubleSide;}
                  this.ruleSets.push({Color : this.ruleFile.Rules[i].Color, Geometry : GEO, Material : MAT});
             }
        

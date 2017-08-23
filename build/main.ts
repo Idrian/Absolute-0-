@@ -294,7 +294,8 @@ let arrayToMesh = new ArrayToMesh(model);
     var converterOne : fileReader;
  
     var useME : boolean = true;
-    objUpload.addEventListener("input", function(){
+    objUpload.addEventListener("change", function(){
+        console.log("I am here");
         var OBJFile : File = objUpload.files[0];
         useME = false;
         converterOne = new fileReader(OBJFile,doRest,[demo_canvas,converterOne_canvas,ruleApplyer,arrayToMesh]);
