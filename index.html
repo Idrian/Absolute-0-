@@ -18,7 +18,7 @@
          <!-- voxc.js required scripts -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="build/js/voxc.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="build/voxc.js" type="text/javascript" charset="utf-8"></script> 
         <script src="js/webMain.js" type="text/javascript" charset="utf-8"></script> 
        
     </head>
@@ -97,7 +97,7 @@
                         <div class="file-upload-container col-sm-2 col-sm-offset-3">
                             <input type="file" name="objfile" id="objfile" class="input-file-hidden" accept=".obj"/>
 
-                            <label for="objfile"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
+                            <label for="file"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
                             
                             Upload own .obj file
                         </div>
@@ -106,7 +106,43 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                        <div id="editor">{"key" : "Write your own rules file here..."}<br></div>
+                        <div id="editor">  {"Rules" : 
+    [{
+        "Color" : "0x664611" ,
+        "Shape" : "Cylinder",
+        "Texture" : "./resources/textures/oak.png",
+        "Bmap" : "./resources/textures/oakBump.png"
+    },{
+        "Color" : "0x00ff00",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    },{
+        "Color" : "0x00ff01",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    }],
+     "cellularRules" :    [{
+                        "Color" : "0x664611",
+                        "Top" : "0x664611",
+                        "Bottom" : "0x664611",
+                        "Left" : "0x664611",
+                        "Right" : "0x664611",
+                        "Front" : "0x664611",
+                        "Back" : "0x664611",
+                        "newColor" : "0x664610"
+                    },{
+                        "Color" : "0x664611",
+                        "Top" : "0x664611",
+                        "Bottom" : "empty",
+                        "Left" : "0x664611",
+                        "Right" : "0x664611",
+                        "Front" : "0x664611",
+                        "Back" : "0x664611",
+                        "newColor" : "0x664610"
+                    }]
+}<br></div>
                         <button class="rules-file-upload-button">Save and upload</button>
                     </div>
                     <div class="col-sm-8">
