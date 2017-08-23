@@ -46,7 +46,7 @@ export class ArrayToMesh
                                      let singleCube = new THREE.Mesh( geometry, material );
 
                                     singleCube.position.set(-x+xLength,y-yLength,z-zLength);
-
+                                    singleCube.name = x.toString()+y.toString()+z.toString();
                                     this.theMesh.add(singleCube);
                                 }
                                

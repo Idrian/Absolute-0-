@@ -261,10 +261,14 @@ let arrayToMesh = new ArrayToMesh(model);
      converterTwo_canvasTwo.setBackgroundColor(0xffffff);
      converterTwo_canvasTwo.start();
 
-    var editor = <HTMLDivElement>document.getElementById("editor");
 
-    var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-    console.log("editor",jsonString)
+     var editor = ace.edit("editor");
+     //editor.container = <HTMLDivElement>document.getElementById("editor");
+
+ //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+ console.log("Full editor",editor.getValue());
+ var jsonString = editor.getValue();
+ console.log("editor",jsonString)
    // console.log("editor",jsonString);
 
     var ruleFile = JSON.parse(jsonString);
@@ -283,7 +287,7 @@ let arrayToMesh = new ArrayToMesh(model);
     demo_canvas.setMesh(converterOne_model);
     demo_canvas.start();
      
-    var uplouder = document.getElementsByClassName("rules-file-button");
+    var uplouder = document.getElementsByClassName("rules-file-upload-button");
 
     var objUpload = <HTMLInputElement>document.getElementById("file");
 
@@ -304,8 +308,11 @@ let arrayToMesh = new ArrayToMesh(model);
         {
     uplouder[0].addEventListener("click", function()
         {
-            var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-            console.log("editor",jsonString)
+           // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+           
+ console.log("Full editor",editor.getValue());
+ var jsonString = editor.getValue();
+           console.log("editor",jsonString)
  //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
             ruleApplyer.convert(ruleFile, model);
@@ -332,12 +339,15 @@ function doRest(model : string[][][],other : any)
     var arrayToMesh = new ArrayToMesh(model);
      other[1].setMesh(arrayToMesh.output());
 
-
-        var editor = <HTMLDivElement>document.getElementById("editor");
-          var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+        var editor = ace.edit("editor");
+       // var editor = <HTMLDivElement>document.getElementById("editor");
+        //  var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
         //    console.log("editor",jsonString)
  //console.log("Input File array 5",array);
-          var  ruleFile = JSON.parse(jsonString);
+        
+ console.log("Full editor",editor.getValue());
+ var jsonString = editor.getValue();
+ var  ruleFile = JSON.parse(jsonString);
             other[2].convert(ruleFile, model);
             var converterOne_model = new THREE.Group(); 
           //  console.log("Before Group",converterOne_model);
@@ -348,11 +358,13 @@ function doRest(model : string[][][],other : any)
             other[0].setMesh(converterOne_model);
 
 
-        var uplouder = document.getElementsByClassName("rules-file-button");
+        var uplouder = document.getElementsByClassName("rules-file-upload-button");
              uplouder[0].addEventListener("click", function()
         {
-            var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-            console.log("editor",jsonString)
+         //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+          
+          var jsonString = editor.getValue();
+         console.log("editor",jsonString)
  //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
             other[2].convert(ruleFile, model);

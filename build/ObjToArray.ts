@@ -118,8 +118,12 @@ export class fileReader {
                         me.setVertex(lines[line], false);
                     }
                 }
+
+                console.log("Vertexes" , me.GvArray);
+                 console.log("Normals" , me.GvnArray);
+                  console.log("Faces" , me.GfArray);
  //console.log("Cameron is wrong test 1",this.element.name);
-              me.buildMatrix();
+             me.buildMatrix();
              me.fillColors(callback,other);
                 me.ready = true;
 

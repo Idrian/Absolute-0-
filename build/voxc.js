@@ -32,6 +32,7 @@ class ArrayToMesh {
                     else {
                         let singleCube = new THREE.Mesh(geometry, material);
                         singleCube.position.set(-x + xLength, y - yLength, z - zLength);
+                        singleCube.name = x.toString() + y.toString() + z.toString();
                         this.theMesh.add(singleCube);
                     }
                     // scene.add(singleCube);
@@ -149,6 +150,9 @@ class fileReader {
                     me.setVertex(lines[line], false);
                 }
             }
+            console.log("Vertexes", me.GvArray);
+            console.log("Normals", me.GvnArray);
+            console.log("Faces", me.GfArray);
             //console.log("Cameron is wrong test 1",this.element.name);
             me.buildMatrix();
             me.fillColors(callback, other);
@@ -180,8 +184,6 @@ class fileReader {
             //  callback(this,other[0],other[1]);
         };
         this.reader.readAsText(file);
-    }
-    loadOBJ() {
     }
     getArray() {
         return this.finalMatrix;
@@ -1929,8 +1931,11 @@ window.onload = () => {
     converterTwo_canvasTwo.setMesh(arrayToMesh.output());
     converterTwo_canvasTwo.setBackgroundColor(0xffffff);
     converterTwo_canvasTwo.start();
-    var editor = document.getElementById("editor");
-    var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+    var editor = ace.edit("editor");
+    //editor.container = <HTMLDivElement>document.getElementById("editor");
+    //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+    console.log("Full editor", editor.getValue());
+    var jsonString = editor.getValue();
     console.log("editor", jsonString);
     // console.log("editor",jsonString);
     var ruleFile = JSON.parse(jsonString);
@@ -1944,7 +1949,7 @@ window.onload = () => {
     demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
     demo_canvas.setMesh(converterOne_model);
     demo_canvas.start();
-    var uplouder = document.getElementsByClassName("rules-file-button");
+    var uplouder = document.getElementsByClassName("rules-file-upload-button");
     var objUpload = document.getElementById("file");
     var converterOne;
     var useME = true;
@@ -1956,7 +1961,9 @@ window.onload = () => {
     });
     if (useME == true) {
         uplouder[0].addEventListener("click", function () {
-            var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+            // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+            console.log("Full editor", editor.getValue());
+            var jsonString = editor.getValue();
             console.log("editor", jsonString);
             //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
@@ -1976,10 +1983,13 @@ function doRest(model, other) {
     other[1].CameraPosition(0, 0, 10);
     var arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
     other[1].setMesh(arrayToMesh.output());
-    var editor = document.getElementById("editor");
-    var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+    var editor = ace.edit("editor");
+    // var editor = <HTMLDivElement>document.getElementById("editor");
+    //  var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
     //    console.log("editor",jsonString)
     //console.log("Input File array 5",array);
+    console.log("Full editor", editor.getValue());
+    var jsonString = editor.getValue();
     var ruleFile = JSON.parse(jsonString);
     other[2].convert(ruleFile, model);
     var converterOne_model = new THREE.Group();
@@ -1987,9 +1997,10 @@ function doRest(model, other) {
     //  console.log("After Group",converterOne_model);
     other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
     other[0].setMesh(converterOne_model);
-    var uplouder = document.getElementsByClassName("rules-file-button");
+    var uplouder = document.getElementsByClassName("rules-file-upload-button");
     uplouder[0].addEventListener("click", function () {
-        var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+        //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+        var jsonString = editor.getValue();
         console.log("editor", jsonString);
         //console.log("Input File array 5",array);
         ruleFile = JSON.parse(jsonString);

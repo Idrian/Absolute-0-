@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Idrian/Absolute-0-#readme",
   "devDependencies": {
+    "@types/ace": "0.0.35",
     "@types/three": "^0.84.19",
     "browserify": "^14.4.0",
     "expose-loader": "^0.7.3",
