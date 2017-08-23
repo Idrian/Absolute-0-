@@ -2,14 +2,18 @@ import * as THREE from 'three';
 
 export class ArrayToMesh
 {
-    private theArray : number[][][];
+    private theArray : string[][][];
     private theMesh : THREE.Group;
 
-    constructor(inputArray : number[][][])
+    constructor(inputArray : string[][][])
     {
         this.theArray = inputArray;
         this.theMesh = new THREE.Group();
 
+       while(this.theMesh.children.length > 0)
+        {
+            this.theMesh.remove(this.theMesh.children[0]);
+        }
         /**
          * These Length variables are used to re-centre the group object as each object
          * will be placed at the index values of the arrays so we need to push them back
@@ -31,7 +35,8 @@ export class ArrayToMesh
                                     geometry.faces[ face ].materialIndex = materialCounter;
                                 }*/
 
-                                let material = new THREE.MeshBasicMaterial( { color: this.theArray[x][y][z] } );
+                                
+                                let material = new THREE.MeshBasicMaterial( { color: parseInt(this.theArray[x][y][z]) } );
                                 material.wireframe = true;
                                 if(this.theArray[x][y][z] == null)
                                     {
@@ -50,7 +55,7 @@ export class ArrayToMesh
                             }
                     }
             }
-
+this.theMesh.name = "Voxel";
            // console.log((inputArray.length/2),(inputArray[0].length/2),(inputArray[0][0].length/2));
            // this.theMesh.position.set(-(inputArray.length/2),-(inputArray[0].length/2),-(inputArray[0][0].length/2));
     }

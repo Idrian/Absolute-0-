@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export class RuleApplyer
 {
-    private theArray : number[][][];
+    private theArray : string[][][];
     private theMesh : THREE.Group;
     public interpreter : RuleInterpreter;
 
@@ -19,7 +19,7 @@ export class RuleApplyer
         this.interpreter = interpreter;
     }*/
 
-    convert(ruleFile : RulesFile, inputArray : number[][][]) : THREE.Group
+    convert(ruleFile : RulesFile, inputArray : string[][][]) : THREE.Group
     {   
 
         this.theArray = inputArray;
@@ -154,31 +154,31 @@ export class RuleApplyer
 
 interface RulesFile {
   Rules:    [{
-                Color : number ,
+                Color : string ,
                 Shape : string,
                 Texture : string,
                 Bmap : string,
             }];
  cellularRules :    [{
-                        Color : number,
+                        Color : string,
                         Top : string,
                         Bottom : string,
                         Left : string,
                         Right : string,
                         Front : string,
                         Back : string,
-                        newColor : number,
+                        newColor : string,
                     }];
 }
 
 interface RuleSet {
-    Color : number ;
+    Color : string ;
     Geometry : THREE.Geometry;
     Material : THREE.MeshPhongMaterial;
 }
 
 interface cellularRuleSet {
-    Color : number; 
+    Color : string; 
     rules : colorRules[];
 }
 
@@ -199,7 +199,7 @@ class colorPositions {
 class colorRules{
         valids : colorPositions;
         invalids : colorPositions;
-        newColor : number;
+        newColor : string;
 
         constructor()
         {
@@ -267,16 +267,18 @@ class RuleInterpreter
                 var MAT : THREE.MeshPhongMaterial;
 
                 var shapeFound : boolean = false;
-                for(var g=0;g<this.Shapes.length;g++)
-                    {
-                        
-                        if(this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase())
-                            {
-                                GEO = this.Shapes[g].ShapeGEO;
-                                shapeFound = true;
-                                break;
-                            }
-                    }
+                if(this.ruleFile.Rules[i].Shape != null)
+                {
+                    for(var g=0;g<this.Shapes.length;g++)
+                        {
+                            if(this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase())
+                                {
+                                    GEO = this.Shapes[g].ShapeGEO;
+                                    shapeFound = true;
+                                    break;
+                                }
+                        }
+                }
                 if(shapeFound == false)
                     {
                         GEO = new THREE.BoxGeometry(1, 1, 1);

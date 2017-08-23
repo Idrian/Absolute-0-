@@ -6,6 +6,9 @@ class ArrayToMesh {
     constructor(inputArray) {
         this.theArray = inputArray;
         this.theMesh = new THREE.Group();
+        while (this.theMesh.children.length > 0) {
+            this.theMesh.remove(this.theMesh.children[0]);
+        }
         /**
          * These Length variables are used to re-centre the group object as each object
          * will be placed at the index values of the arrays so we need to push them back
@@ -22,7 +25,7 @@ class ArrayToMesh {
                      {
                          geometry.faces[ face ].materialIndex = materialCounter;
                      }*/
-                    let material = new THREE.MeshBasicMaterial({ color: this.theArray[x][y][z] });
+                    let material = new THREE.MeshBasicMaterial({ color: parseInt(this.theArray[x][y][z]) });
                     material.wireframe = true;
                     if (this.theArray[x][y][z] == null) {
                     }
@@ -35,6 +38,7 @@ class ArrayToMesh {
                 }
             }
         }
+        this.theMesh.name = "Voxel";
         // console.log((inputArray.length/2),(inputArray[0].length/2),(inputArray[0][0].length/2));
         // this.theMesh.position.set(-(inputArray.length/2),-(inputArray[0].length/2),-(inputArray[0][0].length/2));
     }
@@ -49,7 +53,7 @@ exports.ArrayToMesh = ArrayToMesh;
 Object.defineProperty(exports, "__esModule", { value: true });
 class fileReader {
     //called immediately
-    constructor(element) {
+    constructor(element, callback, other) {
         this.reader = new FileReader();
         //declaring the arrays to hold the .obj data
         //holds the normals
@@ -62,6 +66,7 @@ class fileReader {
         this.GfArray = [];
         //final matrix
         this.finalMatrix = [];
+        this.theArray = [];
         //flag to check if matrix has been created
         this.flag = false;
         //used to hold colorMatrix
@@ -73,9 +78,11 @@ class fileReader {
         this.lowX = 0;
         this.lowY = 0;
         this.lowZ = 0;
-        this.ready = false;
-        this.ready = false;
+        // this.ready = false;
         this.element = element;
+        //   this.loadOBJ();
+        // var me = this
+        //opens file
         console.log("Cameron is wrong test 1", this.element.name);
         var me = this;
         //declaring the arrays to hold the .obj data
@@ -106,8 +113,9 @@ class fileReader {
         var vtArray = [];
         var vArray = [];
         var fArray = [];
-        //opens file
-        this.reader.onload = function (progressEvent) {
+        this.reader = new FileReader();
+        // var callback = fn;
+        this.reader.onload = function () {
             console.log("Cameron is wrong test 4", file.name);
             //alert("I'm in");
             // By lines
@@ -143,7 +151,9 @@ class fileReader {
             }
             //console.log("Cameron is wrong test 1",this.element.name);
             me.buildMatrix();
+            me.fillColors(callback, other);
             me.ready = true;
+            console.log("ready state", this.readyState);
             //    document.getElementById("display").innerHTML = "Wow";
             //    //alert("in " + me.largestX);
             //    var dis = "";
@@ -165,14 +175,80 @@ class fileReader {
             //    document.getElementById("display").innerHTML = dis;
             //};
             //reader.readAsText(file);
+            // callback.returnValue()
+            // console.log()
+            //  callback(this,other[0],other[1]);
         };
         this.reader.readAsText(file);
     }
+    loadOBJ() {
+    }
     getArray() {
-        // var me = this
-        console.log("Input File array 3", this.check());
-        this.check();
         return this.finalMatrix;
+    }
+    /*getFinalMatrix() : string[][][]
+    {
+        var returnArray : string[][][];
+        var me = this;
+        this.getArray().then(returnArray  => me.finalMatrix);
+        return returnArray;
+    }*/
+    /*async constructMatrix() : Promise<string[][][]>
+    {
+        await this.loadOBJ();
+        return new Promise<string[][][]>(resolve => {
+            resolve(this.finalMatrix);
+        });
+    }*/
+    fillColors(callback, other) {
+        console.log("Colors", this.GvtArray[0]);
+        console.log("Colors", this.GvtArray[1]);
+        console.log("Matrix", this.finalMatrix);
+        var canvas = document.createElement("canvas");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+            var image = new Image();
+            image.onload = (() => this.imageReady(image, ctx, callback, other));
+        }
+        image.src = './example-models/1.png';
+    }
+    imageReady(image, ctx, callback, other) {
+        var me = this;
+        ctx.drawImage(image, 0, 0, image.width, image.height);
+        for (var x = 0; x < me.finalMatrix.length; x++) {
+            for (var y = 0; y < me.finalMatrix[x].length; y++) {
+                for (var z = 0; z < me.finalMatrix[x][y].length; z++) {
+                    var color = null;
+                    var colorIndex = me.finalMatrix[x][y][z];
+                    if (colorIndex != "") {
+                        console.log("index", x, y, z, colorIndex);
+                        var colors = me.GvtArray[parseInt(colorIndex) - 1].split(" ");
+                        var u = parseFloat(colors[0]);
+                        var v = parseFloat(colors[1]);
+                        console.log("u", u, "v", v);
+                        var imgData = ctx.getImageData(image.width * u, image.height * v, 1, 1).data;
+                        color = me.rgbToHex(imgData[0], imgData[1], imgData[2]);
+                        console.log("Color", x, y, z, color);
+                        me.finalMatrix[x][y][z] = color;
+                    }
+                    else {
+                        me.finalMatrix[x][y][z] = null;
+                    }
+                    //   me.theArray.push(color);
+                }
+            }
+        }
+        console.log("Matrix", me.finalMatrix);
+        callback(me.finalMatrix, other);
+    }
+    rgbToHex(r, g, b) {
+        var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+        console.log("Hex", hex);
+        return hex;
+    }
+    componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
     check() {
         if (this.ready === true) {
@@ -629,7 +705,7 @@ class fileReader {
             for (var y = 0; y < this.largestY - this.lowY; y++) {
                 this.finalMatrix[x][y] = [];
                 for (var z = 0; z < this.largestZ - this.lowZ; z++) {
-                    this.finalMatrix[x][y][z] = "0";
+                    this.finalMatrix[x][y][z] = "";
                 } //end third layer
             } //end second layer
         } //end third layer
@@ -1508,11 +1584,13 @@ class RuleInterpreter {
             var GEO;
             var MAT;
             var shapeFound = false;
-            for (var g = 0; g < this.Shapes.length; g++) {
-                if (this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase()) {
-                    GEO = this.Shapes[g].ShapeGEO;
-                    shapeFound = true;
-                    break;
+            if (this.ruleFile.Rules[i].Shape != null) {
+                for (var g = 0; g < this.Shapes.length; g++) {
+                    if (this.ruleFile.Rules[i].Shape.toLowerCase() == this.Shapes[g].ShapeName.toLowerCase()) {
+                        GEO = this.Shapes[g].ShapeGEO;
+                        shapeFound = true;
+                        break;
+                    }
                 }
             }
             if (shapeFound == false) {
@@ -1806,25 +1884,25 @@ window.onload = () => {
         }
     }
     for (var i = 0; i < 5; i++) {
-        model[2][i][2] = 0x664611;
+        model[2][i][2] = "0x664611";
     }
     for (var k = 3; k < 5; k++) {
         for (var i = k - 3; i < 8 - k; i++) {
             for (var j = k - 3; j < 8 - k; j++) {
                 if (i == 2 && j == 2) {
                     if (k == 4) {
-                        model[i][k][j] = 0x00ff00;
+                        model[i][k][j] = "0x00ff00";
                     }
                     else {
-                        model[2][k][2] = 0x664611;
+                        model[2][k][2] = "0x664611";
                     }
                 }
                 else {
                     if (k == 3) {
-                        model[i][k][j] = 0x00ff00;
+                        model[i][k][j] = "0x00ff00";
                     }
                     else {
-                        model[i][k][j] = 0x00ff00;
+                        model[i][k][j] = "0x00ff00";
                     }
                 }
             }
@@ -1869,26 +1947,61 @@ window.onload = () => {
     var uplouder = document.getElementsByClassName("rules-file-button");
     var objUpload = document.getElementById("file");
     var converterOne;
+    var useME = true;
     objUpload.addEventListener("input", function () {
         var OBJFile = objUpload.files[0];
-        converterOne = new ObjToArray_1.fileReader(OBJFile);
-        console.log("Input File array", converterOne.getArray());
-        var array = converterOne.getArray();
-        console.log("Input File array 2", array);
+        useME = false;
+        converterOne = new ObjToArray_1.fileReader(OBJFile, doRest, [demo_canvas, converterOne_canvas, ruleApplyer, arrayToMesh]);
+        // console.log("Input test",converterOne.getArray());
     });
+    if (useME == true) {
+        uplouder[0].addEventListener("click", function () {
+            var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+            console.log("editor", jsonString);
+            //console.log("Input File array 5",array);
+            ruleFile = JSON.parse(jsonString);
+            ruleApplyer.convert(ruleFile, model);
+            var converterOne_model = new THREE.Group();
+            //  console.log("Before Group",converterOne_model);
+            converterOne_model = ruleApplyer.output();
+            //  console.log("After Group",converterOne_model);
+            demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
+            demo_canvas.setMesh(converterOne_model);
+        });
+    }
+};
+function doRest(model, other) {
+    //  array = converterOne.getArray();
+    console.log("Input File array 2", model);
+    other[1].CameraPosition(0, 0, 10);
+    var arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
+    other[1].setMesh(arrayToMesh.output());
+    var editor = document.getElementById("editor");
+    var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
+    //    console.log("editor",jsonString)
+    //console.log("Input File array 5",array);
+    var ruleFile = JSON.parse(jsonString);
+    other[2].convert(ruleFile, model);
+    var converterOne_model = new THREE.Group();
+    //  console.log("Before Group",converterOne_model);
+    //  console.log("After Group",converterOne_model);
+    other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
+    other[0].setMesh(converterOne_model);
+    var uplouder = document.getElementsByClassName("rules-file-button");
     uplouder[0].addEventListener("click", function () {
         var jsonString = editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""), editor.textContent.indexOf("}X") + 1);
         console.log("editor", jsonString);
+        //console.log("Input File array 5",array);
         ruleFile = JSON.parse(jsonString);
-        ruleApplyer.convert(ruleFile, model);
+        other[2].convert(ruleFile, model);
         var converterOne_model = new THREE.Group();
         //  console.log("Before Group",converterOne_model);
-        converterOne_model = ruleApplyer.output();
+        converterOne_model = other[2].output();
         //  console.log("After Group",converterOne_model);
-        demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
-        demo_canvas.setMesh(converterOne_model);
+        other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
+        other[0].setMesh(converterOne_model);
     });
-};
+}
 
 },{"./ArrayToMesh":1,"./ObjToArray":2,"./OrbitControls":3,"./RuleApplyer":4,"three":6}],6:[function(require,module,exports){
 (function (global, factory) {

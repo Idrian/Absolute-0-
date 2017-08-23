@@ -15,6 +15,7 @@ export class fileReader {
     matrix: face[];
     //final matrix
     finalMatrix: string[][][] = [];
+    theArray: number[][][] = [];
     //flag to check if matrix has been created
     flag: boolean = false;
     //used to hold colorMatrix
@@ -29,13 +30,20 @@ export class fileReader {
     lowY: number = 0;
     lowZ: number = 0;
 
-    ready: boolean = false;
+    ready: boolean ;
 
     //called immediately
-    constructor(element: File) {
-        this.ready = false;
+    constructor(element: File, callback : Function, other : any) {
+       // this.ready = false;
         this.element = element;
-        console.log("Cameron is wrong test 1",this.element.name);
+
+     //   this.loadOBJ();
+       // var me = this
+
+
+            //opens file
+   
+       console.log("Cameron is wrong test 1",this.element.name);
         var me: fileReader = this;
     
             //declaring the arrays to hold the .obj data
@@ -71,10 +79,9 @@ export class fileReader {
             var vArray: string[] = [];
             var fArray: string[] = [];
 
-            //opens file
-            
-
-            this.reader.onload = function (callback) {
+        this.reader = new FileReader();
+       // var callback = fn;
+               this.reader.onload =  function () {
                  console.log("Cameron is wrong test 4",file.name);
                 //alert("I'm in");
                 // By lines
@@ -112,8 +119,11 @@ export class fileReader {
                     }
                 }
  //console.log("Cameron is wrong test 1",this.element.name);
-                me.buildMatrix();
+              me.buildMatrix();
+             me.fillColors(callback,other);
                 me.ready = true;
+
+                console.log("ready state", this.readyState)
             //    document.getElementById("display").innerHTML = "Wow";
             //    //alert("in " + me.largestX);
 
@@ -138,22 +148,113 @@ export class fileReader {
             //reader.readAsText(file);
            
            // callback.returnValue()
-            
+
+          // console.log()
+         //  callback(this,other[0],other[1]);
+               
+           
         }; 
-        
-        this.reader.readAsText(file);
+        this.reader.readAsText(file);    
+     
 }  
 
-    getArray(): string[][][] {
 
-       // var me = this
+getArray(): string[][][] {
 
+    return this.finalMatrix; 
+}
+
+/*getFinalMatrix() : string[][][]
+{
+    var returnArray : string[][][];
+    var me = this;
+    this.getArray().then(returnArray  => me.finalMatrix);
+    return returnArray;
+}*/
+/*async constructMatrix() : Promise<string[][][]>
+{
+    await this.loadOBJ();
+    return new Promise<string[][][]>(resolve => {
+        resolve(this.finalMatrix);
+    });
+}*/
+
+fillColors(callback : Function, other : any)
+{
+    console.log("Colors",this.GvtArray[0]);
+    console.log("Colors",this.GvtArray[1]);
+    console.log("Matrix",this.finalMatrix);
+
+
+ var canvas = document.createElement("canvas");
+
+      if(canvas.getContext)
+        {
+            var ctx = canvas.getContext('2d');
+
+            var image : HTMLImageElement = new Image();
+           
+            image.onload = (() => this.imageReady(image,ctx,callback,other)); 
+
+
+        }
+
+            image.src = './example-models/1.png';
         
- console.log("Input File array 3",this.check());
-       this.check();
+}
 
-        return this.finalMatrix;
-       
+imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
+{
+                 var me = this;
+                 ctx.drawImage(image, 0, 0,image.width,image.height);
+                for(var x=0;x<me.finalMatrix.length;x++)
+                {
+                    for(var y=0;y<me.finalMatrix[x].length;y++)
+                    {
+                        for(var z=0;z<me.finalMatrix[x][y].length;z++)
+                        {
+                            var color : string = null;
+
+                            var colorIndex = me.finalMatrix[x][y][z]
+                            if(colorIndex != "")
+                                {
+                                    console.log("index",x,y,z,colorIndex);
+                            var colors : string[] = me.GvtArray[parseInt(colorIndex)-1].split(" ");
+                            var u : number = parseFloat(colors[0]);
+                            var v : number = parseFloat(colors[1]);
+                            console.log("u",u,"v",v);
+                            var imgData = ctx.getImageData(image.width*u,image.height*v,1,1).data;
+
+                            color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
+
+                            console.log("Color",x,y,z,color);
+
+                            me.finalMatrix[x][y][z] = color;
+                                }
+                        else{
+                            me.finalMatrix[x][y][z] = null;
+                        }
+                 //   me.theArray.push(color);
+                        }
+                    }
+                }
+
+                 console.log("Matrix",me.finalMatrix);
+
+                  callback(me.finalMatrix,other);
+}
+
+    rgbToHex(r:number,g:number,b:number) : string
+    {
+        var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+        console.log("Hex",hex);
+        return hex;
+    }
+
+    componentToHex(c:number) : string
+    {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
 
 private check()  : string[][][]{
@@ -662,7 +763,7 @@ private check()  : string[][][]{
             for (var y: number = 0; y < this.largestY - this.lowY; y++) {//setting second layer
                 this.finalMatrix[x][y] = [];
                 for (var z: number = 0; z < this.largestZ - this.lowZ; z++) {//setting third layer
-                    this.finalMatrix[x][y][z] = "0";
+                    this.finalMatrix[x][y][z] = "";
                 }//end third layer
             }//end second layer
         }//end third layer
