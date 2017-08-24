@@ -237,6 +237,11 @@ a{
     text-align: center;
 }
 
+.rules-file-button-container-dropdown{
+    text-align: center;
+    padding-top: 25px;
+}
+
 .rules-file-button{
     width: 70px;
     height: 70px;
@@ -494,5 +499,27 @@ input[type=range][orient=vertical]
 .shape-example-name{
     margin-top: 15px;
     font-size: 15px;
+}
+
+.color-selection{
+    cursor: pointer;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+button.btn.btn-color-selection{
+    width: 100%;
+    background-color: #86DCEF;
+    color: #222;
+    border-radius: 8px;
+}
+
+button.btn.btn-color-selection:hover{
+    color: white;
+    background-color: #29badb; 
+}
+
+button.btn.btn-color-selection:focus{
+    outline: none !important;
 }
 

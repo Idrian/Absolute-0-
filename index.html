@@ -100,7 +100,19 @@
                             
                             Upload own .obj file
                         </div>
-                    </div>
+                        <div class="rules-file-button-container-dropdown col-sm-2">
+                            <div class="dropdown">
+                              <button class="btn btn-color-selection" type="button" data-toggle="dropdown">Background Color
+                              <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><div class="color-selection" id="darkgrey" style="background-color: #222; color: white;">Grey</div></li>
+                                <li><div class="color-selection" id="lightgrey" style="background-color: #bbb">Lightgrey</div></li>
+                                <li><div class="color-selection" id="lightblue" style="background-color: #A5C7FF">Lightblue</div></li>
+                                <li><div class="color-selection" id="darkdarkgrey" style="background-color: #111; color: white;">Darkgrey</div></li>
+                                <li><div class="color-selection" id="white" style="background-color: #fff">White</div></li>
+                              </ul>
+                            </div>
+                        </div>
                     
                 </div>
                 <div class="row">
@@ -148,6 +160,7 @@
                         <div id="voxelDemo" width="800" height="400"></div>
                     </div>
                 </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="rules-file-button-container col-sm-6">
@@ -165,6 +178,24 @@
                                 </div>
                             </a>
                             Shape guidelines
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="rules-file-button-container col-sm-6">
+                            <a data-toggle="modal" data-target="#colorsModal">
+                                <div class="rules-file-button">
+                                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            Color selector guidelines
+                        </div>
+                        <div class="rules-file-button-container col-sm-6">
+                            <a data-toggle="modal" data-target="#colorsModal">
+                                <div class="rules-file-button">
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            Pause/Play Animation
                         </div>
                     </div>
                 </div>
@@ -545,9 +576,37 @@
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               </div>
             </div>
+            </div>
+        </div>
+              
+              <div id="colorsModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Rules file color guidelines</h4>
+              </div>
+              <div class="modal-body">
+              The value located at "----------" can be changed to any of the colors listed below
+<pre><code class="language-javascript">{"Rules" :
+[{
+    "Color" : "----------",
+    "Shape" : "Cylinder",
+    "Texture" : "./resources/textures/-----.jpg"
+]}
+</code></pre><br/>
+                        <div id="converter1Canvas" width="800" height="400"></div>
+                <h4>Available colors:</h4>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
 
           </div>
-        </div>
         <script>
             //Smooth Scroll
             $(document).ready(function(){
@@ -561,6 +620,31 @@
                     }, 700, 'swing', function () {
                         window.location.hash = target;
                     });
+                });
+                
+                $("#darkgrey").on('click', function (e) {
+                    e.preventDefault();
+                    $("#voxelDemo").css.('background-color', '#222');
+                });
+                
+                $("#lightgrey").on('click', function (e) {
+                    e.preventDefault();
+                    $("#voxelDemo").css.('background-color', '#bbb');
+                });
+                
+                $("#lightblue").on('click', function (e) {
+                    e.preventDefault();
+                    $("#voxelDemo").css.('background-color', '#A5C7FF');
+                });
+                
+                $("#darkdarkgrey").on('click', function (e) {
+                    e.preventDefault();
+                    $("#voxelDemo").css.('background-color', '#111');
+                });
+                
+                $("#white").on('click', function (e) {
+                    e.preventDefault();
+                    $("#voxelDemo").css.('background-color', '#fff');
                 });
             });
 
