@@ -46,6 +46,7 @@ export class RuleApplyer
 
         console.log("CellularRuleSet",cellularRuleSets);
 
+         console.log("ruleSets",ruleSets);
         var xLength = this.theArray.length;
         var yLength = this.theArray[0].length;
         var zLength = this.theArray[0][0].length;
@@ -156,6 +157,8 @@ interface RulesFile {
   Rules:    [{
                 Color : string ,
                 Shape : string,
+                rotation : number[],
+                scale : number[],
                 Texture : string,
                 Bmap : string,
             }];
@@ -285,6 +288,18 @@ class RuleInterpreter
                         GEO = new THREE.BoxGeometry(1, 1, 1);
                         console.warn("No matching shapes found, defaulting to 'cube'");
                     }
+                if(this.ruleFile.Rules[i].rotation != null)
+                    {
+                       var rotationArray = this.ruleFile.Rules[i].rotation;
+                        GEO = GEO.rotateX(rotationArray[0]);
+                        GEO = GEO.rotateY(rotationArray[1]);
+                        GEO = GEO.rotateZ(rotationArray[2]);
+                    }
+                  if(this.ruleFile.Rules[i].scale != null)
+                    {
+                        var scaleArray = this.ruleFile.Rules[i].scale;
+                        GEO = GEO.scale(scaleArray[0],scaleArray[1],scaleArray[2]);
+                    }
                 var texture : THREE.Texture = this.textureLoader.load(this.ruleFile.Rules[i].Texture);
                 var bumpTexture : THREE.Texture = null;
                 if(this.ruleFile.Rules[i].Bmap != null)
@@ -292,11 +307,17 @@ class RuleInterpreter
                          bumpTexture = this.textureLoader.load(this.ruleFile.Rules[i].Bmap);
                     }
                // console.log("Textures","map",texture,"bmap",bumpTexture);
-                MAT = new THREE.MeshPhongMaterial({ map : texture, bumpMap : bumpTexture, bumpScale  :  1.0}); 
+                 MAT = new THREE.MeshPhongMaterial({ map : texture, bumpMap : bumpTexture, bumpScale  :  1.0});
+                
                // MAT.color.setHex(this.ruleFile.Rules[i].Color);
                if(thisShape == "ring" || thisShape == "plane" || thisShape == "circle")
                { MAT.side = THREE.DoubleSide;}
-                 this.ruleSets.push({Color : this.ruleFile.Rules[i].Color, Geometry : GEO, Material : MAT});
+
+     
+  
+                this.ruleSets.push({Color : this.ruleFile.Rules[i].Color, Geometry : GEO, Material : MAT});
+            
+                 
             }
        
             //console.log("Rule-set",this.ruleSets);

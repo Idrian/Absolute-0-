@@ -19,7 +19,7 @@ export class fileReader {
     //flag to check if matrix has been created
     flag: boolean = false;
     //used to hold colorMatrix
-    colorMatrix: string[][] = [];
+    colorMatrix: string[] = [];
 
     //largest ccoordinates
     largestX: number = 0;
@@ -211,6 +211,16 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
 {
                  var me = this;
                  ctx.drawImage(image, 0, 0,image.width,image.height);
+
+                 for(var c=0;c<me.GvtArray.length;c++)
+                    {
+                        var color : string = null;
+                        var UV = me.GvtArray[c].split(" ");
+                        var imgData = ctx.getImageData(image.width*parseFloat(UV[0]),image.height*parseFloat(UV[1]),1,1).data;
+
+                        color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
+                        me.colorMatrix[c] = color;
+                    }
                 for(var x=0;x<me.finalMatrix.length;x++)
                 {
                     for(var y=0;y<me.finalMatrix[x].length;y++)
@@ -223,15 +233,15 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
                             if(colorIndex != "")
                                 {
                                     console.log("index",x,y,z,colorIndex);
-                            var colors : string[] = me.GvtArray[parseInt(colorIndex)-1].split(" ");
-                            var u : number = parseFloat(colors[0]);
-                            var v : number = parseFloat(colors[1]);
-                            console.log("u",u,"v",v);
-                            var imgData = ctx.getImageData(image.width*u,image.height*v,1,1).data;
+                            var color = me.colorMatrix[parseInt(colorIndex)-1];
+                         //   var u : number = parseFloat(colors[0]);
+                         //   var v : number = parseFloat(colors[1]);
+                         //   console.log("u",u,"v",v);
+                         //   var imgData = ctx.getImageData(image.width*u,image.height*v,1,1).data;
 
-                            color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
+                         //   color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
 
-                            console.log("Color",x,y,z,color);
+                         //   console.log("Color",x,y,z,color);
 
                             me.finalMatrix[x][y][z] = color;
                                 }
@@ -244,6 +254,7 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
                 }
 
                  console.log("Matrix",me.finalMatrix);
+                 other.push(me.colorMatrix);
 
                   callback(me.finalMatrix,other);
 }
@@ -260,15 +271,6 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
     }
-
-private check()  : string[][][]{
-            if(this.ready === true){
-                return this.finalMatrix;
-            }
-            window.setTimeout(this.check, 1000);
-
-             return this.finalMatrix;
-        }
 
     setVertex(line: string[], skip: boolean): void {
         //alert("In setVertex " + line);

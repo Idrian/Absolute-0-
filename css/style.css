@@ -393,6 +393,10 @@ a{
     min-height: 400px;
 }
 
+#colorGuidelinesCanvas{
+    min-height: 400px;
+}
+
 #converter2Canvas1{
     background-color: transparent;
     min-height: 400px;

@@ -14,6 +14,7 @@ class voxJSCanvas
     private controls : OrbitControls;
     private ambientLight : THREE.AmbientLight;
     private light : THREE.PointLight;
+    public play_pause : boolean;
 
     constructor(containerID : string)
     {
@@ -60,18 +61,11 @@ class voxJSCanvas
         this.controls.maxDistance = Infinity;
         this.controls.enableZoom = true;
 
-        this.scene.background =  new THREE.Color( 0xa5c7ff );
+        this.scene.background =  new THREE.Color( 0xffffff );
 
 
-       
+       this.play_pause = true;
         
-    }
-
-    public zoomInOut(z : number)
-    {
-      //  console.log("CameraPos",this.camera.position);
-        this.camera.position.z = ((z));
-      //  this.controls.object = ;
     }
 
    public CameraPosition(x : number,y : number,z : number)
@@ -132,7 +126,11 @@ class voxJSCanvas
         // Each frame we want to render the scene again
         requestAnimationFrame(() => this.render());
 
-           this.voxel.rotation.y += 0.01;
+        if(this.play_pause)
+            {
+                this.voxel.rotation.y += 0.01;
+            }
+           
           // this.voxel.getObjectByName("212").rotation.x += 0.01;
            this.controls.update();
 
@@ -247,7 +245,6 @@ let arrayToMesh = new ArrayToMesh(model);
 
      // var arrayToMesh = new ArrayToMesh(model);
      converterTwo_canvasOne.CameraPosition(0,0,10);
-     converterTwo_canvasOne.setDimensions(400,400);
      converterTwo_canvasOne.setMesh(arrayToMesh.output());
      converterTwo_canvasOne.setBackgroundColor(0xffffff);
      converterTwo_canvasOne.start();
@@ -256,7 +253,6 @@ let arrayToMesh = new ArrayToMesh(model);
 
      // var arrayToMesh = new ArrayToMesh(model);
      converterTwo_canvasTwo.CameraPosition(0,0,10);
-     converterTwo_canvasTwo.setDimensions(400,400);
      converterTwo_canvasTwo.setMesh(arrayToMesh.output());
      converterTwo_canvasTwo.setBackgroundColor(0xffffff);
      converterTwo_canvasTwo.start();
@@ -266,9 +262,9 @@ let arrayToMesh = new ArrayToMesh(model);
      //editor.container = <HTMLDivElement>document.getElementById("editor");
 
  //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
- console.log("Full editor",editor.getValue());
+ //console.log("Full editor",editor.getValue());
  var jsonString = editor.getValue();
- console.log("editor",jsonString)
+ //console.log("editor",jsonString)
    // console.log("editor",jsonString);
 
     var ruleFile = JSON.parse(jsonString);
@@ -285,7 +281,36 @@ let arrayToMesh = new ArrayToMesh(model);
     demo_canvas.CameraPosition(0,0,10);
     demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
     demo_canvas.setMesh(converterOne_model);
+   
+    var darkgrey = document.getElementById("darkgrey");
+    darkgrey.addEventListener("click",function(){
+         demo_canvas.setBackgroundColor(0x020202);
+    });
+    var lightgrey = document.getElementById("lightgrey");
+    lightgrey.addEventListener("click",function(){
+         demo_canvas.setBackgroundColor(0x0b0b0b);
+    });
+    var lightblue = document.getElementById("lightblue");
+    lightblue.addEventListener("click",function(){
+
+         demo_canvas.setBackgroundColor(0xA5C7FF);
+    });
+    var darkdarkgrey = document.getElementById("darkdarkgrey");
+    darkdarkgrey.addEventListener("click",function(){
+     
+         demo_canvas.setBackgroundColor(0x010101);
+    });
+    var white = document.getElementById("white");
+    white.addEventListener("click",function(){
+      
+         demo_canvas.setBackgroundColor(0xffffff);
+    });
+
+    
     demo_canvas.start();
+    var colorCanvas = new voxJSCanvas("colorGuidelinesCanvas");
+
+    fillColorModal(["0x00ff00","0x664611"],arrayToMesh.output(),colorCanvas);
      
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
 
@@ -295,10 +320,10 @@ let arrayToMesh = new ArrayToMesh(model);
  
     var useME : boolean = true;
     objUpload.addEventListener("change", function(){
-        console.log("I am here");
+     //   console.log("I am here");
         var OBJFile : File = objUpload.files[0];
         useME = false;
-        converterOne = new fileReader(OBJFile,doRest,[demo_canvas,converterOne_canvas,ruleApplyer,arrayToMesh]);
+        converterOne = new fileReader(OBJFile,doRest,[demo_canvas,converterOne_canvas,ruleApplyer,colorCanvas]);
 
        // console.log("Input test",converterOne.getArray());
 
@@ -311,9 +336,9 @@ let arrayToMesh = new ArrayToMesh(model);
         {
            // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
            
- console.log("Full editor",editor.getValue());
+ //console.log("Full editor",editor.getValue());
  var jsonString = editor.getValue();
-           console.log("editor",jsonString)
+       //    console.log("editor",jsonString)
  //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
             ruleApplyer.convert(ruleFile, model);
@@ -321,7 +346,6 @@ let arrayToMesh = new ArrayToMesh(model);
           //  console.log("Before Group",converterOne_model);
             converterOne_model = ruleApplyer.output();
           //  console.log("After Group",converterOne_model);
-           demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
             demo_canvas.setMesh(converterOne_model);
         }) ;
         }
@@ -334,19 +358,33 @@ function doRest(model : string[][][],other : any)
 
       //  array = converterOne.getArray();
 
-         console.log("Input File array 2",model);
+     //    console.log("Input File array 2",model);
 
-    other[1].CameraPosition(0,0,10);
+    // console.log(other);
+
+var largest = model.length;
+if(model[0].length > largest)
+    {
+        largest > model[0].length;
+    }
+if(model[0][0].length > largest)
+    {
+        largest > model[0][0].length;
+    }
+        
+
+    other[1].CameraPosition(0,0,largest*2);
     var arrayToMesh = new ArrayToMesh(model);
+  // var wireframeModel = arrayToMesh.output();
      other[1].setMesh(arrayToMesh.output());
-
+    fillColorModal(other[4],arrayToMesh.output(),other[3]);
         var editor = ace.edit("editor");
        // var editor = <HTMLDivElement>document.getElementById("editor");
         //  var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
         //    console.log("editor",jsonString)
  //console.log("Input File array 5",array);
         
- console.log("Full editor",editor.getValue());
+ //console.log("Full editor",editor.getValue());
  var jsonString = editor.getValue();
  var  ruleFile = JSON.parse(jsonString);
             other[2].convert(ruleFile, model);
@@ -356,6 +394,7 @@ function doRest(model : string[][][],other : any)
 
           //  console.log("After Group",converterOne_model);
            other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
+           other[0].CameraPosition(0,0,largest*2);
             other[0].setMesh(converterOne_model);
 
 
@@ -365,7 +404,7 @@ function doRest(model : string[][][],other : any)
          //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
           
           var jsonString = editor.getValue();
-         console.log("editor",jsonString)
+        // console.log("editor",jsonString)
  //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
             other[2].convert(ruleFile, model);
@@ -373,8 +412,49 @@ function doRest(model : string[][][],other : any)
           //  console.log("Before Group",converterOne_model);
             converterOne_model = other[2].output();
           //  console.log("After Group",converterOne_model);
-           other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
             other[0].setMesh(converterOne_model);
         }) ;
         
+}
+
+  function  rgbToHex(r:number,g:number,b:number) : string
+    {
+        var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+        console.log("Hex",parseInt(hex,16));
+        return hex;
+    }
+
+  function  componentToHex(c:number) : string
+    {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+function fillColorModal(colors : string[],model : THREE.Group, colorCanvas : voxJSCanvas)
+{
+
+    
+    var modal = document.getElementById("availableColorList");
+    colorCanvas.setMesh(model);
+    colorCanvas.start();
+
+    modal.innerHTML = "";
+
+    for(var i=0;i<colors.length;i++)
+        {
+            var color = colors[i].split("x");
+            var div = '<div class="col-xs-12 available-color-container">';
+                div +=  '<div class="col-xs-2 available-color-display" style="background-color: #'+ color[1] +'">';
+                div +=          '&nbsp;';
+                div += '</div>';
+                div += '<div class="col-xs-10 available-color-name">';
+                div +=  ' | ' + colors[i];
+                div +=  '</div>';
+                div +='</div>';
+
+                modal.innerHTML += div;
+        }
+
+    
+
 }

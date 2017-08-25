@@ -217,6 +217,13 @@ class fileReader {
     imageReady(image, ctx, callback, other) {
         var me = this;
         ctx.drawImage(image, 0, 0, image.width, image.height);
+        for (var c = 0; c < me.GvtArray.length; c++) {
+            var color = null;
+            var UV = me.GvtArray[c].split(" ");
+            var imgData = ctx.getImageData(image.width * parseFloat(UV[0]), image.height * parseFloat(UV[1]), 1, 1).data;
+            color = me.rgbToHex(imgData[0], imgData[1], imgData[2]);
+            me.colorMatrix[c] = color;
+        }
         for (var x = 0; x < me.finalMatrix.length; x++) {
             for (var y = 0; y < me.finalMatrix[x].length; y++) {
                 for (var z = 0; z < me.finalMatrix[x][y].length; z++) {
@@ -224,13 +231,13 @@ class fileReader {
                     var colorIndex = me.finalMatrix[x][y][z];
                     if (colorIndex != "") {
                         console.log("index", x, y, z, colorIndex);
-                        var colors = me.GvtArray[parseInt(colorIndex) - 1].split(" ");
-                        var u = parseFloat(colors[0]);
-                        var v = parseFloat(colors[1]);
-                        console.log("u", u, "v", v);
-                        var imgData = ctx.getImageData(image.width * u, image.height * v, 1, 1).data;
-                        color = me.rgbToHex(imgData[0], imgData[1], imgData[2]);
-                        console.log("Color", x, y, z, color);
+                        var color = me.colorMatrix[parseInt(colorIndex) - 1];
+                        //   var u : number = parseFloat(colors[0]);
+                        //   var v : number = parseFloat(colors[1]);
+                        //   console.log("u",u,"v",v);
+                        //   var imgData = ctx.getImageData(image.width*u,image.height*v,1,1).data;
+                        //   color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
+                        //   console.log("Color",x,y,z,color);
                         me.finalMatrix[x][y][z] = color;
                     }
                     else {
@@ -241,6 +248,7 @@ class fileReader {
             }
         }
         console.log("Matrix", me.finalMatrix);
+        other.push(me.colorMatrix);
         callback(me.finalMatrix, other);
     }
     rgbToHex(r, g, b) {
@@ -251,13 +259,6 @@ class fileReader {
     componentToHex(c) {
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
-    }
-    check() {
-        if (this.ready === true) {
-            return this.finalMatrix;
-        }
-        window.setTimeout(this.check, 1000);
-        return this.finalMatrix;
     }
     setVertex(line, skip) {
         //alert("In setVertex " + line);
@@ -1465,6 +1466,7 @@ class RuleApplyer {
         var ruleSets = this.interpreter.outPutRuleSet();
         var cellularRuleSets = this.interpreter.outPutCellularRuleSet();
         console.log("CellularRuleSet", cellularRuleSets);
+        console.log("ruleSets", ruleSets);
         var xLength = this.theArray.length;
         var yLength = this.theArray[0].length;
         var zLength = this.theArray[0][0].length;
@@ -1599,6 +1601,16 @@ class RuleInterpreter {
             if (shapeFound == false) {
                 GEO = new THREE.BoxGeometry(1, 1, 1);
                 console.warn("No matching shapes found, defaulting to 'cube'");
+            }
+            if (this.ruleFile.Rules[i].rotation != null) {
+                var rotationArray = this.ruleFile.Rules[i].rotation;
+                GEO = GEO.rotateX(rotationArray[0]);
+                GEO = GEO.rotateY(rotationArray[1]);
+                GEO = GEO.rotateZ(rotationArray[2]);
+            }
+            if (this.ruleFile.Rules[i].scale != null) {
+                var scaleArray = this.ruleFile.Rules[i].scale;
+                GEO = GEO.scale(scaleArray[0], scaleArray[1], scaleArray[2]);
             }
             var texture = this.textureLoader.load(this.ruleFile.Rules[i].Texture);
             var bumpTexture = null;
@@ -1807,12 +1819,8 @@ class voxJSCanvas {
         this.controls.minDistance = 0;
         this.controls.maxDistance = Infinity;
         this.controls.enableZoom = true;
-        this.scene.background = new THREE.Color(0xa5c7ff);
-    }
-    zoomInOut(z) {
-        //  console.log("CameraPos",this.camera.position);
-        this.camera.position.z = ((z));
-        //  this.controls.object = ;
+        this.scene.background = new THREE.Color(0xffffff);
+        this.play_pause = true;
     }
     CameraPosition(x, y, z) {
         this.camera.position.set(x, y, z);
@@ -1851,7 +1859,9 @@ class voxJSCanvas {
     render() {
         // Each frame we want to render the scene again
         requestAnimationFrame(() => this.render());
-        this.voxel.rotation.y += 0.01;
+        if (this.play_pause) {
+            this.voxel.rotation.y += 0.01;
+        }
         // this.voxel.getObjectByName("212").rotation.x += 0.01;
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
@@ -1923,23 +1933,21 @@ window.onload = () => {
     let converterTwo_canvasOne = new voxJSCanvas("converter2Canvas1");
     // var arrayToMesh = new ArrayToMesh(model);
     converterTwo_canvasOne.CameraPosition(0, 0, 10);
-    converterTwo_canvasOne.setDimensions(400, 400);
     converterTwo_canvasOne.setMesh(arrayToMesh.output());
     converterTwo_canvasOne.setBackgroundColor(0xffffff);
     converterTwo_canvasOne.start();
     let converterTwo_canvasTwo = new voxJSCanvas("converter2Canvas2");
     // var arrayToMesh = new ArrayToMesh(model);
     converterTwo_canvasTwo.CameraPosition(0, 0, 10);
-    converterTwo_canvasTwo.setDimensions(400, 400);
     converterTwo_canvasTwo.setMesh(arrayToMesh.output());
     converterTwo_canvasTwo.setBackgroundColor(0xffffff);
     converterTwo_canvasTwo.start();
     var editor = ace.edit("editor");
     //editor.container = <HTMLDivElement>document.getElementById("editor");
     //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-    console.log("Full editor", editor.getValue());
+    //console.log("Full editor",editor.getValue());
     var jsonString = editor.getValue();
-    console.log("editor", jsonString);
+    //console.log("editor",jsonString)
     // console.log("editor",jsonString);
     var ruleFile = JSON.parse(jsonString);
     // console.log("fileJson",JSON.parse(".resources/ruleExample.json"));
@@ -1951,24 +1959,46 @@ window.onload = () => {
     demo_canvas.CameraPosition(0, 0, 10);
     demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
     demo_canvas.setMesh(converterOne_model);
+    var darkgrey = document.getElementById("darkgrey");
+    darkgrey.addEventListener("click", function () {
+        demo_canvas.setBackgroundColor(0x020202);
+    });
+    var lightgrey = document.getElementById("lightgrey");
+    lightgrey.addEventListener("click", function () {
+        demo_canvas.setBackgroundColor(0x0b0b0b);
+    });
+    var lightblue = document.getElementById("lightblue");
+    lightblue.addEventListener("click", function () {
+        demo_canvas.setBackgroundColor(0xA5C7FF);
+    });
+    var darkdarkgrey = document.getElementById("darkdarkgrey");
+    darkdarkgrey.addEventListener("click", function () {
+        demo_canvas.setBackgroundColor(0x010101);
+    });
+    var white = document.getElementById("white");
+    white.addEventListener("click", function () {
+        demo_canvas.setBackgroundColor(0xffffff);
+    });
     demo_canvas.start();
+    var colorCanvas = new voxJSCanvas("colorGuidelinesCanvas");
+    fillColorModal(["0x00ff00", "0x664611"], arrayToMesh.output(), colorCanvas);
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
     var objUpload = document.getElementById("objfile");
     var converterOne;
     var useME = true;
     objUpload.addEventListener("change", function () {
-        console.log("I am here");
+        //   console.log("I am here");
         var OBJFile = objUpload.files[0];
         useME = false;
-        converterOne = new ObjToArray_1.fileReader(OBJFile, doRest, [demo_canvas, converterOne_canvas, ruleApplyer, arrayToMesh]);
+        converterOne = new ObjToArray_1.fileReader(OBJFile, doRest, [demo_canvas, converterOne_canvas, ruleApplyer, colorCanvas]);
         // console.log("Input test",converterOne.getArray());
     });
     if (useME == true) {
         uplouder[0].addEventListener("click", function () {
             // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-            console.log("Full editor", editor.getValue());
+            //console.log("Full editor",editor.getValue());
             var jsonString = editor.getValue();
-            console.log("editor", jsonString);
+            //    console.log("editor",jsonString)
             //console.log("Input File array 5",array);
             ruleFile = JSON.parse(jsonString);
             ruleApplyer.convert(ruleFile, model);
@@ -1976,23 +2006,32 @@ window.onload = () => {
             //  console.log("Before Group",converterOne_model);
             converterOne_model = ruleApplyer.output();
             //  console.log("After Group",converterOne_model);
-            demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
             demo_canvas.setMesh(converterOne_model);
         });
     }
 };
 function doRest(model, other) {
     //  array = converterOne.getArray();
-    console.log("Input File array 2", model);
-    other[1].CameraPosition(0, 0, 10);
+    //    console.log("Input File array 2",model);
+    // console.log(other);
+    var largest = model.length;
+    if (model[0].length > largest) {
+        largest > model[0].length;
+    }
+    if (model[0][0].length > largest) {
+        largest > model[0][0].length;
+    }
+    other[1].CameraPosition(0, 0, largest * 2);
     var arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
+    // var wireframeModel = arrayToMesh.output();
     other[1].setMesh(arrayToMesh.output());
+    fillColorModal(other[4], arrayToMesh.output(), other[3]);
     var editor = ace.edit("editor");
     // var editor = <HTMLDivElement>document.getElementById("editor");
     //  var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
     //    console.log("editor",jsonString)
     //console.log("Input File array 5",array);
-    console.log("Full editor", editor.getValue());
+    //console.log("Full editor",editor.getValue());
     var jsonString = editor.getValue();
     var ruleFile = JSON.parse(jsonString);
     other[2].convert(ruleFile, model);
@@ -2000,12 +2039,13 @@ function doRest(model, other) {
     //  console.log("Before Group",converterOne_model);
     //  console.log("After Group",converterOne_model);
     other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
+    other[0].CameraPosition(0, 0, largest * 2);
     other[0].setMesh(converterOne_model);
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
     uplouder[0].addEventListener("click", function () {
         //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
         var jsonString = editor.getValue();
-        console.log("editor", jsonString);
+        // console.log("editor",jsonString)
         //console.log("Input File array 5",array);
         ruleFile = JSON.parse(jsonString);
         other[2].convert(ruleFile, model);
@@ -2013,9 +2053,35 @@ function doRest(model, other) {
         //  console.log("Before Group",converterOne_model);
         converterOne_model = other[2].output();
         //  console.log("After Group",converterOne_model);
-        other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
         other[0].setMesh(converterOne_model);
     });
+}
+function rgbToHex(r, g, b) {
+    var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    console.log("Hex", parseInt(hex, 16));
+    return hex;
+}
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+function fillColorModal(colors, model, colorCanvas) {
+    var modal = document.getElementById("availableColorList");
+    colorCanvas.setMesh(model);
+    colorCanvas.start();
+    modal.innerHTML = "";
+    for (var i = 0; i < colors.length; i++) {
+        var color = colors[i].split("x");
+        var div = '<div class="col-xs-12 available-color-container">';
+        div += '<div class="col-xs-2 available-color-display" style="background-color: #' + color[1] + '">';
+        div += '&nbsp;';
+        div += '</div>';
+        div += '<div class="col-xs-10 available-color-name">';
+        div += ' | ' + colors[i];
+        div += '</div>';
+        div += '</div>';
+        modal.innerHTML += div;
+    }
 }
 
 },{"./ArrayToMesh":1,"./ObjToArray":2,"./OrbitControls":3,"./RuleApplyer":4,"three":6}],6:[function(require,module,exports){
