@@ -1923,6 +1923,39 @@ window.onload = () => {
             }
         }
     }
+    var ruleFileModel = new Array();
+    for (var i = 0; i < 10; i++) {
+        ruleFileModel.push(new Array());
+        for (var j = 0; j < 10; j++) {
+            ruleFileModel[i].push(new Array());
+            for (var k = 0; k < 10; k++) {
+                ruleFileModel[i][j].push(null);
+            }
+        }
+    }
+    for (var x = 0; x < 10; x++) {
+        for (var z = 0; z < 10; z++) {
+            ruleFileModel[x][0][z] = "0x00bb00";
+        }
+    }
+    for (var y = 0; y < 8; y++) {
+        ruleFileModel[3][y][2] = "0x3300cc";
+        ruleFileModel[3][y][3] = "0x3300cc";
+        ruleFileModel[4][y][2] = "0x3300cc";
+        ruleFileModel[4][y][3] = "0x3300cc";
+    }
+    ruleFileModel[3][8][2] = "0xee0000";
+    ruleFileModel[3][8][3] = "0xee0000";
+    ruleFileModel[4][8][2] = "0xee0000";
+    ruleFileModel[4][8][3] = "0xee0000";
+    for (var y = 0; y < 6; y++) {
+        ruleFileModel[2][y][7] = "0x3300cc";
+    }
+    ruleFileModel[2][6][7] = "0xee0000";
+    for (var y = 0; y < 5; y++) {
+        ruleFileModel[7][y][8] = "0x3300cc";
+    }
+    ruleFileModel[7][5][8] = "0xee0000";
     let arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
     //let wireFrameMesh : THREE.Group = arrayToMesh.output();
     let converterOne_canvas = new voxJSCanvas("converter1Canvas");
@@ -1930,16 +1963,23 @@ window.onload = () => {
     converterOne_canvas.setMesh(arrayToMesh.output());
     converterOne_canvas.setBackgroundColor(0xffffff);
     converterOne_canvas.start();
+    var ruleFile1 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
+    var ruleFile2 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}';
+    var ruleFile = JSON.parse(ruleFile1);
+    var ruleApplyerDemo = new RuleApplyer_1.RuleApplyer();
+    ruleApplyerDemo.convert(ruleFile, ruleFileModel);
     let converterTwo_canvasOne = new voxJSCanvas("converter2Canvas1");
     // var arrayToMesh = new ArrayToMesh(model);
-    converterTwo_canvasOne.CameraPosition(0, 0, 10);
-    converterTwo_canvasOne.setMesh(arrayToMesh.output());
+    converterTwo_canvasOne.CameraPosition(0, 0, 20);
+    converterTwo_canvasOne.setMesh(ruleApplyerDemo.output());
     converterTwo_canvasOne.setBackgroundColor(0xffffff);
     converterTwo_canvasOne.start();
+    var ruleFile = JSON.parse(ruleFile2);
+    ruleApplyerDemo.convert(ruleFile, ruleFileModel);
     let converterTwo_canvasTwo = new voxJSCanvas("converter2Canvas2");
     // var arrayToMesh = new ArrayToMesh(model);
-    converterTwo_canvasTwo.CameraPosition(0, 0, 10);
-    converterTwo_canvasTwo.setMesh(arrayToMesh.output());
+    converterTwo_canvasTwo.CameraPosition(0, 0, 20);
+    converterTwo_canvasTwo.setMesh(ruleApplyerDemo.output());
     converterTwo_canvasTwo.setBackgroundColor(0xffffff);
     converterTwo_canvasTwo.start();
     var editor = ace.edit("editor");
