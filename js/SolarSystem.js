@@ -155,31 +155,31 @@ scene.add(particleSystem);
 
 
         var sun = mesh.getChildByName("5000");
-           sun.rotation.y += 0.01
+           sun.rotation.y += 0.1
        
 
         var merc = mesh.getChildByName("5900");
-           merc.rotation.y += 0.01 
+           merc.rotation.y += 0.1 
             matrix.makeRotationY(1*Math.PI/180);
            merc.position.applyMatrix4(matrix);
         var venus = mesh.getChildByName("6100");
-           venus.rotation.y += 0.01
+           venus.rotation.y += 0.1
             matrix.makeRotationY(0.9*Math.PI/180);
            venus.position.applyMatrix4(matrix);
 
         var earth = mesh.getChildByName("6500");
-           earth.rotation.y += 0.01
+           earth.rotation.y += 0.1
                       matrix.makeRotationY(0.7*Math.PI/180);
            earth.position.applyMatrix4(matrix);
 
                 var mars = mesh.getChildByName("6700");
-           mars.rotation.y += 0.01
+           mars.rotation.y += 0.1
                       matrix.makeRotationY(0.65*Math.PI/180);
            mars.position.applyMatrix4(matrix);
 
 
                 var jupiter = mesh.getChildByName("7300");
-           jupiter.rotation.y += 0.01
+           jupiter.rotation.y += 0.1
                       matrix.makeRotationY(0.5*Math.PI/180);
            jupiter.position.applyMatrix4(matrix);
 
@@ -189,7 +189,7 @@ for(var i=0;i<mesh.children.length;i++)
         if(mesh.children[i].name == "8000")
             {
                       var saturn = mesh.children[i];
-            saturn.rotation.y += 0.01
+            saturn.rotation.y += 0.1
                       matrix.makeRotationY(0.3*Math.PI/180);
            saturn.position.applyMatrix4(matrix);
             }
@@ -198,12 +198,12 @@ for(var i=0;i<mesh.children.length;i++)
           
 
                 var uranus = mesh.getChildByName("8500");
-           uranus.rotation.y += 0.01
+           uranus.rotation.y += 0.1
                       matrix.makeRotationY(0.2*Math.PI/180);
            uranus.position.applyMatrix4(matrix);
 
                 var neptune = mesh.getChildByName("9200");
-           neptune.rotation.y += 0.01
+           neptune.rotation.y += 0.1
                       matrix.makeRotationY(0.1*Math.PI/180);
            neptune.position.applyMatrix4(matrix);
           // this.voxel.getObjectByName("212").rotation.x += 0.01;
