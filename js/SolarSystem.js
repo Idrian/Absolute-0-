@@ -30,7 +30,7 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
 
         scene.add( ambientLight);
 
-        var controls =   new OrbitControls(camera,  renderer.domElement);
+        var controls = new THREE.OrbitControls(camera,  renderer.domElement);
 
         scene.background =  new THREE.Color( 0x020202 );
 
