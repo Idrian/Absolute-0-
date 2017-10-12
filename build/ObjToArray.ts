@@ -1,3 +1,6 @@
+import {rgbToHex} from './ColourFunctions';
+import {componentToHex} from './ColourFunctions';
+
 export class fileReader {
     element: File;
 
@@ -33,7 +36,7 @@ export class fileReader {
     ready: boolean ;
 
     //called immediately
-    constructor(element: File, callback : Function, other : any) {
+    constructor(element: File, callback : Function) {
        // this.ready = false;
         this.element = element;
 
@@ -82,7 +85,7 @@ export class fileReader {
         this.reader = new FileReader();
        // var callback = fn;
                this.reader.onload =  function () {
-                 console.log("Cameron is wrong test 4",file.name);
+                // console.log("Cameron is wrong test 4",file.name);
                 //alert("I'm in");
                 // By lines
                 var lines = this.result.split('\n');
@@ -119,15 +122,15 @@ export class fileReader {
                     }
                 }
 
-                console.log("Vertexes" , me.GvArray);
-                 console.log("Normals" , me.GvnArray);
-                  console.log("Faces" , me.GfArray);
+                //console.log("Vertexes" , me.GvArray);
+                 //console.log("Normals" , me.GvnArray);
+                  //console.log("Faces" , me.GfArray);
  //console.log("Cameron is wrong test 1",this.element.name);
              me.buildMatrix();
-             me.fillColors(callback,other);
+             me.fillColors(callback);
                 me.ready = true;
 
-                console.log("ready state", this.readyState)
+               // console.log("ready state", this.readyState)
             //    document.getElementById("display").innerHTML = "Wow";
             //    //alert("in " + me.largestX);
 
@@ -168,6 +171,10 @@ getArray(): string[][][] {
     return this.finalMatrix; 
 }
 
+getColors() : string[] {
+    return this.colorMatrix;
+}
+
 /*getFinalMatrix() : string[][][]
 {
     var returnArray : string[][][];
@@ -183,11 +190,11 @@ getArray(): string[][][] {
     });
 }*/
 
-fillColors(callback : Function, other : any)
+fillColors(callback : Function)
 {
-    console.log("Colors",this.GvtArray[0]);
-    console.log("Colors",this.GvtArray[1]);
-    console.log("Matrix",this.finalMatrix);
+    //console.log("Colors",this.GvtArray[0]);
+    //console.log("Colors",this.GvtArray[1]);
+    //console.log("Matrix",this.finalMatrix);
 
 
  var canvas = document.createElement("canvas");
@@ -198,7 +205,7 @@ fillColors(callback : Function, other : any)
 
             var image : HTMLImageElement = new Image();
            
-            image.onload = (() => this.imageReady(image,ctx,callback,other)); 
+            image.onload = (() => this.imageReady(image,ctx,callback)); 
 
 
         }
@@ -207,7 +214,7 @@ fillColors(callback : Function, other : any)
         
 }
 
-imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
+imageReady(image : HTMLImageElement,ctx : any,callback : Function)
 {
                  var me = this;
                  ctx.drawImage(image, 0, 0,image.width,image.height);
@@ -218,7 +225,7 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
                         var UV = me.GvtArray[c].split(" ");
                         var imgData = ctx.getImageData(image.width*parseFloat(UV[0]),image.height*parseFloat(UV[1]),1,1).data;
 
-                        color = me.rgbToHex(imgData[0],imgData[1],imgData[2]);
+                        color = rgbToHex(imgData[0],imgData[1],imgData[2]);
                         me.colorMatrix[c] = color;
                     }
                 for(var x=0;x<me.finalMatrix.length;x++)
@@ -253,24 +260,13 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function,other :any)
                     }
                 }
 
-                 console.log("Matrix",me.finalMatrix);
-                 other.push(me.colorMatrix);
+                // console.log("Matrix",me.finalMatrix);
+                 //other.push(me.colorMatrix);
 
-                  callback(me.finalMatrix,other);
+                  callback();
 }
 
-    rgbToHex(r:number,g:number,b:number) : string
-    {
-        var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-        console.log("Hex",hex);
-        return hex;
-    }
 
-    componentToHex(c:number) : string
-    {
-        var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
 
     setVertex(line: string[], skip: boolean): void {
         //alert("In setVertex " + line);

@@ -2,7 +2,10 @@ import * as THREE from 'three';
 import { OrbitControls } from './OrbitControls';
 import {ArrayToMesh} from './ArrayToMesh';
 import {RuleApplyer} from './RuleApplyer';
+import {CellularRuleApplyer} from './CellularRuleApplyer';
 import {fileReader} from './ObjToArray';
+
+import {ImgToArray} from './ImgToArray';
 
 
 class voxJSCanvas
@@ -144,7 +147,9 @@ class voxJSCanvas
     }
 }
 
-window.onload = () => {
+
+
+/*window.onload = () => {
    
    // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
@@ -174,7 +179,7 @@ window.onload = () => {
     converterOne_canvas.setMesh(converterOne_model);
     */
 
-    var model = new Array();
+  /*  var model = new Array();
 
     for(var i=0;i<5;i++)
         {
@@ -331,10 +336,21 @@ let arrayToMesh = new ArrayToMesh(model);
    // console.log("fileJson",JSON.parse(".resources/ruleExample.json"));
 
   //  var arrayToMesh = new ArrayToMesh(model);
+    var cellularRuleApplyer = new CellularRuleApplyer();
+    cellularRuleApplyer.convert(ruleFile, model);
+
+    var newArray : string[][][] = cellularRuleApplyer.output();
+
+    console.log("CellularArray: ",newArray);
+
     var ruleApplyer = new RuleApplyer();
-    ruleApplyer.convert(ruleFile, model);
+    ruleApplyer.convert(ruleFile, newArray);
 
     converterOne_model = ruleApplyer.output();
+
+    
+
+
     let demo_canvas = new voxJSCanvas("voxelDemo");
 
  
@@ -390,6 +406,7 @@ let arrayToMesh = new ArrayToMesh(model);
 
     });
 
+
     if(useME == true)
         {
     uplouder[0].addEventListener("click", function()
@@ -409,6 +426,17 @@ let arrayToMesh = new ArrayToMesh(model);
             demo_canvas.setMesh(converterOne_model);
         }) ;
         }
+
+  /*      var imgConverter : ImgToArray = new ImgToArray();
+
+        var imgArray : string[] = new Array<string>();
+
+        imgArray.push('./example-models/1.png');
+
+    imgConverter.convert(imgArray,function()
+    {
+        console.log("imgArray: ",imgConverter.output());
+    });*//*
 };
 
 
@@ -517,4 +545,14 @@ function fillColorModal(colors : string[],model : THREE.Group, colorCanvas : vox
 
     
 
-}
+}*/
+
+(<any>window).voxJSCanvas = voxJSCanvas;
+//(<any>window).THREE = THREE;
+(<any>window).ArrayToMesh = ArrayToMesh;
+(<any>window).RuleApplyer = RuleApplyer;
+(<any>window).CellularRuleApplyer = CellularRuleApplyer;
+(<any>window).fileReader = fileReader;
+(<any>window).OrbitControls = OrbitControls;
+
+
