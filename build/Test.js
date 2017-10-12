@@ -230,9 +230,9 @@ let arrayToMesh = new  ArrayToMesh(model);
     
     demo_canvas.start();
     var colorCanvas = new  voxJSCanvas("colorGuidelinesCanvas");
-
+    
     fillColorModal(["0x00ff00","0x664611"],arrayToMesh.output(),colorCanvas);
-     
+     colorCanvas.start();
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
 
     var objUpload = document.getElementById("objfile");
@@ -271,6 +271,7 @@ let arrayToMesh = new  ArrayToMesh(model);
                 var arrayToMesh = new  ArrayToMesh(model);
             // var wireframeModel = arrayToMesh.output();
               //  converterOne_canvas.setMesh(arrayToMesh.output());
+             
                 fillColorModal(converterOne.getColors(),arrayToMesh.output(),colorCanvas);
                     var editor = ace.edit("editor");
                 // var editor = <HTMLDivElement>document.getElementById("editor");
@@ -382,7 +383,7 @@ function fillColorModal(colors,model, colorCanvas)
     
     var modal = document.getElementById("availableColorList");
     colorCanvas.setMesh(model);
-    colorCanvas.start();
+    
 
     modal.innerHTML = "";
 
