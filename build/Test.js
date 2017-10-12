@@ -350,6 +350,7 @@ let arrayToMesh = new  ArrayToMesh(model);
 
     pauseBtn.addEventListener("click",function(){
         demo_canvas.play_pause = !demo_canvas.play_pause;
+        colorCanvas.play_pause = !colorCanvas.play_pause;
     });
 };
 
