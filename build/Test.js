@@ -147,13 +147,13 @@ let arrayToMesh = new  ArrayToMesh(model);
      converterOne_canvas.setBackgroundColor(0xffffff);
      converterOne_canvas.start();*/
 
-    var ruleFile1 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
-    var ruleFile2 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}'
+  //  var ruleFile1 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
+  //  var ruleFile2 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}'
 
-    var ruleFile = JSON.parse(ruleFile1);
+  //  var ruleFile = JSON.parse(ruleFile1);
 
-    var ruleApplyerDemo = new  RuleApplyer();
-    ruleApplyerDemo.convert(ruleFile, ruleFileModel);
+  //  var ruleApplyerDemo = new  RuleApplyer();
+  //  ruleApplyerDemo.convert(ruleFile, ruleFileModel);
 
   /*   let converterTwo_canvasOne = new  voxJSCanvas("converter2Canvas1");  
 
@@ -267,10 +267,10 @@ let arrayToMesh = new  ArrayToMesh(model);
                 }
         
 
-                converterOne_canvas.CameraPosition(0,0,largest*2);
+              //  converterOne_canvas.CameraPosition(0,0,largest*2);
                 var arrayToMesh = new  ArrayToMesh(model);
             // var wireframeModel = arrayToMesh.output();
-                converterOne_canvas.setMesh(arrayToMesh.output());
+              //  converterOne_canvas.setMesh(arrayToMesh.output());
                 fillColorModal(converterOne.getColors(),arrayToMesh.output(),colorCanvas);
                     var editor = ace.edit("editor");
                 // var editor = <HTMLDivElement>document.getElementById("editor");
