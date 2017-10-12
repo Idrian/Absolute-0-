@@ -619,15 +619,27 @@ button.btn.btn-color-selection:focus{
 }
 
 .converter2-demo-toggle-container{
-    margin-top: 80px;
+    margin-top: 0px;
     text-align: center;
+    padding: 0;
+    padding-top: 80px;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .converter2-demo-toggle-container .rules-file-button-container{
     color: white;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .converter2-demo-toggle-container a{
     color: #222;
+}
+
+#solarSystem{
+    padding: 0;
+    margin-top: -200px;
 }
 
