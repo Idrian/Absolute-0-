@@ -49,12 +49,328 @@ class ArrayToMesh {
 }
 exports.ArrayToMesh = ArrayToMesh;
 
-},{"three":6}],2:[function(require,module,exports){
+},{"three":9}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Interpreter_1 = require("./Interpreter");
+class CellularRuleApplyer {
+    constructor() {
+        //  console.log("JSON",ruleFile.Rules[0]);
+        this.interpreter = new Interpreter_1.RuleInterpreter();
+    }
+    convert(ruleFile, inputArray) {
+        this.theArray = inputArray;
+        this.interpreter.setRuleFile(ruleFile);
+        var cellularRuleSets = this.interpreter.outPutCellularRuleSet();
+        console.log("ruleSets", cellularRuleSets);
+        if (cellularRuleSets.length > 0) {
+            for (var x = 0; x < inputArray.length; x++) {
+                for (var y = 0; y < inputArray[x].length; y++) {
+                    for (var z = 0; z < inputArray[x][y].length; z++) {
+                        var Top, Bottom, Left, Right, Front, Back;
+                        var currColor = inputArray[x][y][z];
+                        //LEFT
+                        if (x > 0) {
+                            Left = inputArray[x - 1][y][z];
+                        }
+                        else {
+                            Left = null;
+                        }
+                        //RIGHT
+                        if (x < (inputArray.length - 1)) {
+                            Right = inputArray[x + 1][y][z];
+                        }
+                        else {
+                            Right = null;
+                        }
+                        //BOTTOM   
+                        if (y > 0) {
+                            Bottom = inputArray[x][y - 1][z];
+                        }
+                        else {
+                            Bottom = null;
+                        }
+                        //TOP
+                        if (y < (inputArray[x].length - 1)) {
+                            Top = inputArray[x][y + 1][z];
+                        }
+                        else {
+                            Top = null;
+                        }
+                        //BACK    
+                        if (z > 0) {
+                            Back = inputArray[x][y][z + 1];
+                        }
+                        else {
+                            Back = null;
+                        }
+                        //FRONT
+                        if (z < (inputArray[x][y].length - 1)) {
+                            Front = inputArray[x][y][z - 1];
+                        }
+                        else {
+                            Front = null;
+                        }
+                        for (var c = 0; c < cellularRuleSets.length; c++) {
+                            if (currColor == cellularRuleSets[c].Color) {
+                                for (var r = 0; r < cellularRuleSets[c].rules.length; r++) {
+                                    if (Top == cellularRuleSets[c].rules[r].valids.Top &&
+                                        Bottom == cellularRuleSets[c].rules[r].valids.Bottom &&
+                                        Front == cellularRuleSets[c].rules[r].valids.Front &&
+                                        Back == cellularRuleSets[c].rules[r].valids.Back &&
+                                        Left == cellularRuleSets[c].rules[r].valids.Left &&
+                                        Right == cellularRuleSets[c].rules[r].valids.Right) {
+                                        this.theArray[x][y][z] = cellularRuleSets[c].rules[r].newColor;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return this.theArray;
+    }
+    output() {
+        //console.log("Inside Before Group output",this.theMesh);
+        return this.theArray;
+    }
+    setInterpreter(newInterpreter) {
+        this.interpreter = newInterpreter;
+    }
+}
+exports.CellularRuleApplyer = CellularRuleApplyer;
+
+},{"./Interpreter":4}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function rgbToHex(r, g, b) {
+    var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    console.log("Hex", hex);
+    return hex;
+}
+exports.rgbToHex = rgbToHex;
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+exports.componentToHex = componentToHex;
+
+},{}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const THREE = require("three");
+class colorPositions {
+    constructor() {
+    }
+}
+class colorRules {
+    constructor() {
+        this.valids = new colorPositions();
+        //this.invalids = new colorPositions();
+        this.newColor = null;
+    }
+}
+exports.colorRules = colorRules;
+class RuleInterpreter {
+    constructor() {
+        //console.log("Rules",ruleFile)
+        this.textureLoader = new THREE.TextureLoader();
+        this.textureLoader.crossOrigin = "";
+        this.Shapes = new Array();
+        this.ruleSets = new Array();
+        this.cellularRuleSets = new Array();
+        this.Shapes.push({ ShapeName: "cube", ShapeGEO: new THREE.BoxGeometry(1, 1, 1) });
+        this.Shapes.push({ ShapeName: "cylinder", ShapeGEO: new THREE.CylinderGeometry(0.5, 0.5, 1, 16) });
+        this.Shapes.push({ ShapeName: "circle", ShapeGEO: new THREE.CircleGeometry(0.5, 16) });
+        this.Shapes.push({ ShapeName: "cone", ShapeGEO: new THREE.ConeGeometry(0.5, 1, 16) });
+        this.Shapes.push({ ShapeName: "dodecahedron", ShapeGEO: new THREE.DodecahedronGeometry(0.5, 0) });
+        this.Shapes.push({ ShapeName: "icosahedron", ShapeGEO: new THREE.IcosahedronGeometry(0.5, 0) });
+        this.Shapes.push({ ShapeName: "octahedron", ShapeGEO: new THREE.OctahedronGeometry(0.5, 0) });
+        this.Shapes.push({ ShapeName: "plane", ShapeGEO: new THREE.PlaneGeometry(1, 1, 16) });
+        this.Shapes.push({ ShapeName: "pyramid", ShapeGEO: new THREE.CylinderGeometry(0, 0.7, 1, 4).rotateY(0.785398) });
+        this.Shapes.push({ ShapeName: "ring", ShapeGEO: new THREE.RingGeometry(0.2, 0.5, 16) });
+        this.Shapes.push({ ShapeName: "sphere", ShapeGEO: new THREE.SphereGeometry(0.5, 16, 16) });
+        this.Shapes.push({ ShapeName: "torus", ShapeGEO: new THREE.TorusGeometry(1, 2, 8, 16).scale(0.5, 0.5, 0.5) });
+        this.Shapes.push({ ShapeName: "torusknot", ShapeGEO: new THREE.TorusKnotGeometry(1, 2, 16, 8).scale(0.5, 0.5, 0.5) });
+    }
+    setRuleFile(ruleFile) {
+        this.ruleFile = ruleFile;
+        this.ruleSets = new Array();
+        this.cellularRuleSets = new Array();
+    }
+    outPutRuleSet() {
+        for (var i = 0; i < this.ruleFile.Rules.length; i++) {
+            var GEO;
+            var MAT;
+            var shapeFound = false;
+            if (this.ruleFile.Rules[i].Shape != null) {
+                var thisShape = this.ruleFile.Rules[i].Shape.toLowerCase();
+                for (var g = 0; g < this.Shapes.length; g++) {
+                    if (thisShape == this.Shapes[g].ShapeName.toLowerCase()) {
+                        GEO = this.Shapes[g].ShapeGEO;
+                        shapeFound = true;
+                        break;
+                    }
+                }
+            }
+            if (shapeFound == false) {
+                GEO = new THREE.BoxGeometry(1, 1, 1);
+                console.warn("No matching shapes found, defaulting to 'cube'");
+            }
+            if (this.ruleFile.Rules[i].rotation != null) {
+                var rotationArray = this.ruleFile.Rules[i].rotation;
+                GEO = GEO.clone();
+                GEO = GEO.rotateX(rotationArray[0]);
+                GEO = GEO.rotateY(rotationArray[1]);
+                GEO = GEO.rotateZ(rotationArray[2]);
+            }
+            if (this.ruleFile.Rules[i].scale != null) {
+                var scaleArray = this.ruleFile.Rules[i].scale;
+                GEO = GEO.clone();
+                GEO = GEO.scale(scaleArray[0], scaleArray[1], scaleArray[2]);
+            }
+            var texture = this.textureLoader.load(this.ruleFile.Rules[i].Texture);
+            var bumpTexture = null;
+            if (this.ruleFile.Rules[i].Bmap != null) {
+                bumpTexture = this.textureLoader.load(this.ruleFile.Rules[i].Bmap);
+            }
+            var matColor = "0xffffff";
+            if (this.ruleFile.Rules[i].Color != null) {
+                matColor = this.ruleFile.Rules[i].Color;
+            }
+            // console.log("Textures","map",texture,"bmap",bumpTexture);
+            MAT = new THREE.MeshPhongMaterial({ map: texture, bumpMap: bumpTexture, bumpScale: 1.0, color: +matColor });
+            // MAT.color.setHex(this.ruleFile.Rules[i].Color);
+            if (thisShape == "ring" || thisShape == "plane" || thisShape == "circle") {
+                MAT.side = THREE.DoubleSide;
+            }
+            this.ruleSets.push({ Color: this.ruleFile.Rules[i].Key, Geometry: GEO, Material: MAT });
+        }
+        //console.log("Rule-set",this.ruleSets);
+        return this.ruleSets;
+    }
+    outPutCellularRuleSet() {
+        if (this.ruleFile.cellularRules != null) {
+            for (var i = 0; i < this.ruleFile.cellularRules.length; i++) {
+                var currentColor = this.ruleFile.cellularRules[i].Color;
+                var newColorRuleSet = new colorRules();
+                //TOP
+                if (this.ruleFile.cellularRules[i].Top != null) {
+                    if (this.ruleFile.cellularRules[i].Top.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Top.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Top = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Top = this.ruleFile.cellularRules[i].Top;
+                        //newColorRuleSet.invalids.Top = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Top = null;
+                    //newColorRuleSet.invalids.Top = null;
+                }
+                //BOTTOM
+                if (this.ruleFile.cellularRules[i].Bottom != null) {
+                    if (this.ruleFile.cellularRules[i].Bottom.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Bottom.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Bottom = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Bottom = this.ruleFile.cellularRules[i].Bottom;
+                        //newColorRuleSet.invalids.Bottom = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Bottom = null;
+                    //newColorRuleSet.invalids.Bottom = null;
+                }
+                //LEFT
+                if (this.ruleFile.cellularRules[i].Left != null) {
+                    if (this.ruleFile.cellularRules[i].Left.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Left.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Left = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Left = this.ruleFile.cellularRules[i].Left;
+                        //newColorRuleSet.invalids.Left = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Left = null;
+                    //newColorRuleSet.invalids.Left = null;
+                }
+                //RIGHT
+                if (this.ruleFile.cellularRules[i].Right != null) {
+                    if (this.ruleFile.cellularRules[i].Right.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Right.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Right = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Right = this.ruleFile.cellularRules[i].Right;
+                        // newColorRuleSet.invalids.Right = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Right = null;
+                    //newColorRuleSet.invalids.Right = null;
+                }
+                //FRONT
+                if (this.ruleFile.cellularRules[i].Front != null) {
+                    if (this.ruleFile.cellularRules[i].Front.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Front.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Front = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Front = this.ruleFile.cellularRules[i].Front;
+                        //newColorRuleSet.invalids.Front = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Front = null;
+                    //newColorRuleSet.invalids.Front = null;
+                }
+                //BACK
+                if (this.ruleFile.cellularRules[i].Back != null) {
+                    if (this.ruleFile.cellularRules[i].Back.toLowerCase() == "empty" || this.ruleFile.cellularRules[i].Back.toLowerCase() == "null") {
+                        newColorRuleSet.valids.Back = null;
+                    }
+                    else {
+                        newColorRuleSet.valids.Back = this.ruleFile.cellularRules[i].Back;
+                        //newColorRuleSet.invalids.Back = null;
+                    }
+                }
+                else {
+                    newColorRuleSet.valids.Back = null;
+                    //newColorRuleSet.invalids.Back = null;
+                }
+                newColorRuleSet.newColor = this.ruleFile.cellularRules[i].newColor;
+                var colorFound = false;
+                for (var c = 0; c < this.cellularRuleSets.length; c++) {
+                    if (currentColor == this.cellularRuleSets[c].Color) {
+                        colorFound = true;
+                        this.cellularRuleSets[c].rules.push(newColorRuleSet);
+                        break;
+                    }
+                }
+                if (colorFound == false) {
+                    var newColorRules = new Array();
+                    newColorRules.push(newColorRuleSet);
+                    this.cellularRuleSets.push({ Color: currentColor, rules: newColorRules });
+                }
+            }
+        }
+        return this.cellularRuleSets;
+    }
+    addShape(name, GEO) {
+        this.Shapes.push({ ShapeName: name, ShapeGEO: GEO });
+    }
+}
+exports.RuleInterpreter = RuleInterpreter;
+
+},{"three":9}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ColourFunctions_1 = require("./ColourFunctions");
 class fileReader {
     //called immediately
-    constructor(element, callback, other) {
+    constructor(element, callback) {
         this.reader = new FileReader();
         //declaring the arrays to hold the .obj data
         //holds the normals
@@ -117,7 +433,7 @@ class fileReader {
         this.reader = new FileReader();
         // var callback = fn;
         this.reader.onload = function () {
-            console.log("Cameron is wrong test 4", file.name);
+            // console.log("Cameron is wrong test 4",file.name);
             //alert("I'm in");
             // By lines
             var lines = this.result.split('\n');
@@ -150,14 +466,14 @@ class fileReader {
                     me.setVertex(lines[line], false);
                 }
             }
-            console.log("Vertexes", me.GvArray);
-            console.log("Normals", me.GvnArray);
-            console.log("Faces", me.GfArray);
+            //console.log("Vertexes" , me.GvArray);
+            //console.log("Normals" , me.GvnArray);
+            //console.log("Faces" , me.GfArray);
             //console.log("Cameron is wrong test 1",this.element.name);
             me.buildMatrix();
-            me.fillColors(callback, other);
+            me.fillColors(callback);
             me.ready = true;
-            console.log("ready state", this.readyState);
+            // console.log("ready state", this.readyState)
             //    document.getElementById("display").innerHTML = "Wow";
             //    //alert("in " + me.largestX);
             //    var dis = "";
@@ -188,6 +504,9 @@ class fileReader {
     getArray() {
         return this.finalMatrix;
     }
+    getColors() {
+        return this.colorMatrix;
+    }
     /*getFinalMatrix() : string[][][]
     {
         var returnArray : string[][][];
@@ -202,26 +521,26 @@ class fileReader {
             resolve(this.finalMatrix);
         });
     }*/
-    fillColors(callback, other) {
-        console.log("Colors", this.GvtArray[0]);
-        console.log("Colors", this.GvtArray[1]);
-        console.log("Matrix", this.finalMatrix);
+    fillColors(callback) {
+        //console.log("Colors",this.GvtArray[0]);
+        //console.log("Colors",this.GvtArray[1]);
+        //console.log("Matrix",this.finalMatrix);
         var canvas = document.createElement("canvas");
         if (canvas.getContext) {
             var ctx = canvas.getContext('2d');
             var image = new Image();
-            image.onload = (() => this.imageReady(image, ctx, callback, other));
+            image.onload = (() => this.imageReady(image, ctx, callback));
         }
         image.src = './example-models/1.png';
     }
-    imageReady(image, ctx, callback, other) {
+    imageReady(image, ctx, callback) {
         var me = this;
         ctx.drawImage(image, 0, 0, image.width, image.height);
         for (var c = 0; c < me.GvtArray.length; c++) {
             var color = null;
             var UV = me.GvtArray[c].split(" ");
             var imgData = ctx.getImageData(image.width * parseFloat(UV[0]), image.height * parseFloat(UV[1]), 1, 1).data;
-            color = me.rgbToHex(imgData[0], imgData[1], imgData[2]);
+            color = ColourFunctions_1.rgbToHex(imgData[0], imgData[1], imgData[2]);
             me.colorMatrix[c] = color;
         }
         for (var x = 0; x < me.finalMatrix.length; x++) {
@@ -247,18 +566,9 @@ class fileReader {
                 }
             }
         }
-        console.log("Matrix", me.finalMatrix);
-        other.push(me.colorMatrix);
-        callback(me.finalMatrix, other);
-    }
-    rgbToHex(r, g, b) {
-        var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-        console.log("Hex", hex);
-        return hex;
-    }
-    componentToHex(c) {
-        var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
+        // console.log("Matrix",me.finalMatrix);
+        //other.push(me.colorMatrix);
+        callback();
     }
     setVertex(line, skip) {
         //alert("In setVertex " + line);
@@ -911,7 +1221,7 @@ class face {
     }
 }
 
-},{}],3:[function(require,module,exports){
+},{"./ColourFunctions":3}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
@@ -1438,14 +1748,15 @@ class OrbitControls extends THREE.EventDispatcher {
 }
 exports.OrbitControls = OrbitControls;
 
-},{"three":6}],4:[function(require,module,exports){
+},{"three":9}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
+const Interpreter_1 = require("./Interpreter");
 class RuleApplyer {
     constructor() {
         //  console.log("JSON",ruleFile.Rules[0]);
-        this.interpreter = new RuleInterpreter();
+        this.interpreter = new Interpreter_1.RuleInterpreter();
     }
     /* setinterpretor(interpreter : RuleInterpreter)
      {
@@ -1464,44 +1775,55 @@ class RuleApplyer {
         }
         // console.log("Inside Before Group",this.theMesh);
         var ruleSets = this.interpreter.outPutRuleSet();
-        var cellularRuleSets = this.interpreter.outPutCellularRuleSet();
-        console.log("CellularRuleSet", cellularRuleSets);
-        console.log("ruleSets", ruleSets);
+        // var cellularRuleSets = this.interpreter.outPutCellularRuleSet();
+        // console.log("CellularRuleSet",cellularRuleSets);
+        //console.log("ruleSets",ruleSets);
         var xLength = this.theArray.length;
         var yLength = this.theArray[0].length;
         var zLength = this.theArray[0][0].length;
-        if (cellularRuleSets.length > 0) {
-            for (var x = 0; x < this.theArray.length; x++) {
-                for (var y = 0; y < this.theArray[x].length; y++) {
-                    for (var z = 0; z < this.theArray[x][y].length; z++) {
-                        for (var c = 0; c < cellularRuleSets.length; c++) {
-                            if (this.theArray[x][y][z] == cellularRuleSets[c].Color) {
-                                var Top, Bottom, Left, Right, Front, Back;
-                                if (x != xLength - 1) {
-                                    if (x != 0) {
-                                        //thus somewhere in the middle
-                                        Right = this.theArray[x + 1][y][z];
-                                        Left = this.theArray[x - 1][y][z];
-                                    }
-                                    else {
-                                    }
-                                }
-                                else {
-                                    Right = null;
-                                }
-                                if (y == this.theArray[x][y].length - 1) {
-                                    Top = null;
-                                }
-                                else {
-                                    Top = this.theArray[x][y + 1][z];
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        /* if(cellularRuleSets.length > 0)
+             {
+                 for(var x=0;x<this.theArray.length;x++)
+                 {
+                     for(var y=0;y<this.theArray[x].length;y++)
+                         {
+                             for(var z=0;z<this.theArray[x][y].length;z++)
+                                 {
+                                     for(var c=0;c<cellularRuleSets.length;c++)
+                                         {
+                                             if(this.theArray[x][y][z] == cellularRuleSets[c].Color)
+                                                 {
+                                                     var Top,Bottom,Left,Right,Front,Back;
+                                                     if(x != xLength-1)//not the absolute Right
+                                                         {
+                                                             if(x != 0)//not the absolute Left
+                                                                 {
+                                                                     //thus somewhere in the middle
+                                                                     Right = this.theArray[x+1][y][z];
+                                                                     Left = this.theArray[x-1][y][z];
+                                                                 }
+                                                                 else{//the most Left
+ 
+                                                                 }
+                                                         }
+                                                         else{//the most right
+                                                             Right = null;
+                                                         }
+                                                     if(y == this.theArray[x][y].length-1)
+                                                         {
+                                                              Top = null;
+                                                         }
+                                                         else{
+                                                              Top = this.theArray[x][y+1][z]
+                                                         }
+                                                     
+                                                     break;
+                                                 }
+                                         }
+                                 }
+                         }
+                 }
+             }*/
         /**
         * These Length variables are used to re-centre the group object as each object
         * will be placed at the index values of the arrays so we need to push them back
@@ -1543,246 +1865,21 @@ class RuleApplyer {
         //console.log("Inside Before Group output",this.theMesh);
         return this.theMesh.clone();
     }
+    setInterpreter(newInterpreter) {
+        this.interpreter = newInterpreter;
+    }
 }
 exports.RuleApplyer = RuleApplyer;
-class colorPositions {
-    constructor() {
-    }
-}
-class colorRules {
-    constructor() {
-        this.valids = new colorPositions();
-        this.invalids = new colorPositions();
-        this.newColor = null;
-    }
-}
-class RuleInterpreter {
-    constructor() {
-        //console.log("Rules",ruleFile)
-        this.textureLoader = new THREE.TextureLoader();
-        this.textureLoader.crossOrigin = "";
-        this.Shapes = new Array();
-        this.ruleSets = new Array();
-        this.cellularRuleSets = new Array();
-        this.Shapes.push({ ShapeName: "cube", ShapeGEO: new THREE.BoxGeometry(1, 1, 1) });
-        this.Shapes.push({ ShapeName: "cylinder", ShapeGEO: new THREE.CylinderGeometry(0.5, 0.5, 1, 16) });
-        this.Shapes.push({ ShapeName: "circle", ShapeGEO: new THREE.CircleGeometry(0.5, 16) });
-        this.Shapes.push({ ShapeName: "cone", ShapeGEO: new THREE.ConeGeometry(0.5, 1, 16) });
-        this.Shapes.push({ ShapeName: "dodecahedron", ShapeGEO: new THREE.DodecahedronGeometry(0.5, 0) });
-        this.Shapes.push({ ShapeName: "icosahedron", ShapeGEO: new THREE.IcosahedronGeometry(0.5, 0) });
-        this.Shapes.push({ ShapeName: "octahedron", ShapeGEO: new THREE.OctahedronGeometry(0.5, 0) });
-        this.Shapes.push({ ShapeName: "plane", ShapeGEO: new THREE.PlaneGeometry(1, 1, 16) });
-        this.Shapes.push({ ShapeName: "pyramid", ShapeGEO: new THREE.CylinderGeometry(0, 0.7, 1, 4).rotateY(0.785398) });
-        this.Shapes.push({ ShapeName: "ring", ShapeGEO: new THREE.RingGeometry(0.2, 0.5, 16) });
-        this.Shapes.push({ ShapeName: "sphere", ShapeGEO: new THREE.SphereGeometry(0.5, 16, 16) });
-        this.Shapes.push({ ShapeName: "torus", ShapeGEO: new THREE.TorusGeometry(1, 2, 8, 16).scale(0.5, 0.5, 0.5) });
-        this.Shapes.push({ ShapeName: "torusknot", ShapeGEO: new THREE.TorusKnotGeometry(1, 2, 16, 8).scale(0.5, 0.5, 0.5) });
-    }
-    setRuleFile(ruleFile) {
-        this.ruleFile = ruleFile;
-        this.ruleSets = new Array();
-        this.cellularRuleSets = new Array();
-    }
-    outPutRuleSet() {
-        for (var i = 0; i < this.ruleFile.Rules.length; i++) {
-            var GEO;
-            var MAT;
-            var shapeFound = false;
-            if (this.ruleFile.Rules[i].Shape != null) {
-                var thisShape = this.ruleFile.Rules[i].Shape.toLowerCase();
-                for (var g = 0; g < this.Shapes.length; g++) {
-                    if (thisShape == this.Shapes[g].ShapeName.toLowerCase()) {
-                        GEO = this.Shapes[g].ShapeGEO;
-                        shapeFound = true;
-                        break;
-                    }
-                }
-            }
-            if (shapeFound == false) {
-                GEO = new THREE.BoxGeometry(1, 1, 1);
-                console.warn("No matching shapes found, defaulting to 'cube'");
-            }
-            if (this.ruleFile.Rules[i].rotation != null) {
-                var rotationArray = this.ruleFile.Rules[i].rotation;
-                GEO = GEO.rotateX(rotationArray[0]);
-                GEO = GEO.rotateY(rotationArray[1]);
-                GEO = GEO.rotateZ(rotationArray[2]);
-            }
-            if (this.ruleFile.Rules[i].scale != null) {
-                var scaleArray = this.ruleFile.Rules[i].scale;
-                GEO = GEO.scale(scaleArray[0], scaleArray[1], scaleArray[2]);
-            }
-            var texture = this.textureLoader.load(this.ruleFile.Rules[i].Texture);
-            var bumpTexture = null;
-            if (this.ruleFile.Rules[i].Bmap != null) {
-                bumpTexture = this.textureLoader.load(this.ruleFile.Rules[i].Bmap);
-            }
-            // console.log("Textures","map",texture,"bmap",bumpTexture);
-            MAT = new THREE.MeshPhongMaterial({ map: texture, bumpMap: bumpTexture, bumpScale: 1.0 });
-            // MAT.color.setHex(this.ruleFile.Rules[i].Color);
-            if (thisShape == "ring" || thisShape == "plane" || thisShape == "circle") {
-                MAT.side = THREE.DoubleSide;
-            }
-            this.ruleSets.push({ Color: this.ruleFile.Rules[i].Color, Geometry: GEO, Material: MAT });
-        }
-        //console.log("Rule-set",this.ruleSets);
-        return this.ruleSets;
-    }
-    outPutCellularRuleSet() {
-        if (this.ruleFile.cellularRules != null) {
-            for (var i = 0; i < this.ruleFile.cellularRules.length; i++) {
-                var currentColor = this.ruleFile.cellularRules[i].Color;
-                var newColorRuleSet = new colorRules();
-                //TOP
-                if (this.ruleFile.cellularRules[i].Top != null) {
-                    if (this.ruleFile.cellularRules[i].Top.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Top = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Top.startsWith("!")) {
-                            newColorRuleSet.invalids.Top = this.ruleFile.cellularRules[i].Top.slice(1);
-                            newColorRuleSet.valids.Top = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Top = this.ruleFile.cellularRules[i].Top;
-                            newColorRuleSet.invalids.Top = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Top = null;
-                    newColorRuleSet.invalids.Top = null;
-                }
-                //BOTTOM
-                if (this.ruleFile.cellularRules[i].Bottom != null) {
-                    if (this.ruleFile.cellularRules[i].Bottom.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Bottom = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Bottom.startsWith("!")) {
-                            newColorRuleSet.invalids.Bottom = this.ruleFile.cellularRules[i].Bottom.slice(1);
-                            newColorRuleSet.valids.Bottom = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Bottom = this.ruleFile.cellularRules[i].Bottom;
-                            newColorRuleSet.invalids.Bottom = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Bottom = null;
-                    newColorRuleSet.invalids.Bottom = null;
-                }
-                //LEFT
-                if (this.ruleFile.cellularRules[i].Left != null) {
-                    if (this.ruleFile.cellularRules[i].Left.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Left = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Left.startsWith("!")) {
-                            newColorRuleSet.invalids.Left = this.ruleFile.cellularRules[i].Left.slice(1);
-                            newColorRuleSet.valids.Left = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Left = this.ruleFile.cellularRules[i].Left;
-                            newColorRuleSet.invalids.Left = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Left = null;
-                    newColorRuleSet.invalids.Left = null;
-                }
-                //RIGHT
-                if (this.ruleFile.cellularRules[i].Right != null) {
-                    if (this.ruleFile.cellularRules[i].Right.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Right = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Right.startsWith("!")) {
-                            newColorRuleSet.invalids.Right = this.ruleFile.cellularRules[i].Right.slice(1);
-                            newColorRuleSet.valids.Right = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Right = this.ruleFile.cellularRules[i].Right;
-                            newColorRuleSet.invalids.Right = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Right = null;
-                    newColorRuleSet.invalids.Right = null;
-                }
-                //FRONT
-                if (this.ruleFile.cellularRules[i].Front != null) {
-                    if (this.ruleFile.cellularRules[i].Front.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Front = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Front.startsWith("!")) {
-                            newColorRuleSet.invalids.Front = this.ruleFile.cellularRules[i].Front.slice(1);
-                            newColorRuleSet.valids.Front = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Front = this.ruleFile.cellularRules[i].Front;
-                            newColorRuleSet.invalids.Front = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Front = null;
-                    newColorRuleSet.invalids.Front = null;
-                }
-                //BACK
-                if (this.ruleFile.cellularRules[i].Back != null) {
-                    if (this.ruleFile.cellularRules[i].Back.toLowerCase() == "empty") {
-                        newColorRuleSet.valids.Back = "empty";
-                    }
-                    else {
-                        if (this.ruleFile.cellularRules[i].Back.startsWith("!")) {
-                            newColorRuleSet.invalids.Back = this.ruleFile.cellularRules[i].Back.slice(1);
-                            newColorRuleSet.valids.Back = null;
-                        }
-                        else {
-                            newColorRuleSet.valids.Back = this.ruleFile.cellularRules[i].Back;
-                            newColorRuleSet.invalids.Back = null;
-                        }
-                    }
-                }
-                else {
-                    newColorRuleSet.valids.Back = null;
-                    newColorRuleSet.invalids.Back = null;
-                }
-                newColorRuleSet.newColor = this.ruleFile.cellularRules[i].newColor;
-                var colorFound = false;
-                for (var c = 0; c < this.cellularRuleSets.length; c++) {
-                    if (currentColor == this.cellularRuleSets[c].Color) {
-                        colorFound = true;
-                        this.cellularRuleSets[c].rules.push(newColorRuleSet);
-                        break;
-                    }
-                }
-                if (colorFound == false) {
-                    var newColorRules = new Array();
-                    newColorRules.push(newColorRuleSet);
-                    this.cellularRuleSets.push({ Color: currentColor, rules: newColorRules });
-                }
-            }
-        }
-        return this.cellularRuleSets;
-    }
-    addShape(name, GEO) {
-        this.Shapes.push({ ShapeName: name, ShapeGEO: GEO });
-    }
-}
 
-},{"three":6}],5:[function(require,module,exports){
+},{"./Interpreter":4,"three":9}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
 const OrbitControls_1 = require("./OrbitControls");
 const ArrayToMesh_1 = require("./ArrayToMesh");
 const RuleApplyer_1 = require("./RuleApplyer");
+const Interpreter_1 = require("./Interpreter");
+const CellularRuleApplyer_1 = require("./CellularRuleApplyer");
 const ObjToArray_1 = require("./ObjToArray");
 class voxJSCanvas {
     constructor(containerID) {
@@ -1870,261 +1967,411 @@ class voxJSCanvas {
         this.render();
     }
 }
-window.onload = () => {
-    // var loader = new THREE.OBJLoader();
+/*window.onload = () => {
+   
+   // var loader = new THREE.OBJLoader();
     //loader.load( 'example-models/chr_gumi.obj', three.setMesh );
+
     let converterOne_model = new THREE.Group();
+
+
+
+
     //let objToThree_converter = new ObjToThree();
+
     //hard coded a obj file for testing
-    // let objTest : string = 'example-models/chr_gumi.obj';
+   // let objTest : string = 'example-models/chr_gumi.obj';
+
     //objToThree_converter.convert();
-    // var hex = objToThree_converter.color;
-    //console.log("main hex: "+hex);
-    /* var geometry = new THREE.BoxGeometry( 5, 5, 5 );
- 
-     var material = new THREE.MeshBasicMaterial( { color: 0x0033ff } );
- 
-      converterOne_model = new THREE.Mesh( geometry, material );
- 
-     converterOne_canvas.setMesh(converterOne_model);
-     */
-    var model = new Array();
-    for (var i = 0; i < 5; i++) {
-        model.push(new Array());
-        for (var j = 0; j < 5; j++) {
-            model[i].push(new Array());
-            for (var k = 0; k < 5; k++) {
-                model[i][j].push(null);
-            }
-        }
-    }
-    for (var i = 0; i < 5; i++) {
-        model[2][i][2] = "0x664611";
-    }
-    for (var k = 3; k < 5; k++) {
-        for (var i = k - 3; i < 8 - k; i++) {
-            for (var j = k - 3; j < 8 - k; j++) {
-                if (i == 2 && j == 2) {
-                    if (k == 4) {
-                        model[i][k][j] = "0x00ff00";
-                    }
-                    else {
-                        model[2][k][2] = "0x664611";
-                    }
-                }
-                else {
-                    if (k == 3) {
-                        model[i][k][j] = "0x00ff00";
-                    }
-                    else {
-                        model[i][k][j] = "0x00ff00";
-                    }
-                }
-            }
-        }
-    }
-    var ruleFileModel = new Array();
-    for (var i = 0; i < 10; i++) {
-        ruleFileModel.push(new Array());
-        for (var j = 0; j < 10; j++) {
-            ruleFileModel[i].push(new Array());
-            for (var k = 0; k < 10; k++) {
-                ruleFileModel[i][j].push(null);
-            }
-        }
-    }
-    for (var x = 0; x < 10; x++) {
-        for (var z = 0; z < 10; z++) {
-            ruleFileModel[x][0][z] = "0x00bb00";
-        }
-    }
-    for (var y = 0; y < 8; y++) {
-        ruleFileModel[3][y][2] = "0x3300cc";
-        ruleFileModel[3][y][3] = "0x3300cc";
-        ruleFileModel[4][y][2] = "0x3300cc";
-        ruleFileModel[4][y][3] = "0x3300cc";
-    }
-    ruleFileModel[3][8][2] = "0xee0000";
-    ruleFileModel[3][8][3] = "0xee0000";
-    ruleFileModel[4][8][2] = "0xee0000";
-    ruleFileModel[4][8][3] = "0xee0000";
-    for (var y = 0; y < 6; y++) {
-        ruleFileModel[2][y][7] = "0x3300cc";
-    }
-    ruleFileModel[2][6][7] = "0xee0000";
-    for (var y = 0; y < 5; y++) {
-        ruleFileModel[7][y][8] = "0x3300cc";
-    }
-    ruleFileModel[7][5][8] = "0xee0000";
-    let arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
-    //let wireFrameMesh : THREE.Group = arrayToMesh.output();
-    let converterOne_canvas = new voxJSCanvas("converter1Canvas");
-    converterOne_canvas.CameraPosition(0, 0, 10);
-    converterOne_canvas.setMesh(arrayToMesh.output());
-    converterOne_canvas.setBackgroundColor(0xffffff);
-    converterOne_canvas.start();
-    var ruleFile1 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
-    var ruleFile2 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}';
-    var ruleFile = JSON.parse(ruleFile1);
-    var ruleApplyerDemo = new RuleApplyer_1.RuleApplyer();
-    ruleApplyerDemo.convert(ruleFile, ruleFileModel);
-    let converterTwo_canvasOne = new voxJSCanvas("converter2Canvas1");
-    // var arrayToMesh = new ArrayToMesh(model);
-    converterTwo_canvasOne.CameraPosition(0, 0, 20);
-    converterTwo_canvasOne.setMesh(ruleApplyerDemo.output());
-    converterTwo_canvasOne.setBackgroundColor(0xffffff);
-    converterTwo_canvasOne.start();
+
+  // var hex = objToThree_converter.color;
+
+   //console.log("main hex: "+hex);
+
+   /* var geometry = new THREE.BoxGeometry( 5, 5, 5 );
+
+    var material = new THREE.MeshBasicMaterial( { color: 0x0033ff } );
+
+     converterOne_model = new THREE.Mesh( geometry, material );
+
+    converterOne_canvas.setMesh(converterOne_model);
+    */
+/*  var model = new Array();
+
+  for(var i=0;i<5;i++)
+      {
+          model.push(new Array());
+          for(var j=0;j<5;j++)
+              {
+                  model[i].push(new Array());
+                  for(var k=0;k<5;k++)
+                      {
+                          model[i][j].push(null);
+                      }
+              }
+      }
+
+      for(var i=0;i<5;i++)
+      {
+          model[2][i][2] = "0x664611";
+      }
+
+      for(var k=3;k<5;k++)
+      {
+
+          for(var i=k-3;i<8-k;i++)
+          {
+              
+              for(var j=k-3;j<8-k;j++)
+              {
+                  
+                  if(i == 2 && j==2)
+                      {
+                          if(k == 4)
+                              {
+                                  model[i][k][j] = "0x00ff00";
+                              }
+                              else{
+                                  model[2][k][2] = "0x664611";
+                              }
+                          
+                      }
+                      else{
+                          if(k == 3)
+                              {
+                                  model[i][k][j] = "0x00ff00";
+                              }
+                          else{
+                              model[i][k][j] = "0x00ff00";
+                          }
+                      }
+              }
+          }
+      }
+
+var ruleFileModel = new Array();
+
+  for(var i=0;i<10;i++)
+      {
+          ruleFileModel.push(new Array());
+          for(var j=0;j<10;j++)
+              {
+                  ruleFileModel[i].push(new Array());
+                  for(var k=0;k<10;k++)
+                      {
+                          ruleFileModel[i][j].push(null);
+                      }
+              }
+      }
+
+for(var x=0;x<10;x++)
+  {
+      for(var z=0;z<10;z++)
+          {
+                ruleFileModel[x][0][z] = "0x00bb00";
+          }
+  }
+
+for(var y=0;y<8;y++)
+  {
+       ruleFileModel[3][y][2] = "0x3300cc";
+       ruleFileModel[3][y][3] = "0x3300cc";
+       ruleFileModel[4][y][2] = "0x3300cc";
+       ruleFileModel[4][y][3] = "0x3300cc";
+  }
+
+       ruleFileModel[3][8][2] = "0xee0000";
+       ruleFileModel[3][8][3] = "0xee0000";
+       ruleFileModel[4][8][2] = "0xee0000";
+       ruleFileModel[4][8][3] = "0xee0000";
+      
+  for(var y=0;y<6;y++)
+  {
+       ruleFileModel[2][y][7] = "0x3300cc";
+  }
+      ruleFileModel[2][6][7] = "0xee0000";
+  for(var y=0;y<5;y++)
+  {
+       ruleFileModel[7][y][8] = "0x3300cc";
+  }
+       ruleFileModel[7][5][8] = "0xee0000";
+
+let arrayToMesh = new ArrayToMesh(model);
+//let wireFrameMesh : THREE.Group = arrayToMesh.output();
+
+  let converterOne_canvas = new voxJSCanvas("converter1Canvas");
+  
+
+   
+   converterOne_canvas.CameraPosition(0,0,10);
+   converterOne_canvas.setMesh(arrayToMesh.output());
+   converterOne_canvas.setBackgroundColor(0xffffff);
+   converterOne_canvas.start();
+
+  var ruleFile1 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
+  var ruleFile2 = '{"Rules" : [{"Color" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Color" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}'
+
+  var ruleFile = JSON.parse(ruleFile1);
+
+  var ruleApplyerDemo = new RuleApplyer();
+  ruleApplyerDemo.convert(ruleFile, ruleFileModel);
+
+   let converterTwo_canvasOne = new voxJSCanvas("converter2Canvas1");
+
+   // var arrayToMesh = new ArrayToMesh(model);
+   converterTwo_canvasOne.CameraPosition(0,0,20);
+   converterTwo_canvasOne.setMesh(ruleApplyerDemo.output());
+   converterTwo_canvasOne.setBackgroundColor(0xffffff);
+   converterTwo_canvasOne.start();
+
     var ruleFile = JSON.parse(ruleFile2);
-    ruleApplyerDemo.convert(ruleFile, ruleFileModel);
-    let converterTwo_canvasTwo = new voxJSCanvas("converter2Canvas2");
-    // var arrayToMesh = new ArrayToMesh(model);
-    converterTwo_canvasTwo.CameraPosition(0, 0, 20);
-    converterTwo_canvasTwo.setMesh(ruleApplyerDemo.output());
-    converterTwo_canvasTwo.setBackgroundColor(0xffffff);
-    converterTwo_canvasTwo.start();
-    var editor = ace.edit("editor");
-    //editor.container = <HTMLDivElement>document.getElementById("editor");
-    //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-    //console.log("Full editor",editor.getValue());
-    var jsonString = editor.getValue();
-    //console.log("editor",jsonString)
-    // console.log("editor",jsonString);
-    var ruleFile = JSON.parse(jsonString);
-    // console.log("fileJson",JSON.parse(".resources/ruleExample.json"));
-    //  var arrayToMesh = new ArrayToMesh(model);
-    var ruleApplyer = new RuleApplyer_1.RuleApplyer();
-    ruleApplyer.convert(ruleFile, model);
-    converterOne_model = ruleApplyer.output();
-    let demo_canvas = new voxJSCanvas("voxelDemo");
-    demo_canvas.CameraPosition(0, 0, 10);
-    demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
-    demo_canvas.setMesh(converterOne_model);
-    var darkgrey = document.getElementById("darkgrey");
-    darkgrey.addEventListener("click", function () {
-        demo_canvas.setBackgroundColor(0x020202);
-    });
-    var lightgrey = document.getElementById("lightgrey");
-    lightgrey.addEventListener("click", function () {
-        demo_canvas.setBackgroundColor(0x0b0b0b);
-    });
-    var lightblue = document.getElementById("lightblue");
-    lightblue.addEventListener("click", function () {
-        demo_canvas.setBackgroundColor(0xA5C7FF);
-    });
-    var darkdarkgrey = document.getElementById("darkdarkgrey");
-    darkdarkgrey.addEventListener("click", function () {
-        demo_canvas.setBackgroundColor(0x010101);
-    });
-    var white = document.getElementById("white");
-    white.addEventListener("click", function () {
-        demo_canvas.setBackgroundColor(0xffffff);
-    });
-    demo_canvas.start();
-    var colorCanvas = new voxJSCanvas("colorGuidelinesCanvas");
-    fillColorModal(["0x00ff00", "0x664611"], arrayToMesh.output(), colorCanvas);
-    var uplouder = document.getElementsByClassName("rules-file-upload-button");
-    var objUpload = document.getElementById("objfile");
-    var converterOne;
-    var useME = true;
-    objUpload.addEventListener("change", function () {
-        //   console.log("I am here");
-        var OBJFile = objUpload.files[0];
-        useME = false;
-        converterOne = new ObjToArray_1.fileReader(OBJFile, doRest, [demo_canvas, converterOne_canvas, ruleApplyer, colorCanvas]);
-        // console.log("Input test",converterOne.getArray());
-    });
-    if (useME == true) {
-        uplouder[0].addEventListener("click", function () {
-            // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-            //console.log("Full editor",editor.getValue());
-            var jsonString = editor.getValue();
-            //    console.log("editor",jsonString)
-            //console.log("Input File array 5",array);
-            ruleFile = JSON.parse(jsonString);
-            ruleApplyer.convert(ruleFile, model);
-            var converterOne_model = new THREE.Group();
-            //  console.log("Before Group",converterOne_model);
-            converterOne_model = ruleApplyer.output();
-            //  console.log("After Group",converterOne_model);
-            demo_canvas.setMesh(converterOne_model);
-        });
-    }
+ruleApplyerDemo.convert(ruleFile, ruleFileModel);
+
+   let converterTwo_canvasTwo = new voxJSCanvas("converter2Canvas2");
+
+   // var arrayToMesh = new ArrayToMesh(model);
+   converterTwo_canvasTwo.CameraPosition(0,0,20);
+   converterTwo_canvasTwo.setMesh(ruleApplyerDemo.output());
+   converterTwo_canvasTwo.setBackgroundColor(0xffffff);
+   converterTwo_canvasTwo.start();
+
+
+  
+
+
+
+   var editor = ace.edit("editor");
+   //editor.container = <HTMLDivElement>document.getElementById("editor");
+
+//   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+//console.log("Full editor",editor.getValue());
+var jsonString = editor.getValue();
+//console.log("editor",jsonString)
+ // console.log("editor",jsonString);
+
+  var ruleFile = JSON.parse(jsonString);
+ // console.log("fileJson",JSON.parse(".resources/ruleExample.json"));
+
+//  var arrayToMesh = new ArrayToMesh(model);
+  var cellularRuleApplyer = new CellularRuleApplyer();
+  cellularRuleApplyer.convert(ruleFile, model);
+
+  var newArray : string[][][] = cellularRuleApplyer.output();
+
+  console.log("CellularArray: ",newArray);
+
+  var ruleApplyer = new RuleApplyer();
+  ruleApplyer.convert(ruleFile, newArray);
+
+  converterOne_model = ruleApplyer.output();
+
+  
+
+
+  let demo_canvas = new voxJSCanvas("voxelDemo");
+
+
+  demo_canvas.CameraPosition(0,0,10);
+  demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
+  demo_canvas.setMesh(converterOne_model);
+ 
+  var darkgrey = document.getElementById("darkgrey");
+  darkgrey.addEventListener("click",function(){
+       demo_canvas.setBackgroundColor(0x020202);
+  });
+  var lightgrey = document.getElementById("lightgrey");
+  lightgrey.addEventListener("click",function(){
+       demo_canvas.setBackgroundColor(0x0b0b0b);
+  });
+  var lightblue = document.getElementById("lightblue");
+  lightblue.addEventListener("click",function(){
+
+       demo_canvas.setBackgroundColor(0xA5C7FF);
+  });
+  var darkdarkgrey = document.getElementById("darkdarkgrey");
+  darkdarkgrey.addEventListener("click",function(){
+   
+       demo_canvas.setBackgroundColor(0x010101);
+  });
+  var white = document.getElementById("white");
+  white.addEventListener("click",function(){
+    
+       demo_canvas.setBackgroundColor(0xffffff);
+  });
+
+  
+  demo_canvas.start();
+  var colorCanvas = new voxJSCanvas("colorGuidelinesCanvas");
+
+  fillColorModal(["0x00ff00","0x664611"],arrayToMesh.output(),colorCanvas);
+   
+  var uplouder = document.getElementsByClassName("rules-file-upload-button");
+
+  var objUpload = <HTMLInputElement>document.getElementById("objfile");
+
+  var converterOne : fileReader;
+
+  var useME : boolean = true;
+  objUpload.addEventListener("change", function(){
+   //   console.log("I am here");
+      var OBJFile : File = objUpload.files[0];
+      useME = false;
+      converterOne = new fileReader(OBJFile,doRest,[demo_canvas,converterOne_canvas,ruleApplyer,colorCanvas]);
+
+     // console.log("Input test",converterOne.getArray());
+
+
+  });
+
+
+  if(useME == true)
+      {
+  uplouder[0].addEventListener("click", function()
+      {
+         // var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+         
+//console.log("Full editor",editor.getValue());
+var jsonString = editor.getValue();
+     //    console.log("editor",jsonString)
+//console.log("Input File array 5",array);
+          ruleFile = JSON.parse(jsonString);
+          ruleApplyer.convert(ruleFile, model);
+          var converterOne_model = new THREE.Group();
+        //  console.log("Before Group",converterOne_model);
+          converterOne_model = ruleApplyer.output();
+        //  console.log("After Group",converterOne_model);
+          demo_canvas.setMesh(converterOne_model);
+      }) ;
+      }
+
+/*      var imgConverter : ImgToArray = new ImgToArray();
+
+      var imgArray : string[] = new Array<string>();
+
+      imgArray.push('./example-models/1.png');
+
+  imgConverter.convert(imgArray,function()
+  {
+      console.log("imgArray: ",imgConverter.output());
+  });*/ /*
 };
-function doRest(model, other) {
-    //  array = converterOne.getArray();
-    //    console.log("Input File array 2",model);
-    // console.log(other);
-    var largest = model.length;
-    if (model[0].length > largest) {
-        largest > model[0].length;
-    }
-    if (model[0][0].length > largest) {
-        largest > model[0][0].length;
-    }
-    other[1].CameraPosition(0, 0, largest * 2);
-    var arrayToMesh = new ArrayToMesh_1.ArrayToMesh(model);
-    // var wireframeModel = arrayToMesh.output();
-    other[1].setMesh(arrayToMesh.output());
-    fillColorModal(other[4], arrayToMesh.output(), other[3]);
+
+
+function doRest(model : string[][][],other : any)
+{
+
+
+  //  array = converterOne.getArray();
+
+ //    console.log("Input File array 2",model);
+
+// console.log(other);
+
+var largest = model.length;
+if(model[0].length > largest)
+{
+    largest > model[0].length;
+}
+if(model[0][0].length > largest)
+{
+    largest > model[0][0].length;
+}
+    
+
+other[1].CameraPosition(0,0,largest*2);
+var arrayToMesh = new ArrayToMesh(model);
+// var wireframeModel = arrayToMesh.output();
+ other[1].setMesh(arrayToMesh.output());
+fillColorModal(other[4],arrayToMesh.output(),other[3]);
     var editor = ace.edit("editor");
-    // var editor = <HTMLDivElement>document.getElementById("editor");
+   // var editor = <HTMLDivElement>document.getElementById("editor");
     //  var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
     //    console.log("editor",jsonString)
-    //console.log("Input File array 5",array);
-    //console.log("Full editor",editor.getValue());
-    var jsonString = editor.getValue();
-    var ruleFile = JSON.parse(jsonString);
-    other[2].convert(ruleFile, model);
-    var converterOne_model = new THREE.Group();
-    //  console.log("Before Group",converterOne_model);
-    //  console.log("After Group",converterOne_model);
-    other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
-    other[0].CameraPosition(0, 0, largest * 2);
-    other[0].setMesh(converterOne_model);
+//console.log("Input File array 5",array);
+    
+//console.log("Full editor",editor.getValue());
+var jsonString = editor.getValue();
+var  ruleFile = JSON.parse(jsonString);
+        other[2].convert(ruleFile, model);
+        var converterOne_model = new THREE.Group();
+      //  console.log("Before Group",converterOne_model);
+
+
+      //  console.log("After Group",converterOne_model);
+       other[0].setGridHelper(model.length, model[0].length, model[0][0].length);
+       other[0].CameraPosition(0,0,largest*2);
+        other[0].setMesh(converterOne_model);
+
+
     var uplouder = document.getElementsByClassName("rules-file-upload-button");
-    uplouder[0].addEventListener("click", function () {
-        //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
-        var jsonString = editor.getValue();
-        // console.log("editor",jsonString)
-        //console.log("Input File array 5",array);
+         uplouder[0].addEventListener("click", function()
+    {
+     //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
+      
+      var jsonString = editor.getValue();
+    // console.log("editor",jsonString)
+//console.log("Input File array 5",array);
         ruleFile = JSON.parse(jsonString);
         other[2].convert(ruleFile, model);
         var converterOne_model = new THREE.Group();
-        //  console.log("Before Group",converterOne_model);
+      //  console.log("Before Group",converterOne_model);
         converterOne_model = other[2].output();
-        //  console.log("After Group",converterOne_model);
+      //  console.log("After Group",converterOne_model);
         other[0].setMesh(converterOne_model);
-    });
+    }) ;
+    
 }
-function rgbToHex(r, g, b) {
+
+function  rgbToHex(r:number,g:number,b:number) : string
+{
     var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-    console.log("Hex", parseInt(hex, 16));
+    console.log("Hex",parseInt(hex,16));
     return hex;
 }
-function componentToHex(c) {
+
+function  componentToHex(c:number) : string
+{
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
 }
-function fillColorModal(colors, model, colorCanvas) {
-    var modal = document.getElementById("availableColorList");
-    colorCanvas.setMesh(model);
-    colorCanvas.start();
-    modal.innerHTML = "";
-    for (var i = 0; i < colors.length; i++) {
+
+function fillColorModal(colors : string[],model : THREE.Group, colorCanvas : voxJSCanvas)
+{
+
+
+var modal = document.getElementById("availableColorList");
+colorCanvas.setMesh(model);
+colorCanvas.start();
+
+modal.innerHTML = "";
+
+for(var i=0;i<colors.length;i++)
+    {
         var color = colors[i].split("x");
         var div = '<div class="col-xs-12 available-color-container">';
-        div += '<div class="col-xs-2 available-color-display" style="background-color: #' + color[1] + '">';
-        div += '&nbsp;';
-        div += '</div>';
-        div += '<div class="col-xs-10 available-color-name">';
-        div += ' | ' + colors[i];
-        div += '</div>';
-        div += '</div>';
-        modal.innerHTML += div;
-    }
-}
+            div +=  '<div class="col-xs-2 available-color-display" style="background-color: #'+ color[1] +'">';
+            div +=          '&nbsp;';
+            div += '</div>';
+            div += '<div class="col-xs-10 available-color-name">';
+            div +=  ' | ' + colors[i];
+            div +=  '</div>';
+            div +='</div>';
 
-},{"./ArrayToMesh":1,"./ObjToArray":2,"./OrbitControls":3,"./RuleApplyer":4,"three":6}],6:[function(require,module,exports){
+            modal.innerHTML += div;
+    }
+
+
+
+}*/
+window.voxJSCanvas = voxJSCanvas;
+window.RuleInterpreter = Interpreter_1.RuleInterpreter;
+window.ArrayToMesh = ArrayToMesh_1.ArrayToMesh;
+window.RuleApplyer = RuleApplyer_1.RuleApplyer;
+window.CellularRuleApplyer = CellularRuleApplyer_1.CellularRuleApplyer;
+window.fileReader = ObjToArray_1.fileReader;
+window.OrbitControls = OrbitControls_1.OrbitControls;
+
+},{"./ArrayToMesh":1,"./CellularRuleApplyer":2,"./Interpreter":4,"./ObjToArray":5,"./OrbitControls":6,"./RuleApplyer":7,"three":9}],9:[function(require,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -46236,5 +46483,5 @@ function fillColorModal(colors, model, colorCanvas) {
 
 })));
 
-},{}]},{},[5])(5)
+},{}]},{},[8])(8)
 });
