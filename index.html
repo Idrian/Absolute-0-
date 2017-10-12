@@ -115,9 +115,9 @@
                                 Rules file options
                         </div>
                         <div class="rules-file-button-container col-sm-2">
-                            <a data-toggle="modal" data-target="#shapesModal">
+                            <a id="shapeGuidelines" data-toggle="modal" data-target="#shapesModal">
                                 <div class="rules-file-button">
-                                    <i id="shapeGuidelines" class="fa fa-codepen" aria-hidden="true"></i>
+                                    <i class="fa fa-codepen" aria-hidden="true"></i>
                                 </div>
                             </a>
                             Shape guidelines
@@ -282,7 +282,7 @@
                                     
                                     Upload own rules file
                             </div>
-                            <div class="rules-file-button-container col-sm-4">
+                            <div id="predefinedRules" class="rules-file-button-container col-sm-4">
                                 <div class="rules-file-button">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                 </div>
@@ -307,7 +307,7 @@
         "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
         "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
     }]
-}<br></div><button class="rules-file-upload-button">Save and upload</button>
+}<br></div><button class="rules-file-upload-button" data-dismiss="modal">Save and upload</button>
                     </div>
                 </div>
             </div>
@@ -467,7 +467,27 @@
             editor.setTheme("ace/theme/monokai");
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
-
+            document.getElementById("predefinedRules").onclick = function(){
+                editor.setValue(`{"Rules" : 
+    [{
+        "Key" : "0x664611" ,
+        "Shape" : "Cylinder",
+        "Texture" : "./resources/textures/oak.png",
+        "Bmap" : "./resources/textures/oakBump.png"
+    },{
+        "Key" : "0x00ff00",
+        "Shape" : "Sphere",
+        "scale" : [1.5,1.5,1.5],
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    },{
+        "Key" : "0x00ff01",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    }]
+}`, 1);
+            }
             /*var sideMenu = document.getElementById("sideMenu");
             sideMenu.onclick = function(){
                 if (isBlurred == true){
