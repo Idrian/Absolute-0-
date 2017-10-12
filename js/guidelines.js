@@ -37,10 +37,6 @@ var shape_guidelines = [
     ["octahedron","resources/shapes/octahedron.png"]
 ]
 
-document.getElementById("colorModalClose").onclick = function(){
-    document.getElementById("colorCanvasLoader").innerHTML = '';
-}
-
 document.getElementById("colorGuidelines").onclick = function(){
     document.getElementById("colorCanvasLoader").innerHTML = '<div id="colorGuidelinesCanvas" width="800" height="400">'; 
 }
