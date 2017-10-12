@@ -155,7 +155,7 @@ scene.add(particleSystem);
 
 
         var sun = mesh.getChildByName("5000");
-           sun.rotation.y += 0.1
+           sun.rotation.y += 0.01
        
 
         var merc = mesh.getChildByName("5900");
