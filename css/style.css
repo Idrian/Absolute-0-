@@ -1,12 +1,52 @@
-body.main{
+html, body{
     background-color: #222;
     font-family: 'Open Sans', sans-serif;
     overflow-x: hidden;
     height: 100%;
+    width: 100%;
+    transition: all 0.3s;
+    display: flex;
+}
+
+.container-div{
+    position: relative;
+    z-index: 1;
+}
+
+.container-div.blur > *:not(.side-menu){
+    /* Any browser which supports CSS3 */
+    filter: blur(7px);
+    
+    /* Firefox version 34 and earlier */
+    filter: url("blur.svg#gaussian_blur");
+
+    /* Webkit in Chrome 52, Safari 9, Opera 39, and earlier */
+    -webkit-filter: blur(7px);
+}
+
+.blur-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+    z-index: 0;
+    display: none;
+    filter: blur(7px);
+    
+    /* Firefox version 34 and earlier */
+    filter: url("blur.svg#gaussian_blur");
+
+    /* Webkit in Chrome 52, Safari 9, Opera 39, and earlier */
+    -webkit-filter: blur(7px);
 }
 
 a{
     text-decoration : none;
+}
+
+.navbar .navbar-inverse .navbar-fixed-top{
+    width: 100%;
 }
 
 #tempheading{
@@ -120,11 +160,13 @@ a{
 }
 
 .voxc-image{
+    margin-top: 50px;
     min-height: 100vh;
     max-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
     background-image: url("../resources/images/voxc.png");
 }
 
@@ -204,6 +246,7 @@ a{
 
 .file-upload-container{
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .console-command{
@@ -312,6 +355,10 @@ a{
     color: black;
 }
 
+.footer-brand a{
+    color: black;
+}
+
 .footer-author{
     font-weight: 100;
     font-size: 12px;
@@ -336,11 +383,12 @@ a{
 
 .geometry-image{
     padding: 0;
+    overflow-x: hidden;
 }
 
 .geometry-image-bottom{
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     
 }
 
@@ -482,6 +530,8 @@ input[type=range][orient=vertical]
 
 .available-shapes-list{
     margin-top: 40px;
+    padding-top: 30px;
+    padding-left: 20px;
     height: 250px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -525,5 +575,59 @@ button.btn.btn-color-selection:hover{
 
 button.btn.btn-color-selection:focus{
     outline: none !important;
+}
+
+.canvasSection{
+
+}
+
+.side-menu{
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    margin-top: 220px;
+    background-color: #86DCEF;
+    margin-left: -10px;
+    cursor: pointer;
+    position: relative;
+    z-index: 40;
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 375px) {
+    #voxelDemo{
+        display: none;
+    }
+
+    .geometry-image{
+        display: none;
+    }
+
+    .geometry-image-bottom{
+        display: none;
+    }
+}
+
+.modal-search{
+    border: none;
+    border-bottom: 3px solid #222;
+    width: 60%;
+}
+
+.modal-search:focus{
+    outline: none !important;
+}
+
+.converter2-demo-toggle-container{
+    margin-top: 80px;
+    text-align: center;
+}
+
+.converter2-demo-toggle-container .rules-file-button-container{
+    color: white;
+}
+
+.converter2-demo-toggle-container a{
+    color: #222;
 }
 

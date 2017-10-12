@@ -19,27 +19,40 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="build/voxc.js" type="text/javascript" charset="utf-8"></script> 
+<<<<<<< HEAD
         <script src="build/Test.js" type="text/javascript" charset="utf-8"></script> 
         <script src="js/three.min.js" type="text/javascript" charset="utf-8"></script> 
        
+=======
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+>>>>>>> master
     </head>
     <body onload="loadVoxelMain()" class="main" id="bodySection" >
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span> 
+                    </button>
                     <a class="navbar-brand" href="#bodySection">voxc.js</a>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="#documentsSection">Documentation</a></li>
-                    <li><a href="#demoSection">Demo</a></li>
-                    <li><a href="#aboutSection">About</a></li>
-                    <li><a href="#usageSection">Usage</a></li>
-                    <li><a href="#converter1Section">Converter 1</a></li>
-                    <li><a href="#converter2Section">Converter 2</a></li>
-                    <li><a href="#">Converter 3</a></li>
-                </ul>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#documentsSection">Documentation</a></li>
+                        <li><a href="#demoSection">Demo</a></li>
+                        <li><a href="#aboutSection">About</a></li>
+                        <li><a href="#usageSection">Usage</a></li>
+                        <li><a href="converter1.html">Converter 1</a></li>
+                        <li><a href="converter2.html">Converter 2</a></li>
+                        <li><a href="#">Converter 3</a></li>
+                        <li><a href="mriscan.html">MRI Scan Demo</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
+        <div class="row">
         <div class="col-sm-12 body">
             
             <div class="voxc-image"></div>
@@ -82,39 +95,30 @@
                     </div>
                     
                     <div class="row">
-                        <div class="file-upload-container col-sm-2">
-                            <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
-
-                            <label for="file"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
-                            
-                            Upload own rules file
-                        </div>
                         <div class="rules-file-button-container col-sm-2">
-                            <div class="rules-file-button">
-                                <i class="fa fa-download" aria-hidden="true"></i>
-                            </div>
-                            Use predefined rules file
+                            <a data-toggle="modal" data-target="#texturesModal" id="textureGuidelines">
+                                <div class="rules-file-button">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                            Texture guidelines
                         </div>
-                        <div class="file-upload-container col-sm-2 col-sm-offset-3">
+                        <div class="file-upload-container col-sm-2">
                             <input type="file" name="objfile" id="objfile" class="input-file-hidden" accept=".obj"/>
 
                             <label for="objfile"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
                             
                             Upload own .obj file
                         </div>
-                        <div class="rules-file-button-container-dropdown col-sm-2">
-                            <div class="dropdown">
-                              <button class="btn btn-color-selection" type="button" data-toggle="dropdown">Background Color
-                              <span class="caret"></span></button>
-                              <ul class="dropdown-menu">
-                                <li><div class="color-selection" id="darkgrey" style="background-color: #222; color: white;">Grey</div></li>
-                                <li><div class="color-selection" id="lightgrey" style="background-color: #bbb">Lightgrey</div></li>
-                                <li><div class="color-selection" id="lightblue" style="background-color: #A5C7FF">Lightblue</div></li>
-                                <li><div class="color-selection" id="darkdarkgrey" style="background-color: #111; color: white;">Darkgrey</div></li>
-                                <li><div class="color-selection" id="white" style="background-color: #fff">White</div></li>
-                              </ul>
-                            </div>
+                        <div class="rules-file-button-container col-sm-4">
+                                <a data-toggle="modal" data-target="#editorModal">
+                                        <div class="rules-file-button">
+                                            <i class="fa fa-th" aria-hidden="true"></i>
+                                        </div>
+                                    </a>
+                                Rules file options
                         </div>
+<<<<<<< HEAD
                     
                 </div>
                 <div class="row">
@@ -167,16 +171,17 @@
                             Texture guidelines
                         </div>
                         <div class="rules-file-button-container col-sm-6">
+=======
+                        <div class="rules-file-button-container col-sm-2">
+>>>>>>> master
                             <a data-toggle="modal" data-target="#shapesModal">
                                 <div class="rules-file-button">
-                                    <i class="fa fa-codepen" aria-hidden="true"></i>
+                                    <i id="shapeGuidelines" class="fa fa-codepen" aria-hidden="true"></i>
                                 </div>
                             </a>
                             Shape guidelines
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="rules-file-button-container col-sm-6">
+                        <div class="rules-file-button-container col-sm-2">
                             <a data-toggle="modal" data-target="#colorsModal">
                                 <div class="rules-file-button">
                                     <i class="fa fa-paint-brush" aria-hidden="true"></i>
@@ -184,7 +189,35 @@
                             </a>
                             Color selector guidelines
                         </div>
-                        <div class="rules-file-button-container col-sm-6">
+                        
+                    
+                </div>
+                <div class="canvasSection row">
+                    <!--<div id="sideMenu" class="side-menu col-sm-1">
+                        &nbsp;
+                    </div>-->
+                    <div class="col-sm-12">
+                        <div class="rules-file-button-container-dropdown col-sm-2 col-sm-offset-5">
+                            <div class="dropdown">
+                                <button class="btn btn-color-selection" type="button" data-toggle="dropdown">Background Color
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                <li><div class="color-selection" id="darkgrey" style="background-color: #222; color: white;">Grey</div></li>
+                                <li><div class="color-selection" id="lightgrey" style="background-color: #bbb">Lightgrey</div></li>
+                                <li><div class="color-selection" id="lightblue" style="background-color: #A5C7FF">Lightblue</div></li>
+                                <li><div class="color-selection" id="darkdarkgrey" style="background-color: #111; color: white;">Darkgrey</div></li>
+                                <li><div class="color-selection" id="white" style="background-color: #fff">White</div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div id="voxelDemo" width="800" height="400"></div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                        <div class="rules-file-button-container col-sm-12">
                             <a data-toggle="modal">
                                 <div id="playPauseButton" class="rules-file-button">
                                     <i class="fa fa-play" aria-hidden="true"></i>
@@ -192,11 +225,10 @@
                             </a>
                             Pause/Play Animation
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-2">
+                <div class="geometry-image hidden-xs col-md-2">
                     <img height="200px" src="resources/images/geometry.png"/>
                 </div>
                 <div id="aboutSection" class="col-sm-8 section">
@@ -249,46 +281,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="geometry-image-bottom col-sm-2">
+                <div class="geometry-image-bottom hidden-sm-down col-md-2">
                     <img height="200px" src="resources/images/geometry-bottom.png"/>
                 </div>
-                <div class="geometry-image-bottom col-sm-2 col-sm-offset-8">
+                <div class="geometry-image-bottom hidden-sm-down col-md-2 col-md-offset-8">
                     <img height="200px" src="resources/images/geometry-bottom.png"/>
                 </div>
             </div>
-            <div class="row">
-                <div id="converter1Section" class="col-sm-12 section">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <h2 class="section-heading">Converter 1</h2>
-                        <hr class="norm-hr"/>
-                        <p class="section-paragraph">
-                            Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
-                        </p>
-                    </div>
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <div id="converter1Canvas" width="800" height="400"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="converter2Section" class="col-sm-12 section">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <h2 class="section-heading">Converter 2</h2>
-                        <hr class="norm-hr"/>
-                        <p class="section-paragraph">
-                            Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
-                        </p>
-                    </div>
-                    <div class="col-sm-6">
-                        <div id="converter2Canvas1" width="800" height="400"></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div id="converter2Canvas2" width="800" height="400"></div>
-                    </div>
-                </div>
-                
-            </div>
-            <img width="100%" class="footer-image" src="resources/images/geometry2.png"/>
             <div class="footer row">
                 <div class="col-sm-1 col-sm-offset-1">
                     <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
@@ -303,9 +302,9 @@
                           &nbsp;&middot;&nbsp;
                         <a class="navlink-footer" href="#usageSection">Usage</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer" href="#converter1Section">Converter 1</a>
+                        <a class="navlink-footer" href="converter1.html">Converter 1</a>
                           &nbsp;&middot;&nbsp;
-                        <a class="navlink-footer" href="#converter2Section">Converter 2</a>
+                        <a class="navlink-footer" href="converter2.html">Converter 2</a>
                           &nbsp;&middot;&nbsp;
                         <a class="navlink-footer">Converter 3</a>
                     </div>
@@ -320,6 +319,54 @@
                 </div>
                 <div class="col-sm-2">
                     <a href="https://waffle.io/Idrian/Absolute-0-?utm_source=badge" target="_blank"><img class="waffle-icon" height="100px" width="100px" src="resources/images/waffle.png"/></a>
+                </div>
+            </div>
+        </div>
+
+            <div id="editorModal" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+        
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit the rules file</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="file-upload-container col-sm-4 col-sm-offset-2">
+                                    <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
+        
+                                    <label for="file"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
+                                    
+                                    Upload own rules file
+                            </div>
+                            <div class="rules-file-button-container col-sm-4">
+                                <div class="rules-file-button">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </div>
+                                Use predefined rules file
+                            </div>
+                        </div>
+                        <div id="editor">{"Rules" : 
+    [{
+        "Color" : "0x664611" ,
+        "Shape" : "Cylinder",
+        "Texture" : "./resources/textures/oak.png",
+        "Bmap" : "./resources/textures/oakBump.png"
+    },{
+        "Color" : "0x00ff00",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    },{
+        "Color" : "0x00ff01",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    }]
+}<br></div><button class="rules-file-upload-button">Save and upload</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -343,148 +390,9 @@
     ]}
 }           
                     </code></pre><br/>
-                <h4>Available shapes:</h4>
-                <div class="available-shapes-list">
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/hemisphere.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "hemisphere"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/cube.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "cube"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/cylinder.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "cylinder"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/circle.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "circle"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/cone.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "cone"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/plane.jpg">
-                            </div>
-                            <div class="shape-example-name">
-                                | "plane"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/pyramid.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "pyramid"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/ring.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "ring"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/sphere.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "sphere"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/torus.jpeg">
-                            </div>
-                            <div class="shape-example-name">
-                                | "torus"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/torusknot.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "torusknot"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/dodecahedron.jpeg">
-                            </div>
-                            <div class="shape-example-name">
-                                | "dodecahedron"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/icosahedron.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "icosahedron"
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="shape-example-container col-xs-10">
-                            <div class="shape-example-image-container col-xs-2">
-                                <img class="shape-example-image" src="resources/shapes/octahedron.png">
-                            </div>
-                            <div class="shape-example-name">
-                                | "octahedron"
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm-6"><h4>Available shapes:</h4></div><div class="col-sm-6"><input class="modal-search" id="shapeSearchText" type="text" placeholder="Search for shapes here..."/></div>
+                <div class="available-shapes-list" id="availableShapesList">
+                    
                 </div>
               </div>
               <div class="modal-footer">
@@ -513,99 +421,18 @@
     ]}
 }        
                     </code></pre><br/>
-                <h4>Available textures:</h4>
+                <div class="col-sm-6"><h4>Available textures:</h4></div><div class="col-sm-6"><input class="modal-search" id="textureSearchText" type="text" placeholder="Search for textures here..."/></div>   
                 <div class="texture-list">
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/industrial-buildings.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Industrial building texture | <span class="texture-example-value">"./resources/textures/industrial-buildings.jpg"</span>
-                            </div>
-                        </div>
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/cactus.png"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Cactus texture | <span class="texture-example-value">"./resources/textures/cactus.jpg"</span>
-                            </div>
-                        </div>
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/sand.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Sand texture | <span class="texture-example-value">"./resources/textures/sand.jpg"</span>
-                            </div>
-                        </div>
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/brick-texture.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Brick texture | <span class="texture-example-value">"./resources/textures/brick-texture.jpg"</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/flowerbed-texture.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Flowerbed texture | <span class="texture-example-value">"./resources/textures/flowerbed-texture.jpg"</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/grass-texture.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Grass texture | <span class="texture-example-value">"./resources/textures/grass-texture.jpg"</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/leaves.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Leaves texture | <span class="texture-example-value">"./resources/textures/leaves.jpg"</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/oak.png"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Oak texture | <span class="texture-example-value">"./resources/textures/oak.png"</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="texture-example-container col-xs-10">
-                            <div class="texture-example-image-container col-xs-2">
-                                <img class="texture-example-image" src="resources/textures/slate-roof-texture.jpg"/>
-                            </div>
-                            <div class="texture-example-name col-xs-10">
-                                Slate roof texture | <span class="texture-example-value">"./resources/textures/slate-roof-texture.jpg"</span>
-                            </div>
-                        </div>
+                    <div class="row align-items-center" id="availableTexturesList">
+                        
                     </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-              </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
             </div>
-            </div>
+        </div>
         </div>
               
               <div id="colorsModal" class="modal fade" role="dialog">
@@ -639,6 +466,7 @@
             </div>
 
           </div>
+        <script src="js/guidelines.js"></script>
         <script>
             //Smooth Scroll
             $(document).ready(function(){
@@ -656,27 +484,27 @@
                 
                 $("#darkgrey").on('click', function (e) {
                     e.preventDefault();
-                    $("#voxelDemo").css.('background-color', '#222');
+                    $("#voxelDemo").css('background-color', '#222');
                 });
                 
                 $("#lightgrey").on('click', function (e) {
                     e.preventDefault();
-                    $("#voxelDemo").css.('background-color', '#bbb');
+                    $("#voxelDemo").css('background-color', '#bbb');
                 });
                 
                 $("#lightblue").on('click', function (e) {
                     e.preventDefault();
-                    $("#voxelDemo").css.('background-color', '#A5C7FF');
+                    $("#voxelDemo").css('background-color', '#A5C7FF');
                 });
                 
                 $("#darkdarkgrey").on('click', function (e) {
                     e.preventDefault();
-                    $("#voxelDemo").css.('background-color', '#111');
+                    $("#voxelDemo").css('background-color', '#111');
                 });
                 
                 $("#white").on('click', function (e) {
                     e.preventDefault();
-                    $("#voxelDemo").css.('background-color', '#fff');
+                    $("#voxelDemo").css('background-color', '#fff');
                 });
             });
 
@@ -692,10 +520,23 @@
             })
         </script>
         <script>
+            var isBlurred = false;
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
+
+            /*var sideMenu = document.getElementById("sideMenu");
+            sideMenu.onclick = function(){
+                if (isBlurred == true){
+                    isBlurred = false;
+                    document.body.className = "";
+                } else {
+                    document.getElementById("container").classList.add("blur");
+                    sideMenu.style.webkitFilter = none;
+                    isBlurred = true;
+                }
+            }*/
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
     </body>
