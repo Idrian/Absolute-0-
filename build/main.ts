@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from './OrbitControls';
 import {ArrayToMesh} from './ArrayToMesh';
 import {RuleApplyer} from './RuleApplyer';
+import {RuleInterpreter} from './Interpreter';
 import {CellularRuleApplyer} from './CellularRuleApplyer';
 import {fileReader} from './ObjToArray';
 
@@ -548,7 +549,7 @@ function fillColorModal(colors : string[],model : THREE.Group, colorCanvas : vox
 }*/
 
 (<any>window).voxJSCanvas = voxJSCanvas;
-//(<any>window).THREE = THREE;
+(<any>window).RuleInterpreter = RuleInterpreter;
 (<any>window).ArrayToMesh = ArrayToMesh;
 (<any>window).RuleApplyer = RuleApplyer;
 (<any>window).CellularRuleApplyer = CellularRuleApplyer;

@@ -19,9 +19,11 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="build/voxc.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="js/three.min.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="build/Test.js" type="text/javascript" charset="utf-8"></script> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body class="main" id="bodySection" >
+    <body onload="loadVoxelMain()" class="main" id="bodySection" >
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -289,17 +291,18 @@
                         </div>
                         <div id="editor">{"Rules" : 
     [{
-        "Color" : "0x664611" ,
+        "Key" : "0x664611" ,
         "Shape" : "Cylinder",
         "Texture" : "./resources/textures/oak.png",
         "Bmap" : "./resources/textures/oakBump.png"
     },{
-        "Color" : "0x00ff00",
-        "Shape" : "Cube",
+        "Key" : "0x00ff00",
+        "Shape" : "Sphere",
+        "scale" : [1.5,1.5,1.5],
         "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
         "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
     },{
-        "Color" : "0x00ff01",
+        "Key" : "0x00ff01",
         "Shape" : "Cube",
         "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
         "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"

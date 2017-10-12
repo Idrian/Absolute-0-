@@ -1878,6 +1878,7 @@ const THREE = require("three");
 const OrbitControls_1 = require("./OrbitControls");
 const ArrayToMesh_1 = require("./ArrayToMesh");
 const RuleApplyer_1 = require("./RuleApplyer");
+const Interpreter_1 = require("./Interpreter");
 const CellularRuleApplyer_1 = require("./CellularRuleApplyer");
 const ObjToArray_1 = require("./ObjToArray");
 class voxJSCanvas {
@@ -2363,14 +2364,14 @@ for(var i=0;i<colors.length;i++)
 
 }*/
 window.voxJSCanvas = voxJSCanvas;
-//(<any>window).THREE = THREE;
+window.RuleInterpreter = Interpreter_1.RuleInterpreter;
 window.ArrayToMesh = ArrayToMesh_1.ArrayToMesh;
 window.RuleApplyer = RuleApplyer_1.RuleApplyer;
 window.CellularRuleApplyer = CellularRuleApplyer_1.CellularRuleApplyer;
 window.fileReader = ObjToArray_1.fileReader;
 window.OrbitControls = OrbitControls_1.OrbitControls;
 
-},{"./ArrayToMesh":1,"./CellularRuleApplyer":2,"./ObjToArray":5,"./OrbitControls":6,"./RuleApplyer":7,"three":9}],9:[function(require,module,exports){
+},{"./ArrayToMesh":1,"./CellularRuleApplyer":2,"./Interpreter":4,"./ObjToArray":5,"./OrbitControls":6,"./RuleApplyer":7,"three":9}],9:[function(require,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :

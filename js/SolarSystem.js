@@ -90,7 +90,7 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
     });*/
 
 
-    var ruleFile1 = '{"Rules" : [{"Key" : "0xffff33" , "Shape" : "Sphere","scale" : [10,10,10],  "Texture" : "./resources/textures/2k_sun.jpg" },{"Key" : "0xdd0000",  "Shape" : "Sphere","scale" : [0.5,0.5,0.5],"Texture" : "./resources/textures/2k_mercury.jpg"},{  "Key" : "0x01ee00",  "Shape" : "Sphere", "scale" : [0.8,0.8,0.8],  "Texture" : "./resources/textures/2k_venus_surface.jpg"},{  "Key" : "0x0000ee",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_earth_daymap.jpg"},{  "Key" : "0x220000",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_mars.jpg"},{ "Key" : "0xffff00",  "Shape" : "Sphere",  "scale" : [4,4,4], "Texture" : "./resources/textures/2k_jupiter.jpg"},{  "Key" : "0xcc0099",  "Shape" : "Sphere",  "scale" : [1.5,1.5,1.5],  "Texture" : "./resources/textures/2k_saturn.jpg"},{  "Key" : "0x000033",  "Shape" : "Sphere",  "scale" : [1.3,1.3,1.3],  "Texture" : "./resources/textures/2k_uranus.jpg" },{   "Key" : "0x3300cc",   "Shape" : "Sphere","scale" : [1.2,1.2,1.2],  "Texture" : "./resources/textures/2k_neptune.jpg"}]}';
+    var ruleFile1 = '{"Rules" : [{"Key" : "0xffff33" , "Shape" : "Sphere","scale" : [10,10,10],  "Texture" : "./resources/textures/2k_sun.jpg" },{"Key" : "0xdd0000",  "Shape" : "Sphere","scale" : [0.5,0.5,0.5],"Texture" : "./resources/textures/2k_mercury.jpg"},{  "Key" : "0x01ee00",  "Shape" : "Sphere", "scale" : [0.8,0.8,0.8],  "Texture" : "./resources/textures/2k_venus_surface.jpg"},{  "Key" : "0x0000ee",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_earth_daymap.jpg"},{  "Key" : "0x220000",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_mars.jpg"},{ "Key" : "0xffff00",  "Shape" : "Sphere",  "scale" : [4,4,4], "Texture" : "./resources/textures/2k_jupiter.jpg"},{  "Key" : "0xcc0099",  "Shape" : "Sphere",  "scale" : [1.5,1.5,1.5],  "Texture" : "./resources/textures/2k_saturn.jpg"},{"Key" : "0xcc0099" , "Shape" : "ring","scale" : [2,2,2], "rotation" : [1.5, 0, 0],  "Texture" : "./resources/textures/2k_saturn.jpg"},{  "Key" : "0x000033",  "Shape" : "Sphere",  "scale" : [1.3,1.3,1.3],  "Texture" : "./resources/textures/2k_uranus.jpg" },{   "Key" : "0x3300cc",   "Shape" : "Sphere","scale" : [1.2,1.2,1.2],  "Texture" : "./resources/textures/2k_neptune.jpg"}]}';
     
 
     var ruleFile = JSON.parse(ruleFile1);
@@ -160,44 +160,51 @@ scene.add(particleSystem);
 
         var merc = mesh.getChildByName("5900");
            merc.rotation.y += 0.01 
-            matrix.makeRotationY(5*Math.PI/180);
+            matrix.makeRotationY(1*Math.PI/180);
            merc.position.applyMatrix4(matrix);
         var venus = mesh.getChildByName("6100");
            venus.rotation.y += 0.01
-            matrix.makeRotationY(4*Math.PI/180);
+            matrix.makeRotationY(0.9*Math.PI/180);
            venus.position.applyMatrix4(matrix);
 
         var earth = mesh.getChildByName("6500");
            earth.rotation.y += 0.01
-                      matrix.makeRotationY(3*Math.PI/180);
+                      matrix.makeRotationY(0.7*Math.PI/180);
            earth.position.applyMatrix4(matrix);
 
                 var mars = mesh.getChildByName("6700");
            mars.rotation.y += 0.01
-                      matrix.makeRotationY(2.8*Math.PI/180);
+                      matrix.makeRotationY(0.65*Math.PI/180);
            mars.position.applyMatrix4(matrix);
 
 
                 var jupiter = mesh.getChildByName("7300");
            jupiter.rotation.y += 0.01
-                      matrix.makeRotationY(2*Math.PI/180);
+                      matrix.makeRotationY(0.5*Math.PI/180);
            jupiter.position.applyMatrix4(matrix);
 
 
-                var saturn = mesh.getChildByName("8000");
-           saturn.rotation.y += 0.01
-                      matrix.makeRotationY(1.8*Math.PI/180);
+for(var i=0;i<mesh.children.length;i++)
+    {
+        if(mesh.children[i].name == "8000")
+            {
+                      var saturn = mesh.children[i];
+            saturn.rotation.y += 0.01
+                      matrix.makeRotationY(0.3*Math.PI/180);
            saturn.position.applyMatrix4(matrix);
+            }
+    }
 
+          
 
                 var uranus = mesh.getChildByName("8500");
            uranus.rotation.y += 0.01
-                      matrix.makeRotationY(1.6*Math.PI/180);
+                      matrix.makeRotationY(0.2*Math.PI/180);
            uranus.position.applyMatrix4(matrix);
 
                 var neptune = mesh.getChildByName("9200");
            neptune.rotation.y += 0.01
-                      matrix.makeRotationY(1*Math.PI/180);
+                      matrix.makeRotationY(0.1*Math.PI/180);
            neptune.position.applyMatrix4(matrix);
           // this.voxel.getObjectByName("212").rotation.x += 0.01;
            controls.update();
