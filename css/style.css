@@ -1,4 +1,4 @@
-body{
+html, body{
     background-color: #222;
     font-family: 'Open Sans', sans-serif;
     overflow-x: hidden;
@@ -160,11 +160,13 @@ a{
 }
 
 .voxc-image{
+    margin-top: 50px;
     min-height: 100vh;
     max-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
     background-image: url("../resources/images/voxc.png");
 }
 
@@ -614,5 +616,18 @@ button.btn.btn-color-selection:focus{
 
 .modal-search:focus{
     outline: none !important;
+}
+
+.converter2-demo-toggle-container{
+    margin-top: 80px;
+    text-align: center;
+}
+
+.converter2-demo-toggle-container .rules-file-button-container{
+    color: white;
+}
+
+.converter2-demo-toggle-container a{
+    color: #222;
 }
 
