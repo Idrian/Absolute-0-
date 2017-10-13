@@ -4,6 +4,8 @@ function loadSolarSystem()
   //  solarSystem.setDimensions(window.innerWidth, window.innerHeight);
   //  solarSystem.setBackgroundColor(0x020202);
 
+var toggleBtn = document.getElementById("converter2Toggle");
+
 let container = document.getElementById("solarSystem");
 
 var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
@@ -91,6 +93,7 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
 
 
     var ruleFile1 = '{"Rules" : [{"Key" : "0xffff33" , "Shape" : "Sphere","scale" : [10,10,10],  "Texture" : "./resources/textures/2k_sun.jpg" },{"Key" : "0xdd0000",  "Shape" : "Sphere","scale" : [0.5,0.5,0.5],"Texture" : "./resources/textures/2k_mercury.jpg"},{  "Key" : "0x01ee00",  "Shape" : "Sphere", "scale" : [0.8,0.8,0.8],  "Texture" : "./resources/textures/2k_venus_surface.jpg"},{  "Key" : "0x0000ee",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_earth_daymap.jpg"},{  "Key" : "0x220000",  "Shape" : "Sphere",  "scale" : [1,1,1],  "Texture" : "./resources/textures/2k_mars.jpg"},{ "Key" : "0xffff00",  "Shape" : "Sphere",  "scale" : [4,4,4], "Texture" : "./resources/textures/2k_jupiter.jpg"},{  "Key" : "0xcc0099",  "Shape" : "Sphere",  "scale" : [1.5,1.5,1.5],  "Texture" : "./resources/textures/2k_saturn.jpg"},{"Key" : "0xcc0099" , "Shape" : "ring","scale" : [2,2,2], "rotation" : [1.5, 0, 0],  "Texture" : "./resources/textures/2k_saturn.jpg"},{  "Key" : "0x000033",  "Shape" : "Sphere",  "scale" : [1.3,1.3,1.3],  "Texture" : "./resources/textures/2k_uranus.jpg" },{   "Key" : "0x3300cc",   "Shape" : "Sphere","scale" : [1.2,1.2,1.2],  "Texture" : "./resources/textures/2k_neptune.jpg"}]}';
+    var ruleFile2 = '{"Rules" : [{"Key" : "0xffff33" ,"Color" : "0xff0000", "Shape" : "Sphere","scale" : [10,10,10],  "Texture" : "./resources/textures/chain.jpg" },{"Key" : "0xdd0000","Color" : "0x0000ff",  "Shape" : "Sphere","scale" : [2,2,2],"Texture" : "./resources/textures/chain.jpg"},{  "Key" : "0x01ee00","Color" : "0x0000ff",  "Shape" : "Sphere", "scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg"},{  "Key" : "0x0000ee", "Color" : "0x0000ff", "Shape" : "Sphere",  "scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg"},{  "Key" : "0x220000", "Color" : "0x0000ff", "Shape" : "Sphere",  "scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg"},{ "Key" : "0xffff00", "Color" : "0x0000ff", "Shape" : "Sphere",  "scale" : [2,2,2], "Texture" : "./resources/textures/chain.jpg"},{  "Key" : "0xcc0099", "Color" : "0x0000ff", "Shape" : "Sphere",  "scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg"},{  "Key" : "0x000033", "Color" : "0x0000ff", "Shape" : "Sphere",  "scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg" },{   "Key" : "0x3300cc", "Color" : "0x0000ff",  "Shape" : "Sphere","scale" : [2,2,2],  "Texture" : "./resources/textures/chain.jpg"}]}';
     
 
     var ruleFile = JSON.parse(ruleFile1);
@@ -101,18 +104,18 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
     solarRuleApplyer.convert(ruleFile, model);
     var arrayToMesh = new  ArrayToMesh(model);
 
-    var mesh;
+    var solarMesh;
    // mesh = arrayToMesh.output();
-    mesh = solarRuleApplyer.output()
+    solarMesh = solarRuleApplyer.output()
 
     //mesh.position.set(-25,0,0);
    // mesh.applyMatrix( new THREE.Matrix4().makeTranslation(-25, 0, 0) );
-    scene.add(mesh);
+    scene.add(solarMesh);
 
 // create the particle variables
 var particleCount = 1800,
     particles = new THREE.Geometry(),
-    pMaterial = new THREE.ParticleBasicMaterial({
+    pMaterial = new THREE.PointsMaterial({
       color: 0xFFFFFF,
       size: 0.5
     });
@@ -132,14 +135,15 @@ for (var p = 0; p < particleCount; p++) {
 }
 
 // create the particle system
-var particleSystem = new THREE.ParticleSystem(
+var particleSystem = new THREE.Points(
     particles,
     pMaterial);
 
 // add it to the scene
+particleSystem.name = "particleSystem";
 scene.add(particleSystem);
 
-
+var mesh = solarMesh;
     function render()
     {
         requestAnimationFrame(() => render());
@@ -154,31 +158,31 @@ scene.add(particleSystem);
         
 
 
-        var sun = mesh.getChildByName("5000");
+        var sun = mesh.getObjectByName("5000");
            sun.rotation.y += 0.01
        
 
-        var merc = mesh.getChildByName("5900");
+        var merc = mesh.getObjectByName("5900");
            merc.rotation.y += 0.1 
             matrix.makeRotationY(1*Math.PI/180);
            merc.position.applyMatrix4(matrix);
-        var venus = mesh.getChildByName("6100");
+        var venus = mesh.getObjectByName("6100");
            venus.rotation.y += 0.1
             matrix.makeRotationY(0.9*Math.PI/180);
            venus.position.applyMatrix4(matrix);
 
-        var earth = mesh.getChildByName("6500");
+        var earth = mesh.getObjectByName("6500");
            earth.rotation.y += 0.1
                       matrix.makeRotationY(0.7*Math.PI/180);
            earth.position.applyMatrix4(matrix);
 
-                var mars = mesh.getChildByName("6700");
+                var mars = mesh.getObjectByName("6700");
            mars.rotation.y += 0.1
                       matrix.makeRotationY(0.65*Math.PI/180);
            mars.position.applyMatrix4(matrix);
 
 
-                var jupiter = mesh.getChildByName("7300");
+                var jupiter = mesh.getObjectByName("7300");
            jupiter.rotation.y += 0.1
                       matrix.makeRotationY(0.5*Math.PI/180);
            jupiter.position.applyMatrix4(matrix);
@@ -197,12 +201,12 @@ for(var i=0;i<mesh.children.length;i++)
 
           
 
-                var uranus = mesh.getChildByName("8500");
+                var uranus = mesh.getObjectByName("8500");
            uranus.rotation.y += 0.1
                       matrix.makeRotationY(0.2*Math.PI/180);
            uranus.position.applyMatrix4(matrix);
 
-                var neptune = mesh.getChildByName("9200");
+                var neptune = mesh.getObjectByName("9200");
            neptune.rotation.y += 0.1
                       matrix.makeRotationY(0.1*Math.PI/180);
            neptune.position.applyMatrix4(matrix);
@@ -221,5 +225,47 @@ for(var i=0;i<mesh.children.length;i++)
 
     start();
 
+
+    ruleFile = JSON.parse(ruleFile2);
+    solarRuleApplyer.convert(ruleFile, model);
+   // var arrayToMesh = new  ArrayToMesh(model);
+
+    var atomMesh;
+   // mesh = arrayToMesh.output();
+    atomMesh = solarRuleApplyer.output()
+
+    var solarSystemOn = true;
+
+toggleBtn.addEventListener("click", function()
+{
+    if(solarSystemOn == true)
+        {
+            setMesh(atomMesh);
+            solarSystemOn = false;
+            scene.remove(scene.getObjectByName("particleSystem"));
+             scene.background =  new THREE.Color( 0xffffff );
+
+
+        }
+    else
+        {
+            setMesh(solarMesh);
+            solarSystemOn = true;
+            scene.add(particleSystem);
+             scene.background =  new THREE.Color( 0x020202 );
+        }
+});
+
+function setMesh(inputMesh)
+{
+    scene.remove(scene.getObjectByName("Voxel"));
+    mesh = inputMesh;
+    scene.add(inputMesh);
+
 }
+
+}
+
+
+
 
