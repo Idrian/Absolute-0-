@@ -49,7 +49,7 @@ class ArrayToMesh {
 }
 exports.ArrayToMesh = ArrayToMesh;
 
-},{"three":9}],2:[function(require,module,exports){
+},{"three":10}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Interpreter_1 = require("./Interpreter");
@@ -142,12 +142,12 @@ class CellularRuleApplyer {
 }
 exports.CellularRuleApplyer = CellularRuleApplyer;
 
-},{"./Interpreter":4}],3:[function(require,module,exports){
+},{"./Interpreter":5}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function rgbToHex(r, g, b) {
     var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-    console.log("Hex", hex);
+    //  console.log("Hex",hex);
     return hex;
 }
 exports.rgbToHex = rgbToHex;
@@ -158,6 +158,80 @@ function componentToHex(c) {
 exports.componentToHex = componentToHex;
 
 },{}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ColourFunctions_1 = require("./ColourFunctions");
+class ImgToArray {
+    constructor() {
+        this.colorMatrix = new Array();
+        this.theArray = new Array();
+    }
+    convert(inputArray, callback) {
+        var canvas = document.createElement("canvas");
+        if (canvas.getContext) {
+            //this.theArray.push(new Array());
+            var ctx = canvas.getContext('2d');
+            var image = new Image();
+            image.onload = (() => this.imageReady(image, ctx, callback));
+        }
+        image.src = inputArray;
+        //  console.log("theArray: ",this.theArray);
+        //  return this.theArray;
+    }
+    imageReady(image, ctx, callback) {
+        ctx.drawImage(image, 0, 0);
+        var imgData = ctx.getImageData(0, 0, image.width, image.height);
+        var colors = imgData.data;
+        var color = null;
+        this.theArray = new Array();
+        var x = -1;
+        var z = 0;
+        for (var p = 0; p < colors.length; p += 4) {
+            //  console.log("P: ",x);
+            //  console.log("y: ",this.theArray.length);
+            //  this.theArray[x].push(new Array(image.width));
+            //  console.log("x: ",this.theArray[x].length);
+            color = ColourFunctions_1.rgbToHex(colors[p], colors[p + 1], colors[p + 2]);
+            if (this.colorMatrix.length == 0) {
+                this.colorMatrix.push(color);
+            }
+            else {
+                var newColor = true;
+                for (var i = 0; i < this.colorMatrix.length; i++) {
+                    if (this.colorMatrix[i] == color) {
+                        newColor = false;
+                        break;
+                    }
+                }
+                if (newColor == true) {
+                    this.colorMatrix.push(color);
+                }
+            }
+            //  console.log("x: ",x%image.width);
+            //  console.log("z: ",z%image.height);
+            if (z % image.width == 0) {
+                this.theArray.push(new Array());
+                x++;
+            }
+            this.theArray[x].push(new Array());
+            this.theArray[x % image.height][z % image.width].push(color);
+            //  console.log("z: ",this.theArray[x][0]);
+            //  console.log("A: ",this.theArray);
+            // x++;
+            z++;
+        }
+        callback();
+    }
+    output() {
+        return this.theArray;
+    }
+    getColors() {
+        return this.colorMatrix;
+    }
+}
+exports.ImgToArray = ImgToArray;
+
+},{"./ColourFunctions":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
@@ -364,7 +438,7 @@ class RuleInterpreter {
 }
 exports.RuleInterpreter = RuleInterpreter;
 
-},{"three":9}],5:[function(require,module,exports){
+},{"three":10}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ColourFunctions_1 = require("./ColourFunctions");
@@ -1221,7 +1295,7 @@ class face {
     }
 }
 
-},{"./ColourFunctions":3}],6:[function(require,module,exports){
+},{"./ColourFunctions":3}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
@@ -1748,7 +1822,7 @@ class OrbitControls extends THREE.EventDispatcher {
 }
 exports.OrbitControls = OrbitControls;
 
-},{"three":9}],7:[function(require,module,exports){
+},{"three":10}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
@@ -1871,7 +1945,7 @@ class RuleApplyer {
 }
 exports.RuleApplyer = RuleApplyer;
 
-},{"./Interpreter":4,"three":9}],8:[function(require,module,exports){
+},{"./Interpreter":5,"three":10}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const THREE = require("three");
@@ -1881,6 +1955,7 @@ const RuleApplyer_1 = require("./RuleApplyer");
 const Interpreter_1 = require("./Interpreter");
 const CellularRuleApplyer_1 = require("./CellularRuleApplyer");
 const ObjToArray_1 = require("./ObjToArray");
+const ImgToArray_1 = require("./ImgToArray");
 class voxJSCanvas {
     constructor(containerID) {
         // Create the renderer, in this case using WebGL, we want an alpha channel
@@ -2370,8 +2445,9 @@ window.RuleApplyer = RuleApplyer_1.RuleApplyer;
 window.CellularRuleApplyer = CellularRuleApplyer_1.CellularRuleApplyer;
 window.fileReader = ObjToArray_1.fileReader;
 window.OrbitControls = OrbitControls_1.OrbitControls;
+window.ImgToArray = ImgToArray_1.ImgToArray;
 
-},{"./ArrayToMesh":1,"./CellularRuleApplyer":2,"./Interpreter":4,"./ObjToArray":5,"./OrbitControls":6,"./RuleApplyer":7,"three":9}],9:[function(require,module,exports){
+},{"./ArrayToMesh":1,"./CellularRuleApplyer":2,"./ImgToArray":4,"./Interpreter":5,"./ObjToArray":6,"./OrbitControls":7,"./RuleApplyer":8,"three":10}],10:[function(require,module,exports){
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -46483,5 +46559,5 @@ window.OrbitControls = OrbitControls_1.OrbitControls;
 
 })));
 
-},{}]},{},[8])(8)
+},{}]},{},[9])(9)
 });

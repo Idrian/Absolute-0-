@@ -69,7 +69,7 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
         model[92][0][0] = "0x3300cc"; //uranus
 
 
-
+console.log("Model: ",model);
         //let arrayToMesh = new  ArrayToMesh(model);
       //  var mesh = arrayToMesh.output()
 
@@ -102,7 +102,7 @@ var renderer = new THREE.WebGLRenderer({alpha: true , antialias: true});
     var solarRuleApplyer = new  RuleApplyer();
 
     solarRuleApplyer.convert(ruleFile, model);
-    var arrayToMesh = new  ArrayToMesh(model);
+   // var arrayToMesh = new  ArrayToMesh(model);
 
     var solarMesh;
    // mesh = arrayToMesh.output();

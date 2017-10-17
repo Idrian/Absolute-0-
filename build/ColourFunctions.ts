@@ -1,7 +1,7 @@
     export function rgbToHex(r:number,g:number,b:number) : string
     {
         var hex = "0x" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
-        console.log("Hex",hex);
+      //  console.log("Hex",hex);
         return hex;
     }
 

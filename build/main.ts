@@ -555,5 +555,7 @@ function fillColorModal(colors : string[],model : THREE.Group, colorCanvas : vox
 (<any>window).CellularRuleApplyer = CellularRuleApplyer;
 (<any>window).fileReader = fileReader;
 (<any>window).OrbitControls = OrbitControls;
+(<any>window).ImgToArray = ImgToArray;
+
 
 
