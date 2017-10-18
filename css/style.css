@@ -1,5 +1,5 @@
 html, body{
-    background-color: #222;
+    background-color: #0c181b;
     font-family: 'Open Sans', sans-serif;
     overflow-x: hidden;
     height: 100%;
@@ -110,6 +110,8 @@ a{
 .hr-blue{
    color: #86DCEF;
     padding-left: 10px;
+    position: relative;
+    z-index: 6;
 }
 
 .voxc-heading{
@@ -122,9 +124,11 @@ a{
 
 .section-heading{
     text-align: left;
-    color: #555;
+    color: white;
     font-size: 40px;
     font-family: 'Roboto', sans-serif;
+    position: relative;
+    z-index: 6;
 }
 
 .main-heading{
@@ -148,15 +152,21 @@ a{
 }
 
 .section-paragraph{
-    color: #666;
+    color: white;
     font-size: 18px;
     text-align: left;
     margin-bottom: 30px;
+    position: relative;
+    z-index: 6;
 }
 
 .section{
-    background-color: #fefefe;
+    background-color: #0c181b;
     padding-bottom: 50px;
+}
+
+.section h5{
+    color: white;
 }
 
 .voxc-image{
@@ -173,7 +183,7 @@ a{
 .canvascontainer{
     padding-top: 40px;
     padding-bottom: 60px;
-    background-color: #fefefe;
+    background-color: #0c181b;
 }
 
 #editor {
@@ -207,11 +217,11 @@ a{
 }
 
 .navbar-inverse .navbar-nav>.active> a{
-    background: #222;
+    background: #0c181b;
 }
 
 .navbar-inverse .navbar-nav li:hover{
-    background: #222;
+    background: #0c181b;
 }
 
 .input-file-hidden{
@@ -247,6 +257,7 @@ a{
 .file-upload-container{
     margin-bottom: 10px;
     text-align: center;
+    color: white;
 }
 
 .console-command{
@@ -278,6 +289,7 @@ a{
 
 .rules-file-button-container{
     text-align: center;
+    color: white;
 }
 
 .rules-file-button-container-dropdown{
@@ -327,6 +339,7 @@ a{
 }
 
 .footer{
+    margin-top: -2px;
     height: 200px;
     background-color: #86DCEF;
 }
@@ -412,16 +425,17 @@ a{
 
 .document-link-container a{
     text-decoration: none;
-    color: #222;
+    color: #86DCEF;
 }
 
 .document-link-container i:hover{
-    color: #86DCEF;
+    color: white;
 }
 
 .document-link-heading{
     font-size: 25px;
     text-align: center;
+    color: white;
 }
 
 .demo-heading{
@@ -478,6 +492,7 @@ input[type=range][orient=vertical]
 
 #voxelDemo{
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .rules-file-upload-button{
@@ -485,7 +500,7 @@ input[type=range][orient=vertical]
     outline: none;
     width: 100%;
     background-color: #86DCEF;
-    color: #222;
+    color: #0c181b;
     height: 30px;
     margin-bottom: 40px;
 }
@@ -641,5 +656,40 @@ button.btn.btn-color-selection:focus{
 #solarSystem{
     padding: 0;
     margin-top: -200px;
+}
+
+#aboutSection{
+    background-color: #0c181b;
+}
+
+.converter2-demo-button{
+    padding: 10px 15px 10px 15px;
+    border: 1px solid white;
+    border-radius: 10px;
+    color: white;
+}
+
+.converter2-demo-button:hover{
+    text-decoration: none;
+    background-color: white;
+    color: #08181C;
+}
+
+.converter2-demo-button:focus{
+    text-decoration: none;
+}
+
+.geomtest{
+    position: absolute;
+    top: -60%;
+    left: 0%;
+    z-index: 5;
+}
+
+.geom-right{
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    width: 700px;
 }
 

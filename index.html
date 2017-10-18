@@ -169,10 +169,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="geometry-image hidden-xs col-md-2">
-                    <img height="200px" src="resources/images/geometry.png"/>
-                </div>
-                <div id="aboutSection" class="col-sm-8 section">
+                <div id="aboutSection" class="col-sm-12 section">
+                    <img class="geomtest" src="resources/images/geomtest.svg"/>
                     <div class="col-sm-8 col-sm-offset-2">
                         <h2 class="section-heading">About</h2>
                         <hr class="norm-hr"/>
@@ -184,12 +182,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="geometry-image col-sm-2">
-                    <img height="200px" src="resources/images/geometry.png"/>
-                </div>
             </div>
             <div class="row">
-                <div id="usageSection" class="col-sm-8 col-sm-offset-2 section">
+                <div id="usageSection" class="col-sm-12 section">
                     <div class="col-sm-8 col-sm-offset-2">
                         <h2 class="section-heading">Usage</h2>
                         <hr class="norm-hr"/>
@@ -221,14 +216,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="geometry-image-bottom hidden-sm-down col-md-2">
-                    <img height="200px" src="resources/images/geometry-bottom.png"/>
-                </div>
-                <div class="geometry-image-bottom hidden-sm-down col-md-2 col-md-offset-8">
-                    <img height="200px" src="resources/images/geometry-bottom.png"/>
-                </div>
-            </div>
+            <img width="100%" class="footer-image" src="resources/images/geometry2.png"/>
             <div class="footer row">
                 <div class="col-sm-1 col-sm-offset-1">
                     <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
@@ -423,31 +411,6 @@
                         window.location.hash = target;
                     });
                 });
-                
-                $("#darkgrey").on('click', function (e) {
-                    e.preventDefault();
-                    $("#voxelDemo").css('background-color', '#222');
-                });
-                
-                $("#lightgrey").on('click', function (e) {
-                    e.preventDefault();
-                    $("#voxelDemo").css('background-color', '#bbb');
-                });
-                
-                $("#lightblue").on('click', function (e) {
-                    e.preventDefault();
-                    $("#voxelDemo").css('background-color', '#A5C7FF');
-                });
-                
-                $("#darkdarkgrey").on('click', function (e) {
-                    e.preventDefault();
-                    $("#voxelDemo").css('background-color', '#111');
-                });
-                
-                $("#white").on('click', function (e) {
-                    e.preventDefault();
-                    $("#voxelDemo").css('background-color', '#fff');
-                });
             });
 
             //Change navbar active class on click
@@ -464,7 +427,7 @@
         <script>
             var isBlurred = false;
             var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
+            editor.setTheme("ace/theme/solarized_dark");
             var JSONMode = ace.require("ace/mode/json").Mode;
             editor.session.setMode(new JSONMode());
             document.getElementById("predefinedRules").onclick = function(){
