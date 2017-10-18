@@ -769,3 +769,8 @@ button.btn.btn-color-selection:focus{
     color: #08181C;
 }
 
+.color-picker{
+    text-align: center;
+    margin-top: 50px;
+}
+
