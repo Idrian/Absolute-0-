@@ -136,52 +136,11 @@ for(var y=0;y<8;y++)
          ruleFileModel[7][5][8] = "0xee0000";
 
 let arrayToMesh = new  ArrayToMesh(model);
-//let wireFrameMesh : THREE.Group = arrayToMesh.output();
 
-   /* let converterOne_canvas = new  voxJSCanvas("converter1Canvas");  
     
-
-     
-     converterOne_canvas.CameraPosition(0,0,10);
-     converterOne_canvas.setMesh(arrayToMesh.output());
-     converterOne_canvas.setBackgroundColor(0xffffff);
-     converterOne_canvas.start();*/
-
-  //  var ruleFile1 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/industrial-buildings.jpg"},{"Color" : "0xee0000","Shape" : "pyramid","Texture" : "./resources/textures/slate-roof-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/brick-texture.jpg"}]}';
-  //  var ruleFile2 = '{"Rules" : [{"Key" : "0x3300cc" ,"Shape" : "cube","Texture" : "./resources/textures/cactus.png"},{"Color" : "0xee0000","Shape" : "dodecahedron","Texture" : "./resources/textures/flowerbed-texture.jpg"},{"Key" : "0x00bb00","Shape" : "Cube","Texture" : "./resources/textures/sand.jpg"}]}'
-
-  //  var ruleFile = JSON.parse(ruleFile1);
-
-  //  var ruleApplyerDemo = new  RuleApplyer();
-  //  ruleApplyerDemo.convert(ruleFile, ruleFileModel);
-
-  /*   let converterTwo_canvasOne = new  voxJSCanvas("converter2Canvas1");  
-
-     // var arrayToMesh = new ArrayToMesh(model);
-     converterTwo_canvasOne.CameraPosition(0,0,20);
-     converterTwo_canvasOne.setMesh(ruleApplyerDemo.output());
-     converterTwo_canvasOne.setBackgroundColor(0xffffff);
-     converterTwo_canvasOne.start();
-
-      var ruleFile = JSON.parse(ruleFile2);
- ruleApplyerDemo.convert(ruleFile, ruleFileModel);
-
-     let converterTwo_canvasTwo = new  voxJSCanvas("converter2Canvas2");  
-
-     // var arrayToMesh = new ArrayToMesh(model);
-     converterTwo_canvasTwo.CameraPosition(0,0,20);
-     converterTwo_canvasTwo.setMesh(ruleApplyerDemo.output());
-     converterTwo_canvasTwo.setBackgroundColor(0xffffff);
-     converterTwo_canvasTwo.start();
-
-*/
-    
-
-
 
      var editor = ace.edit("editor");
-     //editor.container = <HTMLDivElement>document.getElementById("editor");
-
+   
  //   var jsonString =  editor.textContent.slice(editor.textContent.indexOf("{\"Rules\""),editor.textContent.indexOf("}X")+1);
  //console.log("Full editor",editor.getValue());
  var jsonString = editor.getValue();
@@ -202,6 +161,7 @@ let arrayToMesh = new  ArrayToMesh(model);
     demo_canvas.CameraPosition(0,0,10);
     demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
     demo_canvas.setMesh(converterOne_model);
+    demo_canvas.setDimensions(window.innerWidth*0.8,window.innerHeight*0.8);
    
     var darkgrey = document.getElementById("darkgrey");
     darkgrey.addEventListener("click",function(){
@@ -230,6 +190,7 @@ let arrayToMesh = new  ArrayToMesh(model);
     
     demo_canvas.start();
     var colorCanvas = new  voxJSCanvas("colorGuidelinesCanvas");
+     colorCanvas.setDimensions(window.innerWidth*0.6,window.innerHeight*0.8);
     
     fillColorModal(["0x00ff00","0x664611"],arrayToMesh.output(),colorCanvas);
      colorCanvas.start();
@@ -428,5 +389,6 @@ function LoadconverterOne()
      converterOne_canvas.CameraPosition(0,0,10);
      converterOne_canvas.setMesh(arrayToMesh.output());
      converterOne_canvas.setBackgroundColor(0xffffff);
+     converterOne_canvas.setDimensions(window.innerWidth*0.8,window.innerHeight*0.8);
      converterOne_canvas.start();
 }
