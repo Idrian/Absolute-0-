@@ -814,28 +814,22 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function)
 
         //if x doesnt change
         if (faceObj.normal == "-/0/0" || faceObj.normal == "+/0/0") {
-            console.log("In one.one");
+            //console.log("In one.one");
             var m: number = (faceObj.y1 - faceObj.y2) / (faceObj.z1 - faceObj.z2);
             var tempMin: number = faceObj.lowZ;
             var tempMax: number = faceObj.maxZ;
             var c: number = faceObj.y1 - (m * faceObj.z1);
             for (var z: number = tempMin; z < tempMax; z++) {
-                console.log("In one");
+                //console.log("In one");
                 var line: number = ((m * (faceObj.lowZ + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
                 if (faceObj.yAngle == "+") {
-                    if (faceObj.normal == "+/0/0")
-                        this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, z, faceObj.xo);
-                    else
-                        this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, z, faceObj.xo);
+                    this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, z, faceObj.xo, faceObj);
                 }
                 if (faceObj.yAngle == "-") {
-                    if (faceObj.normal == "+/0/0")
-                        this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, z, faceObj.xo);
-                    else
-                        this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, z, faceObj.xo);
+                    this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, z, faceObj.xo, faceObj);
                 }
                 count++;
             }
@@ -846,22 +840,16 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function)
             //alert("m = " + m);
             var c: number = faceObj.z1 - (m * faceObj.x1);
             for (var x: number = faceObj.lowX; x < faceObj.maxX; x++) {
-                console.log("In two");
+                //console.log("In two");
                 var line: number = ((m * (faceObj.lowX + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
                 if (faceObj.zAngle == "+") {
-                    if (faceObj.normal == "0/+/0")
-                        this.putIn(faceObj.zo, line, faceObj.normal, faceObj.color, x, faceObj.yo)
-                    else
-                        this.putIn(faceObj.zo, line, faceObj.normal, faceObj.color, x, faceObj.yo) 
+                    this.putIn(faceObj.zo, line, faceObj.normal, faceObj.color, x, faceObj.yo, faceObj)
                 }
                 if (faceObj.zAngle == "-") {
-                    if (faceObj.normal == "0/+/0")
-                        this.putIn(line, faceObj.zo, faceObj.normal, faceObj.color, x, faceObj.yo)
-                    else
-                        this.putIn(line, faceObj.zo, faceObj.normal, faceObj.color, x, faceObj.yo)
+                    this.putIn(line, faceObj.zo, faceObj.normal, faceObj.color, x, faceObj.yo, faceObj)
                 }
                 count++;
             }
@@ -872,72 +860,98 @@ imageReady(image : HTMLImageElement,ctx : any,callback : Function)
             //alert("m = " + m);
             var c: number = faceObj.y1 - (m * faceObj.x1);
             for (var x: number = faceObj.lowX; x < faceObj.maxX; x++) {
-                console.log("In three");
+                //console.log("In three");
                 var line: number = ((m * (faceObj.lowX + count)) + c);
                 if (line % 1 != 0)
                     line = Math.round(line + 0.5);
 
                 if (faceObj.xAngle == "+") {
-                    if (faceObj.normal == "0/0/+")
-                        this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, x, faceObj.zo);
-                    else
-                        this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, x, faceObj.zo);
+                    this.putIn(faceObj.yo, line, faceObj.normal, faceObj.color, x, faceObj.zo, faceObj);
                 }
                 if (faceObj.xAngle == "-") {
-                    if (faceObj.normal == "0/0/+")
-                        this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, x, faceObj.zo);
-                    else
-                        this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, x, faceObj.zo);
+                    this.putIn(line, faceObj.yo, faceObj.normal, faceObj.color, x, faceObj.zo, faceObj);
                 }
                 count++;
             }
         }
     }
 
-    putIn(from: number, to: number, normal: string, color: string, currentLevel: number, other: number): void {
+    putIn(from: number, to: number, normal: string, color: string, currentLevel: number, other: number, faceObj: face): void {
         console.log("In put in: " + from + " to " + to);
         if (normal == "+/0/0") {
             for (var y: number = from; y < to; y++) {
-                console.log("Adding " + color + " to " + (other - 1) + "/" + (y) + "/" + currentLevel);
+                console.log("Adding " + color + " to " + (other - 1) + "/" + (y) + "/" + currentLevel + "  " + "+/0/0");
                 //if (this.finalMatrix[other - 1][currentLevel][z] != null)
-                this.finalMatrix[other - 1][y][currentLevel] = color;
+                if (this.check(other - 1, y, currentLevel, faceObj))
+                    this.finalMatrix[other - 1][y][currentLevel] = color;
             }
         }
         if (normal == "-/0/0") {
             for (var y: number = from; y < to; y++) {
-                console.log("Adding " + color + " to " + other + "/" + (y) + "/" + (currentLevel));
+                console.log("Adding " + color + " to " + other + "/" + (y) + "/" + (currentLevel) + "  " + "-/0/0");
                 //if (this.finalMatrix[other][currentLevel][z] != null)
-                this.finalMatrix[other][y][currentLevel] = color;
+                if (this.check(other, y, currentLevel, faceObj))
+                    this.finalMatrix[other][y][currentLevel] = color;
             }
         }
         if (normal == "0/+/0") {
             for (var z: number = from; z < to; z++) {
-                console.log("Adding " + color + " to " + currentLevel + "/" + (other - 1) + "/" + z);
+                console.log("Adding " + color + " to " + currentLevel + "/" + (other - 1) + "/" + z + "  " + "0/+/0");
                 //if (this.finalMatrix[x][other - 1][currentLevel])
-                this.finalMatrix[currentLevel][other-1][z] = color;
+                if (this.check(currentLevel, other - 1, z, faceObj))
+                    this.finalMatrix[currentLevel][other - 1][z] = color;
             }
         }
         if (normal == "0/-/0") {
             for (var z: number = from; z < to; z++) {
-                console.log("Adding " + color + " to " + currentLevel + "/" + (other) + "/" + z);
+                console.log("Adding " + color + " to " + currentLevel + "/" + (other) + "/" + z + "  " + "0/-/0");
                 //if (this.finalMatrix[x] && this.finalMatrix[x][other] && this.finalMatrix[x][other][currentLevel])
-                this.finalMatrix[currentLevel][other][z] = color;
+                if (this.check(currentLevel, other, z, faceObj))
+                    this.finalMatrix[currentLevel][other][z] = color;
             }
         }
         if (normal == "0/0/+") {
             for (var y: number = from; y < to; y++) {
-                console.log("Adding " + color + " to " + y + "   " + y + "/" + (currentLevel) + "/" + other);
+                console.log("Adding " + color + " to " + currentLevel + "   " + y + "/" + (y) + "/" + (other - 1) + "  " + "0/0/+");
                 //if (this.finalMatrix[x] && this.finalMatrix[x][currentLevel] && this.finalMatrix[x][currentLevel][other - 1])
-                this.finalMatrix[currentLevel][y][other-1] = color;
+                if (this.check(currentLevel, y, other - 1, faceObj))
+                    this.finalMatrix[currentLevel][y][other - 1] = color;
             }
         }
         if (normal == "0/0/-") {
             for (var y: number = from; y < to; y++) {
-                console.log("Adding " + color + " to " + y + "   " + y + "/" + (currentLevel) + "/" + other);
+                console.log("Adding " + color + " to " + y + "   " + currentLevel + "/" + (y) + "/" + other + "  " + "0/0/-  " + (this.largestY - this.lowY));
                 //if (this.finalMatrix[x] && this.finalMatrix[x][currentLevel] && this.finalMatrix[x][currentLevel][other])
+                if (this.check(currentLevel, y, other, faceObj))
                     this.finalMatrix[currentLevel][y][other] = color;
             }
         }
+    }
+
+    check(x: number, y: number, z: number, faceObj: face): boolean {
+        if (faceObj.maxX == faceObj.lowX) {
+            console.log("Equal X");
+        }
+        else if (x < faceObj.lowX || x >= faceObj.maxX) {
+            console.log("failed in x: " + x + " maxe= " + faceObj.maxX + " min= " + faceObj.lowX);
+            return false;
+        }
+        if (faceObj.maxY == faceObj.lowY) {
+            console.log("Equal Y");
+        }
+        else if (y < faceObj.lowY || y >= faceObj.maxY) {
+            console.log("failed in y: " + y + " maxe= " + faceObj.maxY + " min= " + faceObj.lowY);
+            return false;
+        }
+        if (faceObj.maxZ == faceObj.lowZ) {
+            console.log("Equal Z");
+        }
+        else if (z < faceObj.lowZ || z >= faceObj.maxZ) {
+            console.log("failed in z: " + z + " maxe= " + faceObj.maxZ + " min= " + faceObj.lowZ);
+            return false;
+        }
+
+        return true;
     }
 }
 
