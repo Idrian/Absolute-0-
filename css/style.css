@@ -765,3 +765,7 @@ button.btn.btn-color-selection:focus{
     outline: none !important;
 }
 
+.file-upload-dark-text{
+    color: #08181C;
+}
+

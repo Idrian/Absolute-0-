@@ -52,8 +52,98 @@
                 <div class="image-text-container col-sm-12">
                     <form id="imageTextForm">
                         <input type="text" class="image-text" placeholder="Enter image url and press enter..." id="imageText"/>
-                    </form>
+                    </form><br/><br/>
+                    <div class="converter2-demo-button-container col-sm-12">
+                            <a data-toggle="modal" data-target="#editorModal" id="editRulesFile" class="converter2-demo-button">Edit rules file</a>
+                        </div><br/><br/>
                 </div>
             </div>
+        <div id="editorModal" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+        
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit the rules file</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="file-upload-container file-upload-dark-text col-sm-4 col-sm-offset-2">
+                                    <input type="file" name="file" id="file" class="input-file-hidden" accept=".obj"/>
+        
+                                    <label for="file"><i class="fa fa-upload" aria-hidden="true"></i></label><br>
+                                    
+                                    Upload own rules file
+                            </div>
+                            <div id="predefinedRules" class="rules-file-button-container file-upload-dark-text col-sm-4">
+                                <div class="rules-file-button">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </div>
+                                Use predefined rules file
+                            </div>
+                        </div>
+                        <div id="editor">{"Rules" : 
+    [{
+        "Key" : "0x664611" ,
+        "Shape" : "Cylinder",
+        "Texture" : "./resources/textures/oak.png",
+        "Bmap" : "./resources/textures/oakBump.png"
+    },{
+        "Key" : "0x00ff00",
+        "Shape" : "Sphere",
+        "scale" : [1.5,1.5,1.5],
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    },{
+        "Key" : "0x00ff01",
+        "Shape" : "Cube",
+        "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+        "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+    }]
+}<br></div><button class="rules-file-upload-button" data-dismiss="modal">Save and upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+                var isBlurred = false;
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/solarized_dark");
+                var JSONMode = ace.require("ace/mode/json").Mode;
+                editor.session.setMode(new JSONMode());
+                document.getElementById("predefinedRules").onclick = function(){
+                    editor.setValue(`{"Rules" : 
+        [{
+            "Key" : "0x664611" ,
+            "Shape" : "Cylinder",
+            "Texture" : "./resources/textures/oak.png",
+            "Bmap" : "./resources/textures/oakBump.png"
+        },{
+            "Key" : "0x00ff00",
+            "Shape" : "Sphere",
+            "scale" : [1.5,1.5,1.5],
+            "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+            "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+        },{
+            "Key" : "0x00ff01",
+            "Shape" : "Cube",
+            "Texture" : "./resources/textures/texture_leaves_by_kuschelirmel_stock.jpg",
+            "Bmap" : "./resources/textures/texture_leaves_by_kuschelirmel_stockBump.jpg"
+        }]
+    }`, 1);
+                }
+                /*var sideMenu = document.getElementById("sideMenu");
+                sideMenu.onclick = function(){
+                    if (isBlurred == true){
+                        isBlurred = false;
+                        document.body.className = "";
+                    } else {
+                        document.getElementById("container").classList.add("blur");
+                        sideMenu.style.webkitFilter = none;
+                        isBlurred = true;
+                    }
+                }*/
+            </script>
     </body>
 </html>
