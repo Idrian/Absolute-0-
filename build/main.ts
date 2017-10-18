@@ -396,6 +396,8 @@ let arrayToMesh = new ArrayToMesh(model);
     var converterOne : fileReader;
  
     var useME : boolean = true;
+
+    
     objUpload.addEventListener("change", function(){
      //   console.log("I am here");
         var OBJFile : File = objUpload.files[0];
@@ -406,7 +408,7 @@ let arrayToMesh = new ArrayToMesh(model);
 
 
     });
-
+/*
 
     if(useME == true)
         {

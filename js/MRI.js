@@ -43,28 +43,36 @@ function loadMRI()
 
         var controls = new THREE.OrbitControls(camera,  renderer.domElement);
 
-         scene.background =  new THREE.Color( 0xff0000 );
+         scene.background =  new THREE.Color( 0xffffff );
 
 
  var mriRuleApplyer = new  RuleApplyer();
 
- 
-     
-    
-
-        imgConverter.convert('./resources/images/64x64/normal_brain_mri_'+10+'.jpg',function()
+         imgConverter.convert('./resources/images/64x64/normal_brain_mri_'+10+'.jpg',function()
         {
             model = imgConverter.output();
-        //  console.log("imgArray: ",model);
+         // console.log("imgArray: ",model);
         // console.log("colors: ",imgConverter.getColors());
             var mesh = generateMesh();
-            mesh.rotation.x = 90*Math.PI/180;
-           // mesh.position.y = 10;
             scene.add(mesh);
         });
 
+document.getElementById("imageTextForm").onsubmit = function(e)
+{
+    e.preventDefault();
+    var text_url = document.getElementById("imageText").value;
 
+        imgConverter.convert(text_url,function()
+        {
+            model = imgConverter.output();
+         // console.log("imgArray: ",model);
+        // console.log("colors: ",imgConverter.getColors());
+             scene.remove(scene.getObjectByName("Voxel"));
+            var mesh = generateMesh();
+            scene.add(mesh);
+        });
 
+}
 
     function render()
     {
@@ -84,6 +92,7 @@ function loadMRI()
     {
        var ruleFileJson = '{"Rules" : ['; 
         var colors = imgConverter.getColors();
+        console.log("Colors: ",colors);
             var i
             for(i=0;i<colors.length-1;i++)
                 {
@@ -97,7 +106,11 @@ function loadMRI()
             var ruleFile = JSON.parse(ruleFileJson);
             let arrayToMesh = new  RuleApplyer();
             mriRuleApplyer.convert(ruleFile, model);
+            
+
+           // let arrayToMesh = new  ArrayToMesh(model);
             var mesh = mriRuleApplyer.output();
+           // var mesh = arrayToMesh.output();
             return mesh;
     }
 }

@@ -21,6 +21,7 @@ export class ImgToArray
         var canvas = document.createElement("canvas");
 
 
+
                 if(canvas.getContext)
                 {
                     //this.theArray.push(new Array());
@@ -35,7 +36,7 @@ export class ImgToArray
 
                 image.src = inputArray;
 
-       
+      // console.log("Image in converter: ",image)
             
       
           //  console.log("theArray: ",this.theArray);
@@ -47,7 +48,7 @@ export class ImgToArray
     {
 
         
-       
+       console.log("Image in converter: ",image)
         ctx.drawImage(image, 0, 0);
 
         var imgData = ctx.getImageData(0, 0, image.width, image.height);
