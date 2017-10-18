@@ -45,9 +45,11 @@ function loadMRI()
 
          scene.background =  new THREE.Color( 0xffffff );
 
+          var editor = ace.edit("editor");
 
  var mriRuleApplyer = new  RuleApplyer();
-
+ var ruleFileJson;
+ let arrayToMesh = new  RuleApplyer();
          imgConverter.convert('./resources/images/64x64/normal_brain_mri_'+10+'.jpg',function()
         {
             model = imgConverter.output();
@@ -87,10 +89,23 @@ document.getElementById("imageTextForm").onsubmit = function(e)
     }
 
     start();
+ 
+var uplouder = document.getElementsByClassName("rules-file-upload-button");
+
+uplouder[0].addEventListener("click", function()
+        {
+            var ruleFileJson = editor.getValue();
+            var ruleFile = JSON.parse(ruleFileJson);
+             scene.remove(scene.getObjectByName("Voxel"));
+             mriRuleApplyer.convert(ruleFile, model);
+              var mesh = mriRuleApplyer.output();
+              scene.add(mesh);
+        });
 
     function generateMesh()
     {
-       var ruleFileJson = '{"Rules" : ['; 
+        ruleFileJson = '{"Rules" : ['; 
+       ruleFileJson += '\n';
         var colors = imgConverter.getColors();
         console.log("Colors: ",colors);
             var i
@@ -98,12 +113,14 @@ document.getElementById("imageTextForm").onsubmit = function(e)
                 {
                    
                     ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png" },';
+                    ruleFileJson += '\n';
                         
                 }
-            ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png" }]}';    
-
+            ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png"}\n]}';    
+                
+            editor.setValue(ruleFileJson);
             var ruleFile = JSON.parse(ruleFileJson);
-            let arrayToMesh = new  RuleApplyer();
+          //  let arrayToMesh = new  RuleApplyer();
             mriRuleApplyer.convert(ruleFile, model);
             
 
