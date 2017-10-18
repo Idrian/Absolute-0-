@@ -34,14 +34,13 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="#documentsSection">Documentation</a></li>
-                        <li><a href="#demoSection">Demo</a></li>
-                        <li><a href="#aboutSection">About</a></li>
-                        <li><a href="#usageSection">Usage</a></li>
-                        <li><a href="converter1.html">Converter 1</a></li>
-                        <li><a href="converter2.html">Converter 2</a></li>
-                        <li><a href="#">Converter 3</a></li>
-                        <li><a href="mriscan.html">MRI Scan Demo</a></li>
+                        <li><a href="index.html/#documentsSection">Documentation</a></li>
+                        <li><a href="index.html/#demoSection">Demo</a></li>
+                        <li><a href="index.html/#aboutSection">About</a></li>
+                        <li><a href="index.html/#usageSection">Usage</a></li>
+                        <li><a href="converter1.html">.obj to Array</a></li>
+                        <li class="active"><a href="converter2.html">Rule Applyer</a></li>
+                        <li><a href="mriscan.html">Image to Array</a></li>
                     </ul>
                 </div>
             </div>
@@ -82,11 +81,12 @@
                     </div>
                     <div class="row">
                         <div class="row"  id="demoSection">
+                                <img class="geomtest3" src="resources/images/geomtest.svg"/>
                             <div class="demo-heading col-sm-6 col-sm-offset-3">
-                                <h2 class="section-heading">Converter 2</h2>
+                                <h2 class="section-heading">Rule Applyer Converter</h2>
                                 <hr class="norm-hr"/>
                                 <p class="section-paragraph">
-                                    Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
+                                    The goal of this converter is to take a JavaScript matrix as input and apply rules specified in a rule file to the matrix. This rule file is a JSON file containing key value pairs, the keys being the hexadecimal color value of a block and the values being settings like texture, size, rotation, bump map, shape and color. The rules file is interpreted by an Interpreter pattern which extracts the hexadecimal values, dtermines which objects can be associated with which color and then renders the object with all the associated rules applied to each relevant object. <br/><br/>The example below is aimed at showing the versatility of this converter in texturing the same object in completely different ways.
                                 </p>
                             </div>
                             <div class="converter2-demo-button-container col-sm-12">
@@ -95,7 +95,9 @@
                         </div>
                     </div>
                 </div>
-                <img width="100%" class="footer-image" src="resources/images/geometry2.png"/>
+                <div class="col-sm-12 poster-container">
+                        <img class="poster" src="resources/images/posters/poster2.jpg"/>
+                    </div>
                 <div class="footer row">
                     <div class="col-sm-1 col-sm-offset-1">
                         <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>

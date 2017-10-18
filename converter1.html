@@ -36,14 +36,13 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="#documentsSection">Documentation</a></li>
-                        <li><a href="#demoSection">Demo</a></li>
-                        <li><a href="#aboutSection">About</a></li>
-                        <li><a href="#usageSection">Usage</a></li>
-                        <li><a href="converter1.html">Converter 1</a></li>
-                        <li><a href="converter2.html">Converter 2</a></li>
-                        <li><a href="#">Converter 3</a></li>
-                        <li><a href="mriscan.html">MRI Scan Demo</a></li>
+                        <li><a href="index.html/#documentsSection">Documentation</a></li>
+                        <li><a href="index.html/#demoSection">Demo</a></li>
+                        <li><a href="index.html/#aboutSection">About</a></li>
+                        <li><a href="index.html/#usageSection">Usage</a></li>
+                        <li class="active"><a href="converter1.html">.obj to Array</a></li>
+                        <li><a href="converter2.html">Rule Applyer</a></li>
+                        <li><a href="mriscan.html">Image to Array</a></li>
                     </ul>
                 </div>
             </div>
@@ -82,13 +81,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row">   
                         <div class="row"  id="demoSection">
+                            <img class="geomtest2" src="resources/images/geomtest.svg"/>
                             <div class="demo-heading col-sm-6 col-sm-offset-3">
-                                <h2 class="section-heading">Converter 1</h2>
+                                <h2 class="section-heading">.obj to Array Converter</h2>
                                 <hr class="norm-hr"/>
                                 <p class="section-paragraph">
-                                    Voxc.js is meant to be a lightweight, easy to use library for converting voxel objects into JavaScript matrixes for easy manipulation. These matrixes can then be used for creating more meshes that have different goals. This library will contain a series of converters that all have a different purpose. The creation and formatting of these converters stay consistent by using JavaScriptmatrixes as input and output.
+                                    The goal of this converter is to convert a .obj file created with MagicaVoxel or other 3D software into a JavaScript matrix. A .obj file is a file that consists of coordinates of the faces, edges and vertices of a 3D object. This file also contains extra data like the hexadecimal color values that is associated with each block. This converter analyzes the file, extracting the coordinates of each block and then converting this 3D object into a 3D JavaScript Array.<br/><br/>This JavaScript array is then rendered using THREE.js to provide the output shown below.
                                 </p>
                             </div>
                             <div class="col-sm-10 col-sm-offset-1">
@@ -97,7 +97,9 @@
                         </div>
                     </div>
                 </div>
-                <img width="100%" class="footer-image" src="resources/images/geometry2.png"/>
+                <div class="col-sm-12 poster-container">
+                    <img class="poster" src="resources/images/posters/poster1.jpg"/>
+                </div>
                 <div class="footer row">
                     <div class="col-sm-1 col-sm-offset-1">
                         <a href="https://github.com/Idrian/Absolute-0-" target="_blank"><span class="footer-icon fa fa-github-square fa-5x"></span></a>
