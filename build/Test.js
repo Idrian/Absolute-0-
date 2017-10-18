@@ -246,7 +246,7 @@ let arrayToMesh = new  ArrayToMesh(model);
 
         var OBJFile = objUpload.files[0];
         useME = false;
-        converterOne = new  fileReader(OBJFile,function()
+    converterOne = new  fileReader(OBJFile,function()
     {
                     //  array = converterOne.getArray();
 
@@ -280,13 +280,26 @@ let arrayToMesh = new  ArrayToMesh(model);
             //console.log("Input File array 5",array);
                     
             //console.log("Full editor",editor.getValue());
-            var jsonString = editor.getValue();
-            var  ruleFile = JSON.parse(jsonString);
+
+            var ruleFileJson;
+             ruleFileJson = '{"Rules" :\n \t['; 
+
+             var colors = converterOne.getColors();
+                for(i=0;i<colors.length-1;i++)
+                {
+                   
+                    ruleFileJson += '{\n\t\t"Key" : "'+ colors[i] +'" ,\n\t\t"Color" : "'+colors[i] +'" ,\n\t\t "Shape" : "Cube",\n\t\t"Texture" : "./resources/textures/oak.png"\n\t },';
+                        
+                }
+            ruleFileJson += '{\n\t\t"Key" : "'+ colors[i] +'" ,\n\t\t"Color" : "'+colors[i] +'" ,\n\t\t "Shape" : "Cube",\n\t\t"Texture" : "./resources/textures/oak.png"\n\t}]\n}';    
+
+            editor.setValue(ruleFileJson);
+            var  ruleFile = JSON.parse(ruleFileJson);
                         ruleApplyer.convert(ruleFile, model);
                         var converterOne_model = new  THREE.Group(); 
                     //  console.log("Before Group",converterOne_model);
                 
-
+                    converterOne_model = ruleApplyer.output();
                     //  console.log("After Group",converterOne_model);
                     demo_canvas.setGridHelper(model.length, model[0].length, model[0][0].length);
                     demo_canvas.CameraPosition(0,0,largest*2);
