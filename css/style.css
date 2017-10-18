@@ -693,3 +693,16 @@ button.btn.btn-color-selection:focus{
     width: 700px;
 }
 
+.mri-buttons-container{
+    padding: 20px;
+}
+
+.mri-file-upload{
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+#MRI{
+    padding: 0;
+}
+
