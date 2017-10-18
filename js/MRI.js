@@ -96,10 +96,9 @@ document.getElementById("imageTextForm").onsubmit = function(e)
             var i
             for(i=0;i<colors.length-1;i++)
                 {
-                    if(!colors[i].includes("0x0"))
-                        {
-                        ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png" },';
-                        }
+                   
+                    ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png" },';
+                        
                 }
             ruleFileJson += '{"Key" : "'+ colors[i] +'" ,"Color" : "'+colors[i] +'" , "Shape" : "Cube","Texture" : "./resources/textures/oak.png" }]}';    
 
