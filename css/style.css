@@ -185,6 +185,7 @@ a{
 .canvascontainer{
     padding-top: 40px;
     padding-bottom: 60px;
+    margin-top: 700px;
     background-color: #0c181b;
 }
 
@@ -418,6 +419,7 @@ a{
 
 .documents{
     text-align: center;
+    margin-top: 100px;
     margin-bottom: 400px;
 }
 
@@ -443,6 +445,10 @@ a{
     font-size: 25px;
     text-align: center;
     color: white;
+}
+
+.demo{
+
 }
 
 .demo-heading{
@@ -774,3 +780,90 @@ button.btn.btn-color-selection:focus{
     margin-top: 50px;
 }
 
+.parallax {
+    -webkit-perspective: 100px;
+            perspective: 100px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0%;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .parallax__layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .parallax__layer img {
+    display: block;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .parallax__cover {
+    background: #08181C;
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 900px;
+    z-index: 2;
+  }
+  
+  .parallax__layer__0 {
+    -webkit-transform: translateZ(-300px) scale(4);
+            transform: translateZ(-300px) scale(4);
+  }
+  
+  .parallax__layer__1 {
+      top: 300%;
+      right: 30%;
+    -webkit-transform: translateZ(-250px) scale(3.5);
+            transform: translateZ(-250px) scale(3.5);
+  }
+  
+  .parallax__layer__2 {
+      top: 300%;
+    -webkit-transform: translateZ(-200px) scale(3);
+            transform: translateZ(-200px) scale(3);
+  }
+  
+  .parallax__layer__3 {
+    top: 220%;
+    right: 20%;
+    -webkit-transform: translateZ(-150px) scale(2.5);
+            transform: translateZ(-150px) scale(2.5);
+  }
+  
+  .parallax__layer__4 {
+      top: 190%;
+    -webkit-transform: translateZ(-100px) scale(2);
+            transform: translateZ(-100px) scale(2);
+  }
+  
+  .parallax__layer__5 {
+    -webkit-transform: translateZ(-50px) scale(1.5);
+            transform: translateZ(-50px) scale(1.5);
+  }
+  
+  .parallax__layer__6 {
+    top: 320%;
+    right: 10%;
+  -webkit-transform: translateZ(-250px) scale(3.5);
+          transform: translateZ(-250px) scale(3.5);
+  }
+
+  .youtube{
+      margin-top: 200px;
+  }
+
+  .index-footer{
+      margin-top: 200px;
+  }
